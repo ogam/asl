@@ -171,7 +171,7 @@ init {
 	vars.isWorldMapLoaded = false;
 	
 	TimeSpan clientAliveTime = DateTime.Now - game.StartTime;
-	if(clientAliveTime.Seconds < 5.0f) {
+	if(clientAliveTime.Seconds < 2.5f) {
 		//	Note(ogam):	wait for initial unskippable splash
 		Thread.Sleep(2500 - clientAliveTime.Milliseconds);
 	}
