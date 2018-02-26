@@ -38,7 +38,7 @@ startup {
 		"D9 1D ????????",			// fstp dword ptr [001456F8] { [0.00] }
 		"B9 ????????"				// mov ecx,0354783C { [01000400] }
 	);
-
+	
 	vars.UpdateWatchers = (Action<Process, MemoryWatcherList, List<int[]>, List<Type>>)((proc, watchers, offsetList, types) => {
 		for(int i = 0; i < watchers.Count; ++i) {
 			int[] offsets = offsetList[i];
@@ -117,8 +117,9 @@ startup {
 	vars.dialogueStateName			= "Dialogue State";
 	vars.dashName					= "Dash";
 	vars.dustStormName				= "Dust Storm";
-	vars.raisingDustStormName		= "Raising Dust Storm";
+	vars.raisingDustStormName		= "Aerial Dust Storm";
 	vars.slideName					= "Slide";
+	vars.climbName					= "Iron Grip";
 	vars.doubleJumpName				= "Double Jump";
 	vars.fidgetFireName				= "Fidget Fire";
 	vars.fidgetLightningName		= "Fidget Lightning";
@@ -138,12 +139,15 @@ startup {
 	    vars.dustStormName,
 	    vars.raisingDustStormName,
 	    vars.slideName,
+		vars.climbName,
 	    vars.doubleJumpName,
 	    vars.fidgetFireName,
 	    vars.fidgetLightningName
 	};
 	
+	settings.Add("debug",								false,			"Debug - show more stats"								);
 	settings.Add("117",									false,			"117% show progression text on layout"					);
+	settings.Add("Pause IGT On Room Transitions", 		false, 			"Pause IGT on when losing control on room transitions"	);
 	settings.Add("Pause IGT Unskippable Dialogue", 		false, 			"Pause IGT on unskippable dialogue transition sections"	);
 	settings.Add("Pause IGT Region Intro", 				false, 			"Pause IGT on panorama/region introduction scenes"		);
 	
@@ -220,6 +224,7 @@ init {
 		new MemoryWatcher<byte>(IntPtr.Zero)	{ Name = vars.dustStormName				},
 		new MemoryWatcher<byte>(IntPtr.Zero)	{ Name = vars.raisingDustStormName		},
 		new MemoryWatcher<byte>(IntPtr.Zero)	{ Name = vars.slideName					},
+		new MemoryWatcher<byte>(IntPtr.Zero)	{ Name = vars.climbName					},
 		new MemoryWatcher<byte>(IntPtr.Zero)	{ Name = vars.doubleJumpName			},
 		new MemoryWatcher<byte>(IntPtr.Zero)	{ Name = vars.fidgetFireName			},
 		new MemoryWatcher<byte>(IntPtr.Zero)	{ Name = vars.fidgetLightningName		},
@@ -252,6 +257,7 @@ init {
 		new int[]{ ptr32, 0xDC, 0x8, 0x8		},						//	dustStormName
 		new int[]{ ptr32, 0xDC, 0x8, 0x14		},						//	raisingDustStormName
 		new int[]{ ptr32, 0xDC, 0x8, 0x16		},						//	slideName
+		new int[]{ ptr32, 0xDC, 0x8, 0x18		},						//	climbName
 		new int[]{ ptr32, 0xDC, 0x8, 0x15		},						//	doubleJumpName
 		new int[]{ ptr32, 0xDC, 0x8, 0x9		},						//	fidgetFireName
 		new int[]{ ptr32, 0xDC, 0x8, 0xA		},						//	fidgetLightningName
@@ -284,6 +290,7 @@ init {
 		typeof(byte),													//	dustStormName
 		typeof(byte),													//	raisingDustStormName
 		typeof(byte),													//	slideName
+		typeof(byte),													//	climbName
 		typeof(byte),													//	doubleJumpName
 		typeof(byte),													//	fidgetFireName
 		typeof(byte),													//	fidgetLightningName
@@ -328,6 +335,17 @@ init {
 		}
 	});
 	
+	vars.debugEventSettings 	= default(object);
+	vars.debugFadeSettings		= default(object);
+	vars.debugLoadQueueSettings = default(object);
+	vars.debugDialogueSettings	= default(object);
+	if(settings["debug"]) {
+		vars.debugEventSettings		= vars.FindOrCreateTextComponentSettings("Events");
+		vars.debugFadeSettings		= vars.FindOrCreateTextComponentSettings("Fade Timer");
+		vars.debugLoadQueueSettings = vars.FindOrCreateTextComponentSettings("Load Count");
+		vars.debugDialogueSettings	= vars.FindOrCreateTextComponentSettings("Dialogue");
+	}
+	
 	vars.completionSettings		= default(object);
 	vars.explorationSettings	= default(object);
 	vars.treasureSettings		= default(object);
@@ -354,6 +372,24 @@ update {
 		return;
 	}
 	vars.UpdateWatchers(game, vars.watchers, vars.watcherOffsets, vars.watcherTypes);
+	
+	if(settings["debug"]) {
+		if(vars.debugEventSettings == null) {
+			vars.debugEventSettings		= vars.FindOrCreateTextComponentSettings("Events");
+			vars.debugFadeSettings		= vars.FindOrCreateTextComponentSettings("Fade Timer");
+			vars.debugLoadQueueSettings = vars.FindOrCreateTextComponentSettings("Load Count");
+			vars.debugDialogueSettings	= vars.FindOrCreateTextComponentSettings("Dialogue");
+		}
+		vars.debugEventSettings.Text2 = string.Format	("{0}, {1}, {2}", 	vars.watchers[vars.currentEventName].Current,
+																			vars.watchers[vars.eventTypeName].Current,
+																			vars.watchers[vars.subEventName].Current
+														);
+		float fadeTime = Math.Max(vars.watchers[vars.transInFrameName].Current, vars.watchers[vars.transOutFrameName].Current);
+		fadeTime = Math.Max(Math.Max(fadeTime, vars.watchers[vars.worldMapFadeTimerName].Current), 0);
+		vars.debugFadeSettings.Text2 = fadeTime.ToString("N3");
+		vars.debugLoadQueueSettings.Text2 = vars.watchers[vars.loadQueueName].Current.ToString();
+		vars.debugDialogueSettings.Text2 = vars.watchers[vars.dialogueStateName].Current.ToString();
+	}
 	
 	bool bTextComponents_117 = 	vars.completionSettings != null || vars.explorationSettings != null || 
 								vars.treasureSettings != null || vars.friendsSettings != null || 
@@ -517,36 +553,21 @@ exit {
 }
 
 isLoading {
-	float transInFrameCurrent 		= vars.watchers[vars.transInFrameName].Current;
-	float transOutFrameCurrent 		= vars.watchers[vars.transOutFrameName].Current;
-	float eventTimerCurrent 		= vars.watchers[vars.eventTimerName].Current;
-	int subEventCurrent 			= vars.watchers[vars.subEventName].Current;
-	int dialogueStateCurrent		= vars.watchers[vars.dialogueStateName].Current;
-	int regionIntroStageCurrent		= vars.watchers[vars.regionIntroStageName].Current;
+	float transInFrameCurrent 			= vars.watchers[vars.transInFrameName].Current;
+	float transOutFrameCurrent 			= vars.watchers[vars.transOutFrameName].Current;
+	float eventTimerCurrent 			= vars.watchers[vars.eventTimerName].Current;
+	int subEventCurrent 				= vars.watchers[vars.subEventName].Current;
+	int dialogueStateCurrent			= vars.watchers[vars.dialogueStateName].Current;
+	int regionIntroStageCurrent			= vars.watchers[vars.regionIntroStageName].Current;
+	int loadQueueCount					= vars.watchers[vars.loadQueueName].Current;
 	
-	bool bWaitOnWorldMap 			= false;
-	bool isWaitingOnDialogueSkip 	= false;
-	bool isIntroCameraPanning 		= false;
+	bool bWaitOnWorldMap 				= false;
+	bool isWaitingOnDialogueSkip 		= false;
+	bool isIntroCameraPanning 			= false;
+	bool isTransitioning				= transInFrameCurrent > 0 || transOutFrameCurrent > 0;
+	bool isLoadingBetweenTransitions 	= isTransitioning && loadQueueCount > 0;
+	bool isLoading						= false;
 	
-	//	Bug(ogam):	timing will pause->play->pause when switching from loading assets to checking the updated fade timer
-	//				so you will lose a tiny bit of time until new value is found
-	if(vars.watchers[vars.isUsingWorldMapName].Current) {
-		if(vars.isWorldMapLoaded) {
-			if(vars.fadeTimerTempAddress != 0) {
-				vars.watcherOffsets[vars.fadeTimerIndex][0] = vars.fadeTimerTempAddress;
-				vars.fadeTimerTempAddress = 0;
-				bWaitOnWorldMap = vars.watchers[vars.loadQueueName].Current > 0;
-				vars.UpdateWatchers(game, vars.watchers, vars.watcherOffsets, vars.watcherTypes);
-			} else {
-				bWaitOnWorldMap = vars.watchers[vars.worldMapFadeTimerName].Current > 0f;
-			}
-		} else {
-			if(!vars.worldMapScannerThread.IsAlive) {
-				vars.worldMapScannerThread.Start();
-			}
-			bWaitOnWorldMap = vars.watchers[vars.loadQueueName].Current > 0;
-		}
-	}
 	
 	//	Note(ogam):	DialogueState		-	0 ->	nothing
 	//									-	1 ->	loading
@@ -563,5 +584,33 @@ isLoading {
 		isIntroCameraPanning = regionIntroStageCurrent > 0;
 	}
 	
-	return transInFrameCurrent > 0 || transOutFrameCurrent > 0 || bWaitOnWorldMap || isWaitingOnDialogueSkip || isIntroCameraPanning;
+	
+	if(settings["Pause IGT On Room Transitions"]) {
+		//	Bug(ogam):	timing will pause->play->pause when switching from loading assets to checking the updated fade timer
+		//				so you will lose a tiny bit of time until new value is found
+		if(vars.watchers[vars.isUsingWorldMapName].Current) {
+			if(vars.isWorldMapLoaded) {
+				if(vars.fadeTimerTempAddress != 0) {
+					vars.watcherOffsets[vars.fadeTimerIndex][0] = vars.fadeTimerTempAddress;
+					vars.fadeTimerTempAddress = 0;
+					bWaitOnWorldMap = loadQueueCount > 0;
+					vars.UpdateWatchers(game, vars.watchers, vars.watcherOffsets, vars.watcherTypes);
+				} else {
+					bWaitOnWorldMap = vars.watchers[vars.worldMapFadeTimerName].Current > 0f;
+				}
+			} else {
+				if(!vars.worldMapScannerThread.IsAlive) {
+					vars.worldMapScannerThread.Start();
+				}
+				bWaitOnWorldMap = loadQueueCount > 0;
+			}
+		}
+		
+		isLoading = isTransitioning || bWaitOnWorldMap || isWaitingOnDialogueSkip || isIntroCameraPanning;
+	} else {
+		bWaitOnWorldMap = vars.watchers[vars.isUsingWorldMapName].Current && loadQueueCount > 0;
+		isLoading = isLoadingBetweenTransitions || bWaitOnWorldMap || isWaitingOnDialogueSkip || isIntroCameraPanning;
+	}
+	
+	return isLoading;
 }
