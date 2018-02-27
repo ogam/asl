@@ -76,7 +76,9 @@ startup {
 			}
 		}
 	});
-		
+	
+	vars.textMap = new Dictionary<string, object>();
+	
 	vars.FindOrCreateTextComponentSettings = (Func<string, object>)((name) => {
 		//	DefyGravity
 		//	https://github.com/jkarkkainen/DefyGravityASL/blob/master/DefyGravity.asl
@@ -101,6 +103,18 @@ startup {
 		}
 		
 		return textSettings;
+	});
+	
+	vars.SetText = (Action<string, string>)((name, text) => {
+		if(!vars.textMap.ContainsKey(name)){
+			vars.textMap.Add(name, vars.FindOrCreateTextComponentSettings(name));
+		}
+		
+		if(vars.textMap[name] == null){
+			vars.textMap[name] = vars.FindOrCreateTextComponentSettings(name);
+		}
+		
+		vars.textMap[name].Text2 = text;
 	});
 	
 	vars.loadQueueName 				= "Load Queue Count";
@@ -143,7 +157,6 @@ startup {
 	vars.introEverdawm1Name			= "Bloodmoon Region Introduction";
 	vars.introEverdawn2Name			= "Everdawn Battlefield Region Introduction";
 	vars.introArcherName			= "Archer's Pass Region Introduction";
-	vars.regionName					= "Region Name";
 	
 	vars.abilityNames				= new string[]{
 		vars.dashName,
@@ -272,16 +285,16 @@ init {
 		new MemoryWatcher<int>(IntPtr.Zero)		{ Name = vars.challengeArenaArrayName	},		//	array address
 		new MemoryWatcher<int>(IntPtr.Zero)		{ Name = vars.questsAvailableName		},
 		new MemoryWatcher<int>(IntPtr.Zero)		{ Name = vars.questsCompletedName		},
-		new MemoryWatcher<bool>(IntPtr.Zero)	{ Name = vars.introGladeName			},
-		new MemoryWatcher<bool>(IntPtr.Zero)	{ Name = vars.introAuroraName			},
-		new MemoryWatcher<bool>(IntPtr.Zero)	{ Name = vars.introAbadisName			},
-		new MemoryWatcher<bool>(IntPtr.Zero)	{ Name = vars.introCirromonName			},
-		new MemoryWatcher<bool>(IntPtr.Zero)	{ Name = vars.introMudpotName			},
-		new MemoryWatcher<bool>(IntPtr.Zero)	{ Name = vars.introSorrowingName		},
-		new MemoryWatcher<bool>(IntPtr.Zero)	{ Name = vars.introBlackmoorName		},
-		new MemoryWatcher<bool>(IntPtr.Zero)	{ Name = vars.introEverdawm1Name		},
-		new MemoryWatcher<bool>(IntPtr.Zero)	{ Name = vars.introEverdawn2Name		},
-		new MemoryWatcher<bool>(IntPtr.Zero)	{ Name = vars.introArcherName			}
+		new MemoryWatcher<byte>(IntPtr.Zero)	{ Name = vars.introGladeName			},
+		new MemoryWatcher<byte>(IntPtr.Zero)	{ Name = vars.introAuroraName			},
+		new MemoryWatcher<byte>(IntPtr.Zero)	{ Name = vars.introAbadisName			},
+		new MemoryWatcher<byte>(IntPtr.Zero)	{ Name = vars.introCirromonName			},
+		new MemoryWatcher<byte>(IntPtr.Zero)	{ Name = vars.introMudpotName			},
+		new MemoryWatcher<byte>(IntPtr.Zero)	{ Name = vars.introSorrowingName		},
+		new MemoryWatcher<byte>(IntPtr.Zero)	{ Name = vars.introBlackmoorName		},
+		new MemoryWatcher<byte>(IntPtr.Zero)	{ Name = vars.introEverdawm1Name		},
+		new MemoryWatcher<byte>(IntPtr.Zero)	{ Name = vars.introEverdawn2Name		},
+		new MemoryWatcher<byte>(IntPtr.Zero)	{ Name = vars.introArcherName			}
 	};
 	
 	vars.watcherOffsets			= new List<int[]>() {
@@ -358,16 +371,16 @@ init {
 		typeof(int),													//	challengeArenaArrayName
 		typeof(int),													//	questsAvailableName
 		typeof(int),													//	questsCompletedName
-		typeof(bool),													//	introGladeName
-		typeof(bool),													//	introAuroraName
-		typeof(bool),													//	introAbadisName
-		typeof(bool),													//	introCirromonName
-		typeof(bool),													//	introMudpotName
-		typeof(bool),													//	introSorrowingName
-		typeof(bool),													//	introBlackmoorName
-		typeof(bool),													//	introEverdawm1Name
-		typeof(bool),													//	introEverdawn2Name
-		typeof(bool)													//	introArcherName
+		typeof(byte),													//	introGladeName
+		typeof(byte),													//	introAuroraName
+		typeof(byte),													//	introAbadisName
+		typeof(byte),													//	introCirromonName
+		typeof(byte),													//	introMudpotName
+		typeof(byte),													//	introSorrowingName
+		typeof(byte),													//	introBlackmoorName
+		typeof(byte),													//	introEverdawm1Name
+		typeof(byte),													//	introEverdawn2Name
+		typeof(byte)													//	introArcherName
 	};
 	
 	vars.fadeTimerTempAddress 	= 0;
@@ -399,44 +412,10 @@ init {
 		}
 	});
 	
-	vars.debugEventSettings 	= default(object);
-	vars.debugFadeSettings		= default(object);
-	vars.debugLoadQueueSettings = default(object);
-	vars.debugDialogueSettings	= default(object);
-	vars.debugTotalLoadTimeSettings			= default(object);
-	vars.debugTotalTransitionTimeSettings	= default(object);
-	
 	vars.totalLoadQueueTime = default(TimeSpan);
 	vars.totalTransitionTime = default(TimeSpan);
 	vars.loadTimeStamp = DateTime.Now;
 	vars.transitionTimeStamp = DateTime.Now;
-	
-	if(settings["debug"]) {
-		vars.debugEventSettings		= vars.FindOrCreateTextComponentSettings("Events");
-		vars.debugFadeSettings		= vars.FindOrCreateTextComponentSettings("Fade Timer");
-		vars.debugLoadQueueSettings = vars.FindOrCreateTextComponentSettings("Load Count");
-		vars.debugDialogueSettings	= vars.FindOrCreateTextComponentSettings("Dialogue");
-		vars.debugTotalLoadTimeSettings			= vars.FindOrCreateTextComponentSettings("Total Load Time");
-		vars.debugTotalTransitionTimeSettings	= vars.FindOrCreateTextComponentSettings("Total Transition Time");
-	}
-	
-	vars.completionSettings		= default(object);
-	vars.explorationSettings	= default(object);
-	vars.treasureSettings		= default(object);
-	vars.friendsSettings		= default(object);
-	vars.materialSettings		= default(object);
-	vars.challengeSettings		= default(object);
-	vars.questsSettings			= default(object);
-
-	if(settings["117"]) {
-		vars.completionSettings		= vars.FindOrCreateTextComponentSettings("Completion");
-		vars.explorationSettings	= vars.FindOrCreateTextComponentSettings("Exploration");
-		vars.treasureSettings		= vars.FindOrCreateTextComponentSettings("Treasures");
-		vars.friendsSettings		= vars.FindOrCreateTextComponentSettings("Friends");
-		vars.materialSettings		= vars.FindOrCreateTextComponentSettings("Materials");
-		vars.challengeSettings		= vars.FindOrCreateTextComponentSettings("Challenges");
-		vars.questsSettings			= vars.FindOrCreateTextComponentSettings("Quests");
-	}
 	
 	vars.isGameInit = 1;
 }
@@ -448,26 +427,22 @@ update {
 	vars.UpdateWatchers(game, vars.watchers, vars.watcherOffsets, vars.watcherTypes);
 	
 	if(settings["debug"]) {
-		if(vars.debugEventSettings == null) {
-			vars.debugEventSettings		= vars.FindOrCreateTextComponentSettings("Events");
-			vars.debugFadeSettings		= vars.FindOrCreateTextComponentSettings("Fade Timer");
-			vars.debugLoadQueueSettings = vars.FindOrCreateTextComponentSettings("Load Count");
-			vars.debugDialogueSettings	= vars.FindOrCreateTextComponentSettings("Dialogue");
-		}
-		vars.debugEventSettings.Text2 = string.Format	("{0}, {1}, {2}", 	vars.watchers[vars.currentEventName].Current,
-																			vars.watchers[vars.eventTypeName].Current,
-																			vars.watchers[vars.subEventName].Current
-														);
+		vars.SetText("Events", string.Format("{0}, {1}, {2}", 	vars.watchers[vars.currentEventName].Current,
+																vars.watchers[vars.eventTypeName].Current,
+																vars.watchers[vars.subEventName].Current
+											)
+					);
+
 		float fadeTime = Math.Max(vars.watchers[vars.transInFrameName].Current, vars.watchers[vars.transOutFrameName].Current);
 		fadeTime = Math.Max(Math.Max(fadeTime, vars.watchers[vars.worldMapFadeTimerName].Current), 0);
 		
 		float oldFadeTime = Math.Max(vars.watchers[vars.transInFrameName].Old, vars.watchers[vars.transOutFrameName].Old);
 		oldFadeTime = Math.Max(Math.Max(oldFadeTime, vars.watchers[vars.worldMapFadeTimerName].Old), 0);
 		
-		vars.debugFadeSettings.Text2 = fadeTime.ToString("N3");
-		vars.debugLoadQueueSettings.Text2 = vars.watchers[vars.loadQueueName].Current.ToString();
-		vars.debugDialogueSettings.Text2 = vars.watchers[vars.dialogueStateName].Current.ToString();
-		
+		vars.SetText("Fade Timer", fadeTime.ToString("N3"));
+		vars.SetText("Load Count", vars.watchers[vars.loadQueueName].Current.ToString());
+		vars.SetText("Dialogue", vars.watchers[vars.dialogueStateName].Current.ToString());
+
 		if(oldFadeTime == 0 && fadeTime > 0) {
 			vars.transitionTimeStamp = DateTime.Now;
 		}
@@ -484,25 +459,11 @@ update {
 			vars.transitionTimeStamp = DateTime.Now;
 		}
 		
-		vars.debugTotalLoadTimeSettings.Text2 = vars.totalLoadQueueTime.ToString(@"hh\:mm\:ss\.fff");
-		vars.debugTotalTransitionTimeSettings.Text2 = vars.totalTransitionTime.ToString(@"hh\:mm\:ss\.fff");
+		vars.SetText("Total Load Time", vars.totalLoadQueueTime.ToString(@"hh\:mm\:ss\.fff"));
+		vars.SetText("Total Transition Time", vars.totalTransitionTime.ToString(@"hh\:mm\:ss\.fff"));
 	}
 	
-	bool bTextComponents_117 = 	vars.completionSettings != null || vars.explorationSettings != null || 
-								vars.treasureSettings != null || vars.friendsSettings != null || 
-								vars.materialSettings != null || vars.challengeSettings != null;
-								
 	if(settings["117"]) {
-		if(!bTextComponents_117) {
-			vars.completionSettings		= vars.FindOrCreateTextComponentSettings("Completion");
-			vars.explorationSettings	= vars.FindOrCreateTextComponentSettings("Exploration");
-			vars.treasureSettings		= vars.FindOrCreateTextComponentSettings("Treasures");
-			vars.friendsSettings		= vars.FindOrCreateTextComponentSettings("Friends");
-			vars.materialSettings		= vars.FindOrCreateTextComponentSettings("Materials");
-			vars.challengeSettings		= vars.FindOrCreateTextComponentSettings("Challenges");
-			vars.questsSettings			= vars.FindOrCreateTextComponentSettings("Quests");
-		}
-		
 		int currentMaterials = 0;
 		int currentShopMaterials = 0;
 		int maxMaterials = vars.watchers[vars.maxMaterialsName].Current;
@@ -541,24 +502,14 @@ update {
 		}
 
 		//	TODO(ogam):	find RevealMap find current / total of each category
-		vars.completionSettings.Text2 	= (int)vars.watchers[vars.completionName].Current + "%";
-		vars.explorationSettings.Text2 	= vars.watchers[vars.exploredName].Current + 		"%";
-		vars.treasureSettings.Text2 	= vars.watchers[vars.treasureFoundName].Current + 	"%";
-		vars.friendsSettings.Text2		= String.Format("{0:N0}/{1}", vars.watchers[vars.friendsFoundName].Current / 100f * 12, 12);
-		vars.materialSettings.Text2 	= String.Format("{0}/{1}/{2}", currentMaterials, currentShopMaterials, maxMaterials);
+		vars.SetText("Completion", (int)vars.watchers[vars.completionName].Current + "%");
+		vars.SetText("Exploration", vars.watchers[vars.exploredName].Current + "%");
+		vars.SetText("Treasures", vars.watchers[vars.treasureFoundName].Current + "%");
+		vars.SetText("Friends", String.Format("{0:N0}/{1}", vars.watchers[vars.friendsFoundName].Current / 100f * 12, 12));
+		vars.SetText("Materials", String.Format("{0}/{1}/{2}", currentMaterials, currentShopMaterials, maxMaterials));
 		//	Note(ogam):	add in challenge star ranking? each star is added towards 117% calculation
-		vars.challengeSettings.Text2	= String.Format("{0}/{1}", currentChallenges, maxChallenges);
-		vars.questsSettings.Text2		= String.Format("{0}/{1}", vars.watchers[vars.questsCompletedName].Current, vars.watchers[vars.questsAvailableName].Current - 1);
-	} else {
-		if(bTextComponents_117) {
-			vars.completionSettings		= default(object);
-			vars.explorationSettings	= default(object);
-			vars.treasureSettings		= default(object);
-			vars.friendsSettings		= default(object);
-			vars.materialSettings		= default(object);
-			vars.challengeSettings		= default(object);
-			vars.questsSettings			= default(object);
-		}
+		vars.SetText("Challenges", String.Format("{0}/{1}", currentChallenges, maxChallenges));
+		vars.SetText("Quests", String.Format("{0}/{1}", vars.watchers[vars.questsCompletedName].Current, vars.watchers[vars.questsAvailableName].Current - 1));
 	}
 }
 
@@ -579,8 +530,6 @@ start {
 }
 
 split {
-	//	Note(ogam):	Event types and sub events are not always raised for abilities picked up, these are mostly for dialogue or some cutscene playing (ie picking up dash)
-	//				check old and current 'currentEvent' values. (Progress is probably a lot better term than CURRENT_EVENT_CURRENT)
 	int eventTypeOld 			= vars.watchers[vars.eventTypeName].Old;
 	int eventTypeCurrent 		= vars.watchers[vars.eventTypeName].Current;
 	int currentEventOld 		= vars.watchers[vars.currentEventName].Old;
@@ -597,8 +546,8 @@ split {
 	
 	string abilityName;
 	int abilityOld, abilityCurrent;
-	//	Note(ogam):	don't split on abilities while loading a saved game
 	
+	//	Note(ogam):	don't split on abilities and region intros while loading a saved game
 	if(!hasLoadedSavedGame) {
 		for(int i = 0; i < vars.abilityNames.Length; ++i) {
 			abilityName = vars.watchers[vars.abilityNames[i]].Name;
@@ -629,6 +578,7 @@ split {
 		}
 	}
 	
+	//	Note(ogam):	Some events such as picking up quest items does not raise an event type so should check for just 'currentEventOld < value'
 	switch(currentEventCurrent) {	
 		//	TODO(ogam):	add more cases for important sections or something
 		case 115:
@@ -653,6 +603,7 @@ split {
 		
 		case 390:
 		{
+			//	last hit on kane
 			if(settings["Kane"]) {
 				if(isEnteringEvent && currentEventOld < 390) {
 					doSplit = true;
@@ -724,6 +675,7 @@ isLoading {
 	}
 	
 	
+	//	Note(ogam):	black screen transition times
 	if(settings["Pause IGT On Room Transitions"]) {
 		//	Bug(ogam):	timing will pause->play->pause when switching from loading assets to checking the updated fade timer
 		//				so you will lose a tiny bit of time until new value is found
@@ -747,6 +699,7 @@ isLoading {
 		
 		isLoading = isTransitioning || bWaitOnWorldMap || isWaitingOnDialogueSkip || isIntroCameraPanning;
 	} else {
+		//	Note(ogam):	loading asset times
 		bWaitOnWorldMap = vars.watchers[vars.isUsingWorldMapName].Current && loadQueueCount > 0;
 		isLoading = isLoadingBetweenTransitions || bWaitOnWorldMap || isWaitingOnDialogueSkip || isIntroCameraPanning;
 	}
