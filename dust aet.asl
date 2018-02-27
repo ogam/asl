@@ -133,6 +133,17 @@ startup {
 	vars.challengeArenaArrayName	= "Challenge Arena";
 	vars.questsAvailableName		= "Quests Available";
 	vars.questsCompletedName		= "Quests Completed";
+	vars.introGladeName				= "Glade Region Introduction";
+	vars.introAuroraName			= "Aurora Region Introduction";
+	vars.introAbadisName			= "Abadis Region Introduction";
+	vars.introCirromonName			= "Cirromon Region Introduction";
+	vars.introMudpotName			= "Mudpot Region Introduction";
+	vars.introSorrowingName			= "Sorrowing Region Introduction";
+	vars.introBlackmoorName			= "Blackmoor Region Introduction";
+	vars.introEverdawm1Name			= "Bloodmoon Region Introduction";
+	vars.introEverdawn2Name			= "Everdawn Battlefield Region Introduction";
+	vars.introArcherName			= "Archer's Pass Region Introduction";
+	vars.regionName					= "Region Name";
 	
 	vars.abilityNames				= new string[]{
 		vars.dashName,
@@ -143,6 +154,19 @@ startup {
 	    vars.doubleJumpName,
 	    vars.fidgetFireName,
 	    vars.fidgetLightningName
+	};
+	
+	vars.introRegionNames			= new string[]{
+		vars.introGladeName,
+		vars.introAuroraName,
+		vars.introAbadisName,
+		vars.introCirromonName,
+		vars.introMudpotName,
+		vars.introSorrowingName,
+		vars.introBlackmoorName,
+		vars.introEverdawm1Name,
+		vars.introEverdawn2Name,
+		vars.introArcherName
 	};
 	
 	settings.Add("debug",								false,			"Debug - show more stats"								);
@@ -161,10 +185,20 @@ startup {
 	settings.Add("Chapter 4", 							true, 			"Split on chapter 4 (enter blackmoor)"					);
 	settings.Add("Chapter 5", 							true, 			"Split on chapter 5 (enter everdawn)"					);
 	
+	for(int i = 0; i < vars.introRegionNames.Length; ++i){
+		settings.Add(vars.introRegionNames[i],			false,			"Split on " + vars.introRegionNames[i]					);
+	}
+	
+	settings.Add("Post-Abadis - Gaius Cutscene",		false,			"Split on first gaius cutscene with soldier"			);	//	115
+	settings.Add("Post-Cirromon - Gaius Cutscene",		false,			"Split on second gaius cutscene with soldier"			);	//	270
+	settings.Add("Post-Blackmoor - Gaius Cutscene",		false,			"Split on third gaius cutscene with soldier"			);	//	505
+	
 	settings.Add("Kane", 								false, 			"Split on last hit on Kane"								);
 }
 
 shutdown {
+	vars.totalLoadQueueTime = default(TimeSpan);
+	vars.totalTransitionTime = default(TimeSpan);
 	vars.stopThreads = true;
 	vars.isGameInit = 0;
 }
@@ -237,19 +271,29 @@ init {
 		new MemoryWatcher<int>(IntPtr.Zero)		{ Name = vars.maxMaterialsName			},
 		new MemoryWatcher<int>(IntPtr.Zero)		{ Name = vars.challengeArenaArrayName	},		//	array address
 		new MemoryWatcher<int>(IntPtr.Zero)		{ Name = vars.questsAvailableName		},
-		new MemoryWatcher<int>(IntPtr.Zero)		{ Name = vars.questsCompletedName		}
+		new MemoryWatcher<int>(IntPtr.Zero)		{ Name = vars.questsCompletedName		},
+		new MemoryWatcher<bool>(IntPtr.Zero)	{ Name = vars.introGladeName			},
+		new MemoryWatcher<bool>(IntPtr.Zero)	{ Name = vars.introAuroraName			},
+		new MemoryWatcher<bool>(IntPtr.Zero)	{ Name = vars.introAbadisName			},
+		new MemoryWatcher<bool>(IntPtr.Zero)	{ Name = vars.introCirromonName			},
+		new MemoryWatcher<bool>(IntPtr.Zero)	{ Name = vars.introMudpotName			},
+		new MemoryWatcher<bool>(IntPtr.Zero)	{ Name = vars.introSorrowingName		},
+		new MemoryWatcher<bool>(IntPtr.Zero)	{ Name = vars.introBlackmoorName		},
+		new MemoryWatcher<bool>(IntPtr.Zero)	{ Name = vars.introEverdawm1Name		},
+		new MemoryWatcher<bool>(IntPtr.Zero)	{ Name = vars.introEverdawn2Name		},
+		new MemoryWatcher<bool>(IntPtr.Zero)	{ Name = vars.introArcherName			}
 	};
 	
 	vars.watcherOffsets			= new List<int[]>() {
-		new int[]{ ptr32, 0x5C, 0x2C 			},						//	loadQueueName 		
-		new int[]{ ptr32, 0x74, 0x10 			},     					//	isUsingWorldMapName	
-		new int[]{ ptr32, 0xC4, 0x24 			},     					//	eventTypeName 		
-		new int[]{ ptr32, 0xC4, 0x28 			},     					//	currentEventName		
-		new int[]{ ptr32, 0xC4, 0x34 			},     					//	subEventName 		
-		new int[]{ ptr32, 0xC4, 0x48 			},     					//	eventTimerName		
-		new int[]{ ptr32, 0xC4, 0x38 			},     					//	regionIntroStageName	
-		new int[]{ ptr32, 0x70, 0xA8 			},     					//	transInFrameName		
-		new int[]{ ptr32, 0x70, 0xAC 			},     					//	transOutFrameName	
+		new int[]{ ptr32, 0x5C, 0x2C 			},						//	loadQueueName
+		new int[]{ ptr32, 0x74, 0x10 			},     					//	isUsingWorldMapName
+		new int[]{ ptr32, 0xC4, 0x24 			},     					//	eventTypeName
+		new int[]{ ptr32, 0xC4, 0x28 			},     					//	currentEventName
+		new int[]{ ptr32, 0xC4, 0x34 			},     					//	subEventName
+		new int[]{ ptr32, 0xC4, 0x48 			},     					//	eventTimerName
+		new int[]{ ptr32, 0xC4, 0x38 			},     					//	regionIntroStageName
+		new int[]{ ptr32, 0x70, 0xA8 			},     					//	transInFrameName
+		new int[]{ ptr32, 0x70, 0xAC 			},     					//	transOutFrameName
 		new int[]{ 0 							},                 		//	worldMapFadeTimerName
 		new int[]{ ptr32, 0xD0, 0x30, 0x4, 0x8 	},                 		//	chapterTitleName
 		new int[]{ ptr32, 0xD4, 0x3C 			},                 		//	dialogueStateName
@@ -270,7 +314,17 @@ init {
 		new int[]{ ptr32, 0xDC, 0x108			},						//	maxMaterialsName		
 		new int[]{ ptr32, 0x84, 0x8, 0x4		},						//	challengeArenaArrayName
 		new int[]{ ptr32, 0xCC, 0x4, 0x1C		},						//	questsAvailableName
-		new int[]{ ptr32, 0xCC, 0xC, 0xC		}						//	questsCompletedName
+		new int[]{ ptr32, 0xCC, 0xC, 0xC		},						//	questsCompletedName
+		new int[]{ ptr32, 0xC4, 0x14, 0x8		},						//	introGladeName
+		new int[]{ ptr32, 0xC4, 0x14, 0x9		},						//	introAuroraName
+		new int[]{ ptr32, 0xC4, 0x14, 0xB		},						//	introAbadisName
+		new int[]{ ptr32, 0xC4, 0x14, 0xC		},						//	introCirromonName
+		new int[]{ ptr32, 0xC4, 0x14, 0xD		},						//	introMudpotName
+		new int[]{ ptr32, 0xC4, 0x14, 0xE		},						//	introSorrowingName
+		new int[]{ ptr32, 0xC4, 0x14, 0xF		},						//	introBlackmoorName
+		new int[]{ ptr32, 0xC4, 0x14, 0x10		},						//	introEverdawm1Name
+		new int[]{ ptr32, 0xC4, 0x14, 0x11		},						//	introEverdawn2Name
+		new int[]{ ptr32, 0xC4, 0x14, 0xA		}						//	introArcherName
 	};
 	
 	vars.watcherTypes 			= new List<Type>(){
@@ -303,7 +357,17 @@ init {
 		typeof(int),													//	maxMaterialsName
 		typeof(int),													//	challengeArenaArrayName
 		typeof(int),													//	questsAvailableName
-		typeof(int)														//	questsCompletedName
+		typeof(int),													//	questsCompletedName
+		typeof(bool),													//	introGladeName
+		typeof(bool),													//	introAuroraName
+		typeof(bool),													//	introAbadisName
+		typeof(bool),													//	introCirromonName
+		typeof(bool),													//	introMudpotName
+		typeof(bool),													//	introSorrowingName
+		typeof(bool),													//	introBlackmoorName
+		typeof(bool),													//	introEverdawm1Name
+		typeof(bool),													//	introEverdawn2Name
+		typeof(bool)													//	introArcherName
 	};
 	
 	vars.fadeTimerTempAddress 	= 0;
@@ -339,11 +403,21 @@ init {
 	vars.debugFadeSettings		= default(object);
 	vars.debugLoadQueueSettings = default(object);
 	vars.debugDialogueSettings	= default(object);
+	vars.debugTotalLoadTimeSettings			= default(object);
+	vars.debugTotalTransitionTimeSettings	= default(object);
+	
+	vars.totalLoadQueueTime = default(TimeSpan);
+	vars.totalTransitionTime = default(TimeSpan);
+	vars.loadTimeStamp = DateTime.Now;
+	vars.transitionTimeStamp = DateTime.Now;
+	
 	if(settings["debug"]) {
 		vars.debugEventSettings		= vars.FindOrCreateTextComponentSettings("Events");
 		vars.debugFadeSettings		= vars.FindOrCreateTextComponentSettings("Fade Timer");
 		vars.debugLoadQueueSettings = vars.FindOrCreateTextComponentSettings("Load Count");
 		vars.debugDialogueSettings	= vars.FindOrCreateTextComponentSettings("Dialogue");
+		vars.debugTotalLoadTimeSettings			= vars.FindOrCreateTextComponentSettings("Total Load Time");
+		vars.debugTotalTransitionTimeSettings	= vars.FindOrCreateTextComponentSettings("Total Transition Time");
 	}
 	
 	vars.completionSettings		= default(object);
@@ -386,9 +460,32 @@ update {
 														);
 		float fadeTime = Math.Max(vars.watchers[vars.transInFrameName].Current, vars.watchers[vars.transOutFrameName].Current);
 		fadeTime = Math.Max(Math.Max(fadeTime, vars.watchers[vars.worldMapFadeTimerName].Current), 0);
+		
+		float oldFadeTime = Math.Max(vars.watchers[vars.transInFrameName].Old, vars.watchers[vars.transOutFrameName].Old);
+		oldFadeTime = Math.Max(Math.Max(oldFadeTime, vars.watchers[vars.worldMapFadeTimerName].Old), 0);
+		
 		vars.debugFadeSettings.Text2 = fadeTime.ToString("N3");
 		vars.debugLoadQueueSettings.Text2 = vars.watchers[vars.loadQueueName].Current.ToString();
 		vars.debugDialogueSettings.Text2 = vars.watchers[vars.dialogueStateName].Current.ToString();
+		
+		if(oldFadeTime == 0 && fadeTime > 0) {
+			vars.transitionTimeStamp = DateTime.Now;
+		}
+		
+		if(fadeTime > 0) {
+			if(vars.watchers[vars.loadQueueName].Current > 0) {
+				if(vars.watchers[vars.loadQueueName].Old == 0){
+					vars.loadTimeStamp = DateTime.Now;
+				}
+				vars.totalLoadQueueTime = vars.totalLoadQueueTime.Add(DateTime.Now - vars.loadTimeStamp);
+				vars.loadTimeStamp = DateTime.Now;
+			}
+			vars.totalTransitionTime = vars.totalTransitionTime.Add(DateTime.Now - vars.transitionTimeStamp);
+			vars.transitionTimeStamp = DateTime.Now;
+		}
+		
+		vars.debugTotalLoadTimeSettings.Text2 = vars.totalLoadQueueTime.ToString(@"hh\:mm\:ss\.fff");
+		vars.debugTotalTransitionTimeSettings.Text2 = vars.totalTransitionTime.ToString(@"hh\:mm\:ss\.fff");
 	}
 	
 	bool bTextComponents_117 = 	vars.completionSettings != null || vars.explorationSettings != null || 
@@ -476,6 +573,8 @@ start {
 	int eventTypeCurrent 	= vars.watchers[vars.eventTypeName].Current;
 	int currentEventCurrent = vars.watchers[vars.currentEventName].Current;
 	
+	vars.totalLoadQueueTime = default(TimeSpan);
+	vars.totalTransitionTime = default(TimeSpan);
 	return eventTypeOld > 0 && eventTypeCurrent == 0 && currentEventCurrent == 0;
 }
 
@@ -512,7 +611,17 @@ split {
 				}
 			}
 		}
+		
+		for(int i = 0; i < vars.introRegionNames.Length; ++i) {
+			if(settings[vars.introRegionNames[i]]) {
+				if(vars.watchers[vars.introRegionNames[i]].Old == 0 && vars.watchers[vars.introRegionNames[i]].Current == 1) {
+					doSplit = true;
+					break;
+				}
+			}
+		}
 	}
+	
 	if(isEnterChapterVideo) {
 		int chapterNumber = chapterTitleCurrent[chapterTitleCurrent.Length - 1] - '0';
 		if(settings["Chapter " + chapterNumber]) {
@@ -522,10 +631,40 @@ split {
 	
 	switch(currentEventCurrent) {	
 		//	TODO(ogam):	add more cases for important sections or something
+		case 115:
+		{
+			if(settings["Post-Abadis - Gaius Cutscene"]) {
+				if(isEnteringEvent && currentEventOld < 115){
+					doSplit = true;
+				}
+			}
+			break;
+		}
+		
+		case 270:
+		{
+			if(settings["Post-Cirromon - Gaius Cutscene"]) {
+				if(isEnteringEvent && currentEventOld < 270){
+					doSplit = true;
+				}
+			}
+			break;
+		}
+		
 		case 390:
 		{
 			if(settings["Kane"]) {
 				if(isEnteringEvent && currentEventOld < 390) {
+					doSplit = true;
+				}
+			}
+			break;
+		}
+		
+		case 505:
+		{
+			if(settings["Post-Blackmoor - Gaius Cutscene"]) {
+				if(isEnteringEvent && currentEventOld < 505){
 					doSplit = true;
 				}
 			}
