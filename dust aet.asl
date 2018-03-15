@@ -39,6 +39,20 @@ startup {
 		"B9 ????????"				// mov ecx,0354783C { [01000400] }
 	);
 	
+	vars.GetStructAddress = (Func<Process, SigScanTarget, IntPtr>)((proc, sigScanTarget) => {
+		IntPtr resultPtr = IntPtr.Zero;
+		foreach (var page in proc.MemoryPages(true)) {
+            var scanner = new SignatureScanner(proc, page.BaseAddress, (int)page.RegionSize);
+            if (resultPtr == IntPtr.Zero) {
+				resultPtr = scanner.Scan(sigScanTarget);
+            } else {
+                break;
+            }
+		}
+		
+		return resultPtr;
+	});
+	
 	vars.UpdateWatchers = (Action<Process, MemoryWatcherList, List<int[]>, List<Type>>)((proc, watchers, offsetList, types) => {
 		for(int i = 0; i < watchers.Count; ++i) {
 			int[] offsets = offsetList[i];
@@ -113,8 +127,49 @@ startup {
 		if(vars.textMap[name] == null){
 			vars.textMap[name] = vars.FindOrCreateTextComponentSettings(name);
 		}
+		if(vars.textMap[name].GetType().ToString().Contains("Settings")) {
+			vars.textMap[name].Text2 = text;
+		}
+	});
+	
+	vars.GetInvalidTextKeys = (Func<List<string>>)(() => {
+		List<string> invalidKeys = new List<string>(vars.textMap.Count);
+		foreach(KeyValuePair<string, object> kvp in vars.textMap) {
+			if(kvp.Value.GetType().ToString().Contains("Settings")) {
+				bool found = false;
+				foreach(dynamic component in timer.Layout.Components) {
+					if(component.GetType().Name == "TextComponent") {
+						if(component.Settings.Text1 == kvp.Key){
+							found = true;
+							break;
+						}
+					}
+				}
+				if(!found) {
+					invalidKeys.Add(kvp.Key);
+				}
+			}
+		}
 		
-		vars.textMap[name].Text2 = text;
+		return invalidKeys;
+	});
+	
+	vars.InvalidateText = (Action)(() => {
+		List<string> invalidKeys = vars.GetInvalidTextKeys();
+		int s = 5;
+		for(int i = 0; i < invalidKeys.Count; ++i) {
+			vars.textMap[invalidKeys[i]] = 0;
+		}
+	});
+	
+	vars.FlushText = (Action)(() => {
+		List<string> invalidKeys = vars.GetInvalidTextKeys();
+		
+		for(int i = 0; i < invalidKeys.Count; ++i) {
+			if(!vars.textMap[invalidKeys[i]].GetType().ToString().Contains("Settings")){
+				vars.textMap.Remove(invalidKeys[i]);
+			}
+		}
 	});
 	
 	vars.loadQueueName 				= "Load Queue Count";
@@ -137,6 +192,7 @@ startup {
 	vars.doubleJumpName				= "Double Jump";
 	vars.fidgetFireName				= "Fidget Fire";
 	vars.fidgetLightningName		= "Fidget Lightning";
+	vars.boostJumpName				= "Boost Jump";
 	vars.completionName				= "Completion";
 	vars.exploredName				= "Explored";
 	vars.treasureFoundName			= "Treasure Found";
@@ -157,6 +213,8 @@ startup {
 	vars.introEverdawm1Name			= "Bloodmoon Region Introduction";
 	vars.introEverdawn2Name			= "Everdawn Battlefield Region Introduction";
 	vars.introArcherName			= "Archer's Pass Region Introduction";
+	vars.keyCountName				= "Key Count";
+	vars.teleportStoneCountName		= "Teleport Stone Count";
 	
 	vars.abilityNames				= new string[]{
 		vars.dashName,
@@ -166,7 +224,8 @@ startup {
 		vars.climbName,
 	    vars.doubleJumpName,
 	    vars.fidgetFireName,
-	    vars.fidgetLightningName
+	    vars.fidgetLightningName,
+		vars.boostJumpName
 	};
 	
 	vars.introRegionNames			= new string[]{
@@ -184,6 +243,8 @@ startup {
 	
 	settings.Add("debug",								false,			"Debug - show more stats"								);
 	settings.Add("117",									false,			"117% show progression text on layout"					);
+	settings.Add(vars.keyCountName,						false,			vars.keyCountName										);
+	settings.Add(vars.teleportStoneCountName,			false,			vars.teleportStoneCountName								);
 	settings.Add("Pause IGT On Room Transitions", 		false, 			"Pause IGT on when losing control on room transitions"	);
 	settings.Add("Pause IGT Unskippable Dialogue", 		false, 			"Pause IGT on unskippable dialogue transition sections"	);
 	settings.Add("Pause IGT Region Intro", 				false, 			"Pause IGT on panorama/region introduction scenes"		);
@@ -207,6 +268,8 @@ startup {
 	settings.Add("Post-Blackmoor - Gaius Cutscene",		false,			"Split on third gaius cutscene with soldier"			);	//	505
 	
 	settings.Add("Kane", 								false, 			"Split on last hit on Kane"								);
+	
+	vars.timeFormatter = new LiveSplit.TimeFormatters.RegularTimeFormatter(LiveSplit.TimeFormatters.TimeAccuracy.Hundredths);
 }
 
 shutdown {
@@ -214,6 +277,8 @@ shutdown {
 	vars.totalTransitionTime = default(TimeSpan);
 	vars.stopThreads = true;
 	vars.isGameInit = 0;
+	vars.InvalidateText();
+	vars.FlushText();
 }
 
 init {
@@ -226,22 +291,6 @@ init {
 		//	Note(ogam):	wait for initial unskippable splash
 		Thread.Sleep(2500 - clientAliveTime.Milliseconds);
 	}
-	
-	vars.isLoading = false;
-	
-	vars.GetStructAddress = (Func<Process, SigScanTarget, IntPtr>)((proc, sigScanTarget) => {
-		IntPtr resultPtr = IntPtr.Zero;
-		foreach (var page in proc.MemoryPages(true)) {
-            var scanner = new SignatureScanner(proc, page.BaseAddress, (int)page.RegionSize);
-            if (resultPtr == IntPtr.Zero) {
-				resultPtr = scanner.Scan(sigScanTarget);
-            } else {
-                break;
-            }
-		}
-		
-		return resultPtr;
-	});
 	
 	IntPtr ptr = vars.GetStructAddress(game, vars.scanLoadThreadTarget);
 	int ptr32 = 0;
@@ -275,6 +324,7 @@ init {
 		new MemoryWatcher<byte>(IntPtr.Zero)	{ Name = vars.doubleJumpName			},
 		new MemoryWatcher<byte>(IntPtr.Zero)	{ Name = vars.fidgetFireName			},
 		new MemoryWatcher<byte>(IntPtr.Zero)	{ Name = vars.fidgetLightningName		},
+		new MemoryWatcher<byte>(IntPtr.Zero)	{ Name = vars.boostJumpName				},
 		new MemoryWatcher<float>(IntPtr.Zero)	{ Name = vars.completionName			},		//	in game menu truncates this
 		new MemoryWatcher<int>(IntPtr.Zero)		{ Name = vars.exploredName				},		//	values are truncated in memory, percentage of found
 		new MemoryWatcher<int>(IntPtr.Zero)		{ Name = vars.treasureFoundName			},      //	values are truncated in memory, percentage of found
@@ -294,7 +344,9 @@ init {
 		new MemoryWatcher<byte>(IntPtr.Zero)	{ Name = vars.introBlackmoorName		},
 		new MemoryWatcher<byte>(IntPtr.Zero)	{ Name = vars.introEverdawm1Name		},
 		new MemoryWatcher<byte>(IntPtr.Zero)	{ Name = vars.introEverdawn2Name		},
-		new MemoryWatcher<byte>(IntPtr.Zero)	{ Name = vars.introArcherName			}
+		new MemoryWatcher<byte>(IntPtr.Zero)	{ Name = vars.introArcherName			},
+		new MemoryWatcher<byte>(IntPtr.Zero)	{ Name = vars.keyCountName				},
+		new MemoryWatcher<byte>(IntPtr.Zero)	{ Name = vars.teleportStoneCountName	}
 	};
 	
 	vars.watcherOffsets			= new List<int[]>() {
@@ -318,6 +370,7 @@ init {
 		new int[]{ ptr32, 0xDC, 0x8, 0x15		},						//	doubleJumpName
 		new int[]{ ptr32, 0xDC, 0x8, 0x9		},						//	fidgetFireName
 		new int[]{ ptr32, 0xDC, 0x8, 0xA		},						//	fidgetLightningName
+		new int[]{ ptr32, 0xDC, 0x8, 0x19		},						//	boostJumpName
 		new int[]{ ptr32, 0xDC, 0x54			},						//	completionName
 		new int[]{ ptr32, 0xDC, 0x58			},						//	exploredName
 		new int[]{ ptr32, 0xDC, 0x5C			},						//	treasureFoundName
@@ -337,7 +390,9 @@ init {
 		new int[]{ ptr32, 0xC4, 0x14, 0xF		},						//	introBlackmoorName
 		new int[]{ ptr32, 0xC4, 0x14, 0x10		},						//	introEverdawm1Name
 		new int[]{ ptr32, 0xC4, 0x14, 0x11		},						//	introEverdawn2Name
-		new int[]{ ptr32, 0xC4, 0x14, 0xA		}						//	introArcherName
+		new int[]{ ptr32, 0xC4, 0x14, 0xA		},						//	introArcherName
+		new int[]{ ptr32, 0xDC, 0x18, 0x139		},						//	keyCountName
+		new int[]{ ptr32, 0xDC, 0x18, 0x134		}						//	teleportStoneCountName
 	};
 	
 	vars.watcherTypes 			= new List<Type>(){
@@ -361,6 +416,7 @@ init {
 		typeof(byte),													//	doubleJumpName
 		typeof(byte),													//	fidgetFireName
 		typeof(byte),													//	fidgetLightningName
+		typeof(byte),													//	boostJumpName
 		typeof(float),													//	completionName
 		typeof(int),													//	exploredName
 		typeof(int),													//	treasureFoundName
@@ -380,7 +436,9 @@ init {
 		typeof(byte),													//	introBlackmoorName
 		typeof(byte),													//	introEverdawm1Name
 		typeof(byte),													//	introEverdawn2Name
-		typeof(byte)													//	introArcherName
+		typeof(byte),													//	introArcherName
+		typeof(byte),													//	keyCountName
+		typeof(byte)													//	teleportStoneCountName
 	};
 	
 	vars.fadeTimerTempAddress 	= 0;
@@ -459,8 +517,17 @@ update {
 			vars.transitionTimeStamp = DateTime.Now;
 		}
 		
-		vars.SetText("Total Load Time", vars.totalLoadQueueTime.ToString(@"hh\:mm\:ss\.fff"));
-		vars.SetText("Total Transition Time", vars.totalTransitionTime.ToString(@"hh\:mm\:ss\.fff"));
+		vars.SetText("Total Load Time", vars.timeFormatter.Format(vars.totalLoadQueueTime));
+		vars.SetText("Total Transition Time", vars.timeFormatter.Format(vars.totalTransitionTime));
+		timer.LoadingTimes = vars.totalLoadQueueTime;
+	}
+	
+	if(settings[vars.keyCountName]) {
+		vars.SetText("Keys", vars.watchers[vars.keyCountName].Current.ToString());
+	}
+	
+	if(settings[vars.teleportStoneCountName]) {
+		vars.SetText("Teleport Stones", vars.watchers[vars.teleportStoneCountName].Current.ToString());
 	}
 	
 	if(settings["117"]) {
@@ -505,12 +572,13 @@ update {
 		vars.SetText("Completion", (int)vars.watchers[vars.completionName].Current + "%");
 		vars.SetText("Exploration", vars.watchers[vars.exploredName].Current + "%");
 		vars.SetText("Treasures", vars.watchers[vars.treasureFoundName].Current + "%");
-		vars.SetText("Friends", String.Format("{0:N0}/{1}", vars.watchers[vars.friendsFoundName].Current / 100f * 12, 12));
+		vars.SetText("Friends", String.Format("{0:N0}/{1}", vars.watchers[vars.friendsFoundName].Current / 100f * 12 + 0.5f, 12));
 		vars.SetText("Materials", String.Format("{0}/{1}/{2}", currentMaterials, currentShopMaterials, maxMaterials));
 		//	Note(ogam):	add in challenge star ranking? each star is added towards 117% calculation
 		vars.SetText("Challenges", String.Format("{0}/{1}", currentChallenges, maxChallenges));
 		vars.SetText("Quests", String.Format("{0}/{1}", vars.watchers[vars.questsCompletedName].Current, vars.watchers[vars.questsAvailableName].Current - 1));
 	}
+	vars.InvalidateText();
 }
 
 reset {
@@ -703,6 +771,6 @@ isLoading {
 		bWaitOnWorldMap = vars.watchers[vars.isUsingWorldMapName].Current && loadQueueCount > 0;
 		isLoading = isLoadingBetweenTransitions || bWaitOnWorldMap || isWaitingOnDialogueSkip || isIntroCameraPanning;
 	}
-	
+
 	return isLoading;
 }
