@@ -215,6 +215,10 @@ startup {
 	vars.introArcherName			= "Archer's Pass Region Introduction";
 	vars.keyCountName				= "Key Count";
 	vars.teleportStoneCountName		= "Teleport Stone Count";
+	vars.coraQuest1Name				= "Cora Quest 1";
+	vars.coraQuest2Name				= "Cora Quest 2";
+	vars.coraQuest3Name				= "Cora Quest 3";
+	vars.coraQuest4Name				= "Cora Quest 4";
 	
 	vars.abilityNames				= new string[]{
 		vars.dashName,
@@ -266,7 +270,7 @@ startup {
 	settings.Add("Post-Abadis - Gaius Cutscene",		false,			"Split on first gaius cutscene with soldier"			);	//	115
 	settings.Add("Post-Cirromon - Gaius Cutscene",		false,			"Split on second gaius cutscene with soldier"			);	//	270
 	settings.Add("Post-Blackmoor - Gaius Cutscene",		false,			"Split on third gaius cutscene with soldier"			);	//	505
-	
+	settings.Add("Cora Quest Items",					false,			"Cora Quest Items"										);
 	settings.Add("Kane", 								false, 			"Split on last hit on Kane"								);
 	
 	vars.timeFormatter = new LiveSplit.TimeFormatters.RegularTimeFormatter(LiveSplit.TimeFormatters.TimeAccuracy.Hundredths);
@@ -346,7 +350,11 @@ init {
 		new MemoryWatcher<byte>(IntPtr.Zero)	{ Name = vars.introEverdawn2Name		},
 		new MemoryWatcher<byte>(IntPtr.Zero)	{ Name = vars.introArcherName			},
 		new MemoryWatcher<byte>(IntPtr.Zero)	{ Name = vars.keyCountName				},
-		new MemoryWatcher<byte>(IntPtr.Zero)	{ Name = vars.teleportStoneCountName	}
+		new MemoryWatcher<byte>(IntPtr.Zero)	{ Name = vars.teleportStoneCountName	},
+		new MemoryWatcher<byte>(IntPtr.Zero)	{ Name = vars.coraQuest1Name			},
+		new MemoryWatcher<byte>(IntPtr.Zero)	{ Name = vars.coraQuest2Name			},
+		new MemoryWatcher<byte>(IntPtr.Zero)	{ Name = vars.coraQuest3Name			},
+		new MemoryWatcher<byte>(IntPtr.Zero)	{ Name = vars.coraQuest4Name			}
 	};
 	
 	vars.watcherOffsets			= new List<int[]>() {
@@ -392,7 +400,11 @@ init {
 		new int[]{ ptr32, 0xC4, 0x14, 0x11		},						//	introEverdawn2Name
 		new int[]{ ptr32, 0xC4, 0x14, 0xA		},						//	introArcherName
 		new int[]{ ptr32, 0xDC, 0x18, 0x139		},						//	keyCountName
-		new int[]{ ptr32, 0xDC, 0x18, 0x134		}						//	teleportStoneCountName
+		new int[]{ ptr32, 0xDC, 0x18, 0x134		},						//	teleportStoneCountName
+		new int[]{ ptr32, 0xDC, 0x18, 0x152		},						//	coraQuest1Name
+		new int[]{ ptr32, 0xDC, 0x18, 0x153		},						//	coraQuest2Name
+		new int[]{ ptr32, 0xDC, 0x18, 0x154		},						//	coraQuest3Name
+		new int[]{ ptr32, 0xDC, 0x18, 0x155		}						//	coraQuest4Name
 	};
 	
 	vars.watcherTypes 			= new List<Type>(){
@@ -438,7 +450,11 @@ init {
 		typeof(byte),													//	introEverdawn2Name
 		typeof(byte),													//	introArcherName
 		typeof(byte),													//	keyCountName
-		typeof(byte)													//	teleportStoneCountName
+		typeof(byte),													//	teleportStoneCountName
+		typeof(byte),													//	coraQuest1Name
+		typeof(byte),													//	coraQuest2Name
+		typeof(byte),													//	coraQuest3Name
+		typeof(byte)													//	coraQuest4Name
 	};
 	
 	vars.fadeTimerTempAddress 	= 0;
@@ -636,6 +652,14 @@ split {
 					break;
 				}
 			}
+		}
+		
+		if(settings["Cora Quest Items"]) {
+			doSplit = 	vars.watchers[vars.coraQuest1Name].Old == 0 && vars.watchers[vars.coraQuest1Name].Current == 1 ||
+						vars.watchers[vars.coraQuest2Name].Old == 0 && vars.watchers[vars.coraQuest2Name].Current == 1 ||
+						vars.watchers[vars.coraQuest3Name].Old == 0 && vars.watchers[vars.coraQuest3Name].Current == 1 ||
+						vars.watchers[vars.coraQuest4Name].Old == 0 && vars.watchers[vars.coraQuest4Name].Current == 1 ||
+						doSplit;
 		}
 	}
 	
