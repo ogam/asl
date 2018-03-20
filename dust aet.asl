@@ -375,7 +375,7 @@ init {
 		new int[]{ ptr32, 0xDC, 0x8, 0x14		},						//	raisingDustStormName
 		new int[]{ ptr32, 0xDC, 0x8, 0x16		},						//	slideName
 		new int[]{ ptr32, 0xDC, 0x8, 0x18		},						//	climbName
-		new int[]{ ptr32, 0xDC, 0x8, 0x15		},						//	doubleJumpName
+		new int[]{ ptr32, 0xDC, 0x8, 0x17		},						//	doubleJumpName
 		new int[]{ ptr32, 0xDC, 0x8, 0x9		},						//	fidgetFireName
 		new int[]{ ptr32, 0xDC, 0x8, 0xA		},						//	fidgetLightningName
 		new int[]{ ptr32, 0xDC, 0x8, 0x19		},						//	boostJumpName
