@@ -1,4 +1,6 @@
-//	currently supported for Patch 3
+//	currently supported versions
+//		Patch 3
+//		hotfix 7
 
 /*
 	@notes:
