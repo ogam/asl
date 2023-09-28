@@ -426,12 +426,12 @@ update
 
 start
 {
-	return vars.current_level_name.Contains("TUT_Avernus_C") && (vars.current_is_playable != 0 && vars.current_log_message.Contains("from: PrepareRunning, to: Running") && !vars.old_log_message.Contains("from: PrepareRunning, to: Running"));
+	return vars.current_level_name.Contains("TUT_Avernus_C") && (vars.current_is_playable != 0 && vars.current_log_message.Contains(", to: Running") && !vars.old_log_message.Contains(", to: Running"));
 }
 
 isLoading
 {
-	return !(vars.current_is_playable != 0 && vars.current_log_message.Contains("from: PrepareRunning, to: Running"));
+	return !(vars.current_is_playable != 0 && vars.current_log_message.Contains(", to: Running"));
 }
 
 split
