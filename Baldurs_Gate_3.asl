@@ -125,6 +125,48 @@ state("bg3_dx11", "steam_hotfix_7")
 	string256 log_message : 0x502AFE0, 0x0, 0x28;
 }
 
+//	vulkan
+state("bg3", "gog_hotfix_9")
+{
+	byte is_playable : 0x5291CC0, 0xA9;
+	string64 level_name : 0x5291CC0, 0x142;
+	string64 level_descriptive_name : 0x5291CC0, 0x183;
+	string32 game_version : 0x5291CC0, 0x284;
+	string256 log_message : 0x5295FC0, 0x0, 0x28;
+}
+
+
+//	directx 11
+state("bg3_dx11", "gog_hotfix_9")
+{
+	byte is_playable : 0x501EA00, 0xA9;
+	string64 level_name : 0x501EA00, 0x142;
+	string64 level_descriptive_name : 0x501EA00, 0x183;
+	string32 game_version : 0x501EA00, 0x284;
+	string256 log_message : 0x5021C50, 0x0, 0x28;
+}
+
+//	vulkan
+state("bg3", "steam_hotfix_9")
+{
+	byte is_playable : 0x52BD2B0, 0xA9;
+	string64 level_name : 0x52BD2B0, 0x142;
+	string64 level_descriptive_name : 0x52BD2B0, 0x183;
+	string32 game_version : 0x52BD2B0, 0x284;
+	string256 log_message : 0x52C15B0, 0x0, 0x28;
+}
+
+
+//	directx 11
+state("bg3_dx11", "steam_hotfix_9")
+{
+	byte is_playable : 0x5027E40, 0xA9;
+	string64 level_name : 0x5027E40, 0x142;
+	string64 level_descriptive_name : 0x5027E40, 0x183;
+	string32 game_version : 0x5027E40, 0x284;
+	string256 log_message : 0x502B090, 0x0, 0x28;
+}
+
 state("bg3", "unsupported")
 {
 }
@@ -296,35 +338,48 @@ init
 	//	if version is not supported then take the slow "unsupported" path
 	//	slow path does require livesplit to be running before the game does, otherwise it'll take too long
 	//	trying to comb through memory pages for logging and server pointers
-	vars.module_size = modules.First().ModuleMemorySize;
-	Dictionary<int, String> module_version_map = new Dictionary<int, String>()
-	{
-		//	gog vulkan
-		{ 91283456, "gog_patch_3" },
-		//	gog dx11
-		{ 88444928, "gog_patch_3" },
-		//	steam vulkan
-		{ 91324416, "steam_patch_3" },
-		//	steam dx11
-		{ 88621056, "steam_patch_3" },
-		
-		//	gog vulkan
-		{ 91176960, "gog_hotfix_7" },
-		//	gog dx11
-		{ 88608768, "gog_hotfix_7" },
-
-		//	steam vulkan
-		{ 91357184, "steam_hotfix_7" },
-		//	steam dx11 
-		{ 88649728, "steam_hotfix_7" },
-	};
 	
-	String mapped_version;
-	if (module_version_map.TryGetValue(vars.module_size, out mapped_version))
+	
+	vars.game_version = modules.First().FileVersionInfo.ProductVersion;
+	bool is_gog_version = false;
+	foreach (var module in modules)
 	{
-		version = mapped_version;
+		if (module.ModuleName == "Galaxy64.dll")
+		{
+			is_gog_version = true;
+			break;
+		}
+	}
+	
+	Dictionary<string, String> gog_version_map = new Dictionary<string, String>()
+	{
+		{ "4.1.1.3732833", "gog_patch_3" },
+		{ "4.1.1.3735951", "gog_hotfix_7" },
+		{ "4.1.1.3767641", "gog_hotfix_9" },
+	};
+	Dictionary<string, String> steam_version_map = new Dictionary<string, String>()
+	{
+		{ "4.1.1.3732833", "steam_patch_3" },
+		{ "4.1.1.3735951", "steam_hotfix_7" },
+		{ "4.1.1.3767641", "steam_hotfix_9" },
+	};
+	String mapped_version;
+	if (is_gog_version)
+	{
+		if (gog_version_map.TryGetValue(vars.game_version, out mapped_version))
+		{
+			version = mapped_version;
+		}
 	}
 	else
+	{
+		if (steam_version_map.TryGetValue(vars.game_version, out mapped_version))
+		{
+			version = mapped_version;
+		}
+	}
+	
+	if (String.IsNullOrEmpty(mapped_version))
 	{
 		version = "unsupported";
 	}
@@ -332,16 +387,24 @@ init
 	vars.is_version_unsupported = version == "unsupported";
 
 	print(String.Format("[BG3_ASL]: {0} - {1}", game.ProcessName, version));
-	print(String.Format("[BG3_ASL]: Module Size - {0}", vars.module_size));
 
 	vars.logging_message_code_ptr = IntPtr.Zero;
 	vars.logging_message_code_offset = 0;	
 	vars.logging_message_offset = 0;
 	vars.logging_message_ptr = IntPtr.Zero;
+	
 	vars.server_state_code_ptr = IntPtr.Zero;
 	vars.server_state_code_offset = 0;
 	vars.server_state_offset = 0;
 	vars.server_state_ptr = IntPtr.Zero;
+	
+	/*
+	bg3_dx11.CAkRegistryMgr::GetObjAndAddref+1A70 - 40 53                 - push rbx
+    bg3_dx11.CAkRegistryMgr::GetObjAndAddref+1A72 - 48 83 EC 20           - sub rsp,20 { 32 }
+    bg3_dx11.CAkRegistryMgr::GetObjAndAddref+1A76 - 48 8B 1D 4BB9D501     - mov rbx,[bg3_dx11.exe+5070E58] { (23C53651B80) }
+    bg3_dx11.CAkRegistryMgr::GetObjAndAddref+1A7D - 48 85 DB              - test rbx,rbx
+    0x218, 0xD0, 0x30, 0x220, 0x580
+	*/
 	
 	if (vars.is_version_unsupported)
 	{
@@ -409,7 +472,7 @@ update
 
 	if (settings["debug"])
 	{
-		vars.SetText("Debug_Module_Size", String.Format("{0}", vars.module_size));
+		vars.SetText("Debug_Game_Version", String.Format("{0}", vars.game_version));
 		vars.SetText("Debug_Log_Ptr", String.Format("{0}", vars.logging_message_code_ptr.ToString("X")));
 		vars.SetText("Debug_Log_code_offset", vars.logging_message_code_offset.ToString("X"));
 		vars.SetText("Debug_Log_offset", vars.logging_message_offset.ToString("X"));
