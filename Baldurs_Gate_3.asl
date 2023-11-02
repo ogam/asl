@@ -167,6 +167,48 @@ state("bg3_dx11", "steam_hotfix_9")
 	string256 log_message : 0x502B090, 0x0, 0x28;
 }
 
+//	vulkan
+state("bg3", "gog_patch_4")
+{
+	byte is_playable : 0x5BA0BA8, 0xA9;
+	string64 level_name : 0x5BA0BA8, 0x142;
+	string64 level_descriptive_name : 0x5BA0BA8, 0x183;
+	string32 game_version : 0x5BA0BA8, 0x284;
+	string256 log_message : 0x5BA13F0, 0x0, 0x28;
+}
+
+
+//	directx 11
+state("bg3_dx11", "gog_patch_4")
+{
+	byte is_playable : 0x590B8D8, 0xA9;
+	string64 level_name : 0x590B8D8, 0x142;
+	string64 level_descriptive_name : 0x590B8D8, 0x183;
+	string32 game_version : 0x590B8D8, 0x284;
+	string256 log_message : 0x590C0D0, 0x0, 0x28;
+}
+
+//	vulkan
+state("bg3", "steam_patch_4")
+{
+	byte is_playable : 0x5BB2060, 0xA9;
+	string64 level_name : 0x5BB2060, 0x142;
+	string64 level_descriptive_name : 0x5BB2060, 0x183;
+	string32 game_version : 0x5BB2060, 0x284;
+	string256 log_message : 0x5BB28C0, 0x0, 0x28;
+}
+
+
+//	directx 11
+state("bg3_dx11", "steam_patch_4")
+{
+	byte is_playable : 0x591DBF0, 0xA9;
+	string64 level_name : 0x591DBF0, 0x142;
+	string64 level_descriptive_name : 0x591DBF0, 0x183;
+	string32 game_version : 0x591DBF0, 0x284;
+	string256 log_message : 0x591E3E0, 0x0, 0x28;
+}
+
 state("bg3", "unsupported")
 {
 }
@@ -236,19 +278,46 @@ startup
 		}
 	});
 
+	//	@todo:	speed or separate this into a simd scanner tool
+	//	this is slow, updated to do this in chunks per memory page as bg3 reserves a lot up front now since
+	//	patch 4, previously it did this after engine finished initialized so it was fine
+	//	now chunks are a bit bigger than int32, and SignatureScanner doesn't support larger types or unsigned
+	//	we'll just do this in smaller batches
 	vars.Scanner = (Func<Process, SigScanTarget, IntPtr>)((proc, scan_target) => {
 		IntPtr result_ptr = IntPtr.Zero;
+		int page_index = 0;
 		foreach (var page in proc.MemoryPages(true))
 		{
-			var scanner = new SignatureScanner(proc, page.BaseAddress, (int)page.RegionSize);
-			if (result_ptr == IntPtr.Zero)
+			UInt64 size = (UInt64)page.RegionSize;
+			int current_position = 0;
+			int block_size = 0x7FFFFFFF >> 1;
+			int region_size = 0;
+			while (size > 0)
 			{
-				result_ptr = scanner.Scan(scan_target);
+				region_size = block_size;
+				if (size < (UInt64)block_size)
+				{
+					region_size = (int)size;
+				}
+
+				print(String.Format("[BG3 ASL] {0} scanning for region - {1} => {2}", page_index, page.BaseAddress + current_position, region_size));
+				var scanner = new SignatureScanner(proc, page.BaseAddress + current_position, region_size);
+				if (result_ptr == IntPtr.Zero)
+				{
+					result_ptr = scanner.Scan(scan_target);
+				}
+				else
+				{
+					break;
+				}
+				current_position += region_size;
+				size -= (UInt64)region_size;
 			}
-			else
+			if (result_ptr != IntPtr.Zero)
 			{
 				break;
 			}
+			page_index++;
 		}
 		
 		return result_ptr;
@@ -316,22 +385,15 @@ init
 */
 	);
 
-	vars.scan_target_server_state = new SigScanTarget(12,
+	vars.scan_target_server_state = new SigScanTarget(7,
 /*
-		bg3_dx11.exe+30485C0 - 0FB6 51 08            - movzx edx,byte ptr [rcx+08]
-		bg3_dx11.exe+30485C4 - 48 8B 0D A584FD01     - mov rcx,[bg3_dx11.exe+5020A70] { (1E806274800) }
-		
-		"0FB6 51 08",
-		"48 8B 0D ????????"
+		bg3.exe+379F652 - 48 83 EC 40           - sub rsp,40 { 64 }
+		bg3.exe+379F656 - 48 8B 2D 4B154002     - mov rbp,[bg3.exe+5BA0BA8] { (1FBDDBF4000) }
+		bg3.exe+379F65D - 83 BD C4020000 FF     - cmp dword ptr [rbp+000002C4],-01 { 255 }
 */
-/*
-		bg3_dx11.exe+30485E0 - 44 0FB6 41 09         - movzx r8d,byte ptr [rcx+09]
-		bg3_dx11.exe+30485E5 - 0FB6 51 08            - movzx edx,byte ptr [rcx+08]
-		bg3_dx11.exe+30485E9 - 48 8B 0D 8084FD01     - mov rcx,[bg3_dx11.exe+5020A70] { (1E806274800) }		
-*/
-		"44 0F B6 41 09",
-		"0F B6 51 08",
-		"48 8B 0D ????????"
+		"48 83 EC 40",
+		"48 8B 2D ????????",
+		"83 BD C4020000 FF"
 	);
 
 	//	try to use hardcoded pointers so it's a bit faster
@@ -356,12 +418,14 @@ init
 		{ "4.1.1.3732833", "gog_patch_3" },
 		{ "4.1.1.3735951", "gog_hotfix_7" },
 		{ "4.1.1.3767641", "gog_hotfix_9" },
+		{ "4.1.1.3882084", "gog_patch_4" },
 	};
 	Dictionary<string, String> steam_version_map = new Dictionary<string, String>()
 	{
 		{ "4.1.1.3732833", "steam_patch_3" },
 		{ "4.1.1.3735951", "steam_hotfix_7" },
 		{ "4.1.1.3767641", "steam_hotfix_9" },
+		{ "4.1.1.3882084", "steam_patch_4" },
 	};
 	String mapped_version;
 	if (is_gog_version)
@@ -379,12 +443,13 @@ init
 		}
 	}
 	
+	vars.is_version_unsupported = false;
 	if (String.IsNullOrEmpty(mapped_version))
 	{
 		version = "unsupported";
+		vars.is_version_unsupported = true;
 	}
-
-	vars.is_version_unsupported = version == "unsupported";
+   
 
 	print(String.Format("[BG3_ASL]: {0} - {1}", game.ProcessName, version));
 
@@ -412,6 +477,7 @@ init
 		//	we'll want to dereference that code pointer value and use that as an offset to actual base module memory
 		//	code_ptr - base_address + code_ptr_value + 4
 		//	this will give the above module offset, example with the above being `0x5023CC0`
+
 		vars.logging_message_code_ptr = vars.Scanner(game, vars.scan_target_logging_message);
 		if (vars.logging_message_code_ptr == IntPtr.Zero)
 		{
@@ -475,12 +541,12 @@ update
 		vars.SetText("Debug_Game_Version", String.Format("{0}", vars.game_version));
 		vars.SetText("Debug_Log_Ptr", String.Format("{0}", vars.logging_message_code_ptr.ToString("X")));
 		vars.SetText("Debug_Log_code_offset", vars.logging_message_code_offset.ToString("X"));
-		vars.SetText("Debug_Log_offset", vars.logging_message_offset.ToString("X"));
+		vars.SetText("*Debug_Log_offset*", vars.logging_message_offset.ToString("X"));
 		vars.SetText("Debug_Log", vars.current_log_message);
 
 		vars.SetText("Debug_Server_Ptr", String.Format("{0}", vars.server_state_code_ptr.ToString("X")));
 		vars.SetText("Debug_Server_code_offset", vars.server_state_code_offset.ToString("X"));
-		vars.SetText("Debug_Server_offset", vars.server_state_offset.ToString("X"));
+		vars.SetText("*Debug_Server_offset*", vars.server_state_offset.ToString("X"));
 		vars.SetText("Debug_Server_is_playable", String.Format("{0}", vars.current_is_playable));
 		vars.SetText("Debug_Server_level_name", vars.current_level_name);
 		vars.SetText("Debug_Server_level_descriptive_name", vars.current_level_descriptive_name);
@@ -489,7 +555,9 @@ update
 
 start
 {
-	return vars.current_level_name.Contains("TUT_Avernus_C") && (vars.current_is_playable != 0 && vars.current_log_message.Contains("to: Running") && !vars.old_log_message.Contains("to: Running"));
+	bool is_tutorial = vars.current_level_name.Contains("TUT_Avernus_C");
+	bool is_running = vars.current_log_message.Contains("to: Running") && !vars.old_log_message.Contains("to: Running");
+	return is_tutorial && vars.current_is_playable != 0 && is_running;
 }
 
 isLoading
