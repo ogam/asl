@@ -49,6 +49,9 @@ state("bg3", "gog_patch_3")
 	string64 level_descriptive_name : 0x52A8A70, 0x183;
 	string32 game_version : 0x52A8A70, 0x284;
 	string256 log_message : 0x52ACD70, 0x0, 0x28;
+	float node_x : 0;	//	unsupported
+	float node_y : 0;	//	unsupported
+	float node_z : 0;	//	unsupported
 }
 
 
@@ -60,6 +63,9 @@ state("bg3_dx11", "gog_patch_3")
 	string64 level_descriptive_name : 0x4FF5370, 0x183;
 	string32 game_version : 0x4FF5370, 0x284;
 	string256 log_message : 0x4FF85C0, 0x0, 0x28;
+	float node_x : 0;	//	unsupported
+	float node_y : 0;	//	unsupported
+	float node_z : 0;	//	unsupported
 }
 
 //	vulkan
@@ -70,6 +76,9 @@ state("bg3", "steam_patch_3")
 	string64 level_descriptive_name : 0x52B2E90, 0x183;
 	string32 game_version : 0x52B2E90, 0x284;
 	string256 log_message : 0x52B7190, 0x0, 0x28;
+	float node_x : 0;	//	unsupported
+	float node_y : 0;	//	unsupported
+	float node_z : 0;	//	unsupported
 }
 
 
@@ -81,6 +90,9 @@ state("bg3_dx11", "steam_patch_3")
 	string64 level_descriptive_name : 0x5020A70, 0x183;
 	string32 game_version : 0x5020A70, 0x284;
 	string256 log_message : 0x5023CC0, 0x0, 0x28;
+	float node_x : 0;	//	unsupported
+	float node_y : 0;	//	unsupported
+	float node_z : 0;	//	unsupported
 }
 
 //	vulkan
@@ -91,6 +103,9 @@ state("bg3", "gog_hotfix_7")
 	string64 level_descriptive_name : 0x528DB50, 0x183;
 	string32 game_version : 0x528DB50, 0x284;
 	string256 log_message : 0x5291E50, 0x0, 0x28;
+	float node_x : 0;	//	unsupported
+	float node_y : 0;	//	unsupported
+	float node_z : 0;	//	unsupported
 }
 
 
@@ -102,6 +117,9 @@ state("bg3_dx11", "gog_hotfix_7")
 	string64 level_descriptive_name : 0x501E920, 0x183;
 	string32 game_version : 0x501E920, 0x284;
 	string256 log_message : 0x5021B70, 0x0, 0x28;
+	float node_x : 0;	//	unsupported
+	float node_y : 0;	//	unsupported
+	float node_z : 0;	//	unsupported
 }
 
 //	vulkan
@@ -112,6 +130,9 @@ state("bg3", "steam_hotfix_7")
 	string64 level_descriptive_name : 0x52BA1A0, 0x183;
 	string32 game_version : 0x52BA1A0, 0x284;
 	string256 log_message : 0x52BE4A0, 0x0, 0x28;
+	float node_x : 0;	//	unsupported
+	float node_y : 0;	//	unsupported
+	float node_z : 0;	//	unsupported
 }
 
 
@@ -123,6 +144,9 @@ state("bg3_dx11", "steam_hotfix_7")
 	string64 level_descriptive_name : 0x5027D90, 0x183;
 	string32 game_version : 0x5027D90, 0x284;
 	string256 log_message : 0x502AFE0, 0x0, 0x28;
+	float node_x : 0;	//	unsupported
+	float node_y : 0;	//	unsupported
+	float node_z : 0;	//	unsupported
 }
 
 //	vulkan
@@ -133,6 +157,9 @@ state("bg3", "gog_hotfix_9")
 	string64 level_descriptive_name : 0x5291CC0, 0x183;
 	string32 game_version : 0x5291CC0, 0x284;
 	string256 log_message : 0x5295FC0, 0x0, 0x28;
+	float node_x : 0;	//	unsupported
+	float node_y : 0;	//	unsupported
+	float node_z : 0;	//	unsupported
 }
 
 
@@ -144,6 +171,9 @@ state("bg3_dx11", "gog_hotfix_9")
 	string64 level_descriptive_name : 0x501EA00, 0x183;
 	string32 game_version : 0x501EA00, 0x284;
 	string256 log_message : 0x5021C50, 0x0, 0x28;
+	float node_x : 0;	//	unsupported
+	float node_y : 0;	//	unsupported
+	float node_z : 0;	//	unsupported
 }
 
 //	vulkan
@@ -154,6 +184,9 @@ state("bg3", "steam_hotfix_9")
 	string64 level_descriptive_name : 0x52BD2B0, 0x183;
 	string32 game_version : 0x52BD2B0, 0x284;
 	string256 log_message : 0x52C15B0, 0x0, 0x28;
+	float node_x : 0;	//	unsupported
+	float node_y : 0;	//	unsupported
+	float node_z : 0;	//	unsupported
 }
 
 
@@ -165,6 +198,9 @@ state("bg3_dx11", "steam_hotfix_9")
 	string64 level_descriptive_name : 0x5027E40, 0x183;
 	string32 game_version : 0x5027E40, 0x284;
 	string256 log_message : 0x502B090, 0x0, 0x28;
+	float node_x : 0;	//	unsupported
+	float node_y : 0;	//	unsupported
+	float node_z : 0;	//	unsupported
 }
 
 //	vulkan
@@ -175,6 +211,9 @@ state("bg3", "gog_patch_4")
 	string64 level_descriptive_name : 0x5BA0BA8, 0x183;
 	string32 game_version : 0x5BA0BA8, 0x284;
 	string256 log_message : 0x5BA13F0, 0x0, 0x28;
+	float node_x : 0;	//	unsupported
+	float node_y : 0;	//	unsupported
+	float node_z : 0;	//	unsupported
 }
 
 
@@ -186,6 +225,9 @@ state("bg3_dx11", "gog_patch_4")
 	string64 level_descriptive_name : 0x590B8D8, 0x183;
 	string32 game_version : 0x590B8D8, 0x284;
 	string256 log_message : 0x590C0D0, 0x0, 0x28;
+	float node_x : 0;	//	unsupported
+	float node_y : 0;	//	unsupported
+	float node_z : 0;	//	unsupported
 }
 
 //	vulkan
@@ -196,6 +238,9 @@ state("bg3", "steam_patch_4")
 	string64 level_descriptive_name : 0x5BB2060, 0x183;
 	string32 game_version : 0x5BB2060, 0x284;
 	string256 log_message : 0x5BB28C0, 0x0, 0x28;
+	float node_x : 0;	//	unsupported
+	float node_y : 0;	//	unsupported
+	float node_z : 0;	//	unsupported
 }
 
 
@@ -207,6 +252,9 @@ state("bg3_dx11", "steam_patch_4")
 	string64 level_descriptive_name : 0x591DBF0, 0x183;
 	string32 game_version : 0x591DBF0, 0x284;
 	string256 log_message : 0x591E3E0, 0x0, 0x28;
+	float node_x : 0;	//	unsupported
+	float node_y : 0;	//	unsupported
+	float node_z : 0;	//	unsupported
 }
 
 //	vulkan
@@ -217,6 +265,9 @@ state("bg3", "gog_patch_4_1")
 	string64 level_descriptive_name : 0x5B9FBA8, 0x183;
 	string32 game_version : 0x5B9FBA8, 0x284;
 	string256 log_message : 0x5BA03F0, 0x0, 0x28;
+	float node_x : 0x5B01AE0, 0x260, 0x38, 0x38, 0x10;
+	float node_y : 0x5B01AE0, 0x260, 0x38, 0x38, 0x14;
+	float node_z : 0x5B01AE0, 0x260, 0x38, 0x38, 0x18;
 }
 
 
@@ -228,6 +279,9 @@ state("bg3_dx11", "gog_patch_4_1")
 	string64 level_descriptive_name : 0x590B8C8, 0x183;
 	string32 game_version : 0x590B8C8, 0x284;
 	string256 log_message : 0x590C0C0, 0x0, 0x28;
+	float node_x : 0x586DB00, 0x260, 0x38, 0x38, 0x10;
+	float node_y : 0x586DB00, 0x260, 0x38, 0x38, 0x14;
+	float node_z : 0x586DB00, 0x260, 0x38, 0x38, 0x18;
 }
 
 //	vulkan
@@ -238,6 +292,9 @@ state("bg3", "steam_patch_4_1")
 	string64 level_descriptive_name : 0x5BB2040, 0x183;
 	string32 game_version : 0x5BB2040, 0x284;
 	string256 log_message : 0x5BB28A0, 0x0, 0x28;
+	float node_x : 0x5B13BA0, 0x260, 0x38, 0x38, 0x10;
+	float node_y : 0x5B13BA0, 0x260, 0x38, 0x38, 0x14;
+	float node_z : 0x5B13BA0, 0x260, 0x38, 0x38, 0x18;
 }
 
 
@@ -249,6 +306,9 @@ state("bg3_dx11", "steam_patch_4_1")
 	string64 level_descriptive_name : 0x591DBD0, 0x183;
 	string32 game_version : 0x591DBD0, 0x284;
 	string256 log_message : 0x591E3C0, 0x0, 0x28;
+	float node_x : 0x587FC60, 0x260, 0x38, 0x38, 0x10;
+	float node_y : 0x587FC60, 0x260, 0x38, 0x38, 0x14;
+	float node_z : 0x587FC60, 0x260, 0x38, 0x38, 0x18;
 }
 
 state("bg3", "unsupported")
@@ -281,6 +341,7 @@ startup
 	}
 	
 	settings.Add("debug", false, "Debug");
+	settings.Add("debug_node_fling", false, "Debug - Node Fling");
 
 	//	https://github.com/ogam/asl/blob/master/dust%20aet.asl
 	//	debug labels
@@ -438,12 +499,26 @@ init
 		"83 BD C4020000 FF"
 	);
 
+	//	world object position x, y = x + 4, z = x + 8
+	//	<x,y,z> => <x,z> maps to what you see on the minimap
+	//	y is height of the position in world space
+	//	0x260, 38, 38, 10
+	vars.scan_target_node_fling = new SigScanTarget(3,
+/*
+	bg3_dx11.exe+28E9692 - 48 8B 0D 6744F802     - mov rcx,[bg3_dx11.exe+586DB00] { (1E8C2860600) }
+	bg3_dx11.exe+28E9699 - 4C 8D 44 24 40        - lea r8,[rsp+40]
+	bg3_dx11.exe+28E969E - 48 8D 54 24 20        - lea rdx,[rsp+20]
+*/
+	"48 8B 0D ????????",
+	"4C 8D 44 24 40",
+	"48 8D 54 24 20"
+	);
+
 	//	try to use hardcoded pointers so it's a bit faster
 	//	if version is not supported then take the slow "unsupported" path
 	//	slow path does require livesplit to be running before the game does, otherwise it'll take too long
 	//	trying to comb through memory pages for logging and server pointers
-	
-	
+
 	vars.game_version = modules.First().FileVersionInfo.ProductVersion;
 	bool is_gog_version = false;
 	foreach (var module in modules)
@@ -507,6 +582,15 @@ init
 	vars.server_state_offset = 0;
 	vars.server_state_ptr = IntPtr.Zero;
 	
+	vars.node_fling_code_ptr = IntPtr.Zero;
+	vars.node_fling_code_offset = 0;
+	vars.node_fling_offset = 0;
+	vars.node_fling_offset = 0;
+	vars.node_fling_ptr = IntPtr.Zero;
+	vars.node_fling_x_ptr = null;
+	vars.node_fling_y_ptr = null;
+	vars.node_fling_z_ptr = null;
+
 	/*
 	bg3_dx11.CAkRegistryMgr::GetObjAndAddref+1A70 - 40 53                 - push rbx
     bg3_dx11.CAkRegistryMgr::GetObjAndAddref+1A72 - 48 83 EC 20           - sub rsp,20 { 32 }
@@ -514,7 +598,7 @@ init
     bg3_dx11.CAkRegistryMgr::GetObjAndAddref+1A7D - 48 85 DB              - test rbx,rbx
     0x218, 0xD0, 0x30, 0x220, 0x580
 	*/
-	
+
 	if (vars.is_version_unsupported)
 	{
 		//	this grabs address in the code pages for pointer address above marked in ????????
@@ -546,16 +630,38 @@ init
 		vars.server_state_is_playable = new DeepPointer(vars.server_state_ptr, 0xA9);
 		vars.server_state_level_name = new DeepPointer(vars.server_state_ptr, 0x142);
 		vars.server_state_level_descriptive_name = new DeepPointer(vars.server_state_ptr, 0x183);
+		
+		if (settings["debug_node_fling"])
+		{
+
+			vars.node_fling_code_ptr = vars.Scanner(game, vars.scan_target_node_fling);
+			if (vars.server_state_code_ptr != IntPtr.Zero)
+			{
+				vars.node_fling_code_offset = game.ReadValue<int>((IntPtr)vars.node_fling_code_ptr);
+				vars.node_fling_offset = vars.node_fling_code_ptr.ToInt64() - modules.First().BaseAddress.ToInt64() + 4;
+				vars.node_fling_offset = vars.node_fling_offset + vars.node_fling_code_offset;
+				vars.node_fling_ptr = new IntPtr(modules.First().BaseAddress.ToInt64() + vars.node_fling_offset);
+				vars.node_fling_x_ptr = new DeepPointer(vars.node_fling_ptr, 0x260, 0x38, 0x38, 0x10);
+				vars.node_fling_y_ptr = new DeepPointer(vars.node_fling_ptr, 0x260, 0x38, 0x38, 0x14);
+				vars.node_fling_z_ptr = new DeepPointer(vars.node_fling_ptr, 0x260, 0x38, 0x38, 0x18);
+			}
+		}
 	}
 
 	vars.current_is_playable = 0;
 	vars.current_level_name = String.Empty;
 	vars.current_level_descriptive_name = String.Empty;
 	vars.current_log_message = String.Empty;
+	vars.current_node_x = 0;
+	vars.current_node_y = 0;
+	vars.current_node_z = 0;
 	vars.old_is_playable = 0;
 	vars.old_level_name = String.Empty;
 	vars.old_level_descriptive_name = String.Empty;
 	vars.old_log_message = String.Empty;
+	vars.old_node_x = 0;
+	vars.old_node_y = 0;
+	vars.old_node_z = 0;
 }
 
 update
@@ -564,6 +670,9 @@ update
 	vars.old_level_name = vars.current_level_name;
 	vars.old_level_descriptive_name = vars.current_level_descriptive_name;
 	vars.old_log_message = vars.current_log_message;
+	vars.old_node_x = vars.current_node_x;
+	vars.old_node_y = vars.current_node_y;
+	vars.old_node_z = vars.current_node_z;
 
 	if (vars.is_version_unsupported)
 	{
@@ -571,6 +680,12 @@ update
 		vars.current_level_name = vars.server_state_level_name.DerefString(game, 32, "Failed");
 		vars.current_level_descriptive_name = vars.server_state_level_descriptive_name.DerefString(game, 64, "Failed");
 		vars.current_log_message = vars.logging_message.DerefString(game, 256, "Failed");
+		if (vars.node_fling_x_ptr != null && vars.node_fling_y_ptr != null && vars.node_fling_z_ptr != null)
+		{
+			vars.current_node_x = vars.node_fling_x_ptr.Deref<float>(game);
+			vars.current_node_y = vars.node_fling_y_ptr.Deref<float>(game);
+			vars.current_node_z = vars.node_fling_z_ptr.Deref<float>(game);
+		}
 	}
 	else
 	{
@@ -578,6 +693,12 @@ update
 		vars.current_level_name = current.level_name;
 		vars.current_level_descriptive_name = current.level_descriptive_name;
 		vars.current_log_message = current.log_message;
+		if (settings["debug_node_fling"])
+		{
+			vars.current_node_x = current.node_x;
+			vars.current_node_y = current.node_y;
+			vars.current_node_z = current.node_z;
+		}
 	}
 
 	if (settings["debug"])
@@ -594,6 +715,18 @@ update
 		vars.SetText("Debug_Server_is_playable", String.Format("{0}", vars.current_is_playable));
 		vars.SetText("Debug_Server_level_name", vars.current_level_name);
 		vars.SetText("Debug_Server_level_descriptive_name", vars.current_level_descriptive_name);
+	}
+
+	if (settings["debug_node_fling"])
+	{
+		vars.SetText("Map X,Y", String.Format("{0:0.0}, {1:0.0}", vars.current_node_x, vars.current_node_z));
+		vars.SetText("World X,Y,Z", String.Format("{0:0.0}, {1:0.0}, {2:0.0}", vars.current_node_x, vars.current_node_y, vars.current_node_z));
+		if (settings["debug"])
+		{
+			vars.SetText("Debug_Node_Ptr", String.Format("{0}", vars.node_fling_code_ptr.ToString("X")));
+			vars.SetText("Debug_Node_code_offset", vars.node_fling_code_offset.ToString("X"));
+			vars.SetText("*Debug_Node_offset*", vars.node_fling_offset.ToString("X"));
+		}
 	}
 }
 
