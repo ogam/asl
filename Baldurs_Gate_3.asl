@@ -209,6 +209,48 @@ state("bg3_dx11", "steam_patch_4")
 	string256 log_message : 0x591E3E0, 0x0, 0x28;
 }
 
+//	vulkan
+state("bg3", "gog_patch_4_1")
+{
+	byte is_playable : 0x5B9FBA8, 0xA9;
+	string64 level_name : 0x5B9FBA8, 0x142;
+	string64 level_descriptive_name : 0x5B9FBA8, 0x183;
+	string32 game_version : 0x5B9FBA8, 0x284;
+	string256 log_message : 0x5BA03F0, 0x0, 0x28;
+}
+
+
+//	directx 11
+state("bg3_dx11", "gog_patch_4_1")
+{
+	byte is_playable : 0x590B8C8, 0xA9;
+	string64 level_name : 0x590B8C8, 0x142;
+	string64 level_descriptive_name : 0x590B8C8, 0x183;
+	string32 game_version : 0x590B8C8, 0x284;
+	string256 log_message : 0x590C0C0, 0x0, 0x28;
+}
+
+//	vulkan
+state("bg3", "steam_patch_4_1")
+{
+	byte is_playable : 0x5BB2040, 0xA9;
+	string64 level_name : 0x5BB2040, 0x142;
+	string64 level_descriptive_name : 0x5BB2040, 0x183;
+	string32 game_version : 0x5BB2040, 0x284;
+	string256 log_message : 0x5BB28A0, 0x0, 0x28;
+}
+
+
+//	directx 11
+state("bg3_dx11", "steam_patch_4_1")
+{
+	byte is_playable : 0x591DBD0, 0xA9;
+	string64 level_name : 0x591DBD0, 0x142;
+	string64 level_descriptive_name : 0x591DBD0, 0x183;
+	string32 game_version : 0x591DBD0, 0x284;
+	string256 log_message : 0x591E3C0, 0x0, 0x28;
+}
+
 state("bg3", "unsupported")
 {
 }
@@ -419,6 +461,7 @@ init
 		{ "4.1.1.3735951", "gog_hotfix_7" },
 		{ "4.1.1.3767641", "gog_hotfix_9" },
 		{ "4.1.1.3882084", "gog_patch_4" },
+		{ "4.1.1.3905231", "gog_patch_4_1" },
 	};
 	Dictionary<string, String> steam_version_map = new Dictionary<string, String>()
 	{
@@ -426,6 +469,7 @@ init
 		{ "4.1.1.3735951", "steam_hotfix_7" },
 		{ "4.1.1.3767641", "steam_hotfix_9" },
 		{ "4.1.1.3882084", "steam_patch_4" },
+		{ "4.1.1.3905231", "steam_patch_4_1" },
 	};
 	String mapped_version;
 	if (is_gog_version)
