@@ -479,6 +479,58 @@ state("bg3_dx11", "steam_hotfix_12")
 	float node_z : 0x58017C0, 0x260, 0x38, 0x38, 0x18;
 }
 
+//	vulkan
+state("bg3", "gog_hotfix_13")
+{
+	byte is_playable : 0x5B1F2D8, 0xA9;
+	string64 level_name : 0x5B1F2D8, 0x142;
+	string64 level_descriptive_name : 0x5B1F2D8, 0x183;
+	string32 game_version : 0x5B1F2D8, 0x284;
+	string256 log_message : 0x5B1FAF0, 0x0, 0x28;
+	float node_x : 0x5A7F8E0, 0x260, 0x38, 0x38, 0x10;
+	float node_y : 0x5A7F8E0, 0x260, 0x38, 0x38, 0x14;
+	float node_z : 0x5A7F8E0, 0x260, 0x38, 0x38, 0x18;
+}
+
+
+//	directx 11
+state("bg3_dx11", "gog_hotfix_13")
+{
+	byte is_playable : 0x58906E8, 0xA9;
+	string64 level_name : 0x58906E8, 0x142;
+	string64 level_descriptive_name : 0x58906E8, 0x183;
+	string32 game_version : 0x58906E8, 0x284;
+	string256 log_message : 0x5890EA0, 0x0, 0x28;
+	float node_x : 0x57F1640, 0x260, 0x38, 0x38, 0x10;
+	float node_y : 0x57F1640, 0x260, 0x38, 0x38, 0x14;
+	float node_z : 0x57F1640, 0x260, 0x38, 0x38, 0x18;
+}
+
+//	vulkan
+state("bg3", "steam_hotfix_13")
+{
+	byte is_playable : 0x5B31540, 0xA9;
+	string64 level_name : 0x5B31540, 0x142;
+	string64 level_descriptive_name : 0x5B31540, 0x183;
+	string32 game_version : 0x5B31540, 0x284;
+	string256 log_message : 0x5B31D48, 0x0, 0x28;
+	float node_x : 0x5A91A80, 0x260, 0x38, 0x38, 0x10;
+	float node_y : 0x5A91A80, 0x260, 0x38, 0x38, 0x14;
+	float node_z : 0x5A91A80, 0x260, 0x38, 0x38, 0x18;
+}
+
+//	directx 11
+state("bg3_dx11", "steam_hotfix_13")
+{
+	byte is_playable : 0x58A2B60, 0xA9;
+	string64 level_name : 0x58A2B60, 0x142;
+	string64 level_descriptive_name : 0x58A2B60, 0x183;
+	string32 game_version : 0x58A2B60, 0x284;
+	string256 log_message : 0x58A3318, 0x0, 0x28;
+	float node_x : 0x58037A0, 0x260, 0x38, 0x38, 0x10;
+	float node_y : 0x58037A0, 0x260, 0x38, 0x38, 0x14;
+	float node_z : 0x58037A0, 0x260, 0x38, 0x38, 0x18;
+}
 
 state("bg3", "unsupported")
 {
@@ -709,6 +761,7 @@ init
 		{ "4.1.1.3911062", "gog_hotfix_10" },
 		{ "4.1.1.3956130", "gog_hotfix_11" },
 		{ "4.1.1.4079877", "gog_hotfix_12" },
+		{ "4.1.1.4145012", "gog_hotfix_13" },
 	};
 	Dictionary<string, String> steam_version_map = new Dictionary<string, String>()
 	{
@@ -720,6 +773,7 @@ init
 		{ "4.1.1.3911062", "steam_hotfix_10" },
 		{ "4.1.1.3956130", "steam_hotfix_11" },
 		{ "4.1.1.4079877", "steam_hotfix_12" },
+		{ "4.1.1.4145012", "steam_hotfix_13" },
 	};
 	String mapped_version;
 	if (is_gog_version)
