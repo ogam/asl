@@ -7,6 +7,8 @@
 //		hotfix 10
 //		hotfix 11
 //		hotfix 12
+//		hotfix 13
+//		hotfix 14
 
 /*
 	@notes:
@@ -45,6 +47,7 @@ INT_Main_A		-	Wyrm's Lookout (Gith intermission)
 BGO_Main_A		-	Wyrm's Crossing
 CTY_Main_A		-	Baldur's Gate
 END_Main		-	High Hall
+EPI_MAIN_A		-	Reunion Camp
 */
 
 //	vulkan
@@ -532,6 +535,60 @@ state("bg3_dx11", "steam_hotfix_13")
 	float node_z : 0x58037A0, 0x260, 0x38, 0x38, 0x18;
 }
 
+//	vulkan
+state("bg3", "gog_hotfix_14")
+{
+	byte is_playable : 0x5B222E8, 0xA9;
+	string64 level_name : 0x5B222E8, 0x142;
+	string64 level_descriptive_name : 0x5B222E8, 0x183;
+	string32 game_version : 0x5B222E8, 0x284;
+	string256 log_message : 0x5B22AF0, 0x0, 0x28;
+	float node_x : 0x5A828E0, 0x260, 0x38, 0x38, 0x10;
+	float node_y : 0x5A828E0, 0x260, 0x38, 0x38, 0x14;
+	float node_z : 0x5A828E0, 0x260, 0x38, 0x38, 0x18;
+}
+
+
+//	directx 11
+state("bg3_dx11", "gog_hotfix_14")
+{
+	byte is_playable : 0x58927E8, 0xA9;
+	string64 level_name : 0x58927E8, 0x142;
+	string64 level_descriptive_name : 0x58927E8, 0x183;
+	string32 game_version : 0x58927E8, 0x284;
+	string256 log_message : 0x5892FA0, 0x0, 0x28;
+	float node_x : 0x57F3600, 0x260, 0x38, 0x38, 0x10;
+	float node_y : 0x57F3600, 0x260, 0x38, 0x38, 0x14;
+	float node_z : 0x57F3600, 0x260, 0x38, 0x38, 0x18;
+}
+
+//	vulkan
+state("bg3", "steam_hotfix_14")
+{
+	byte is_playable : 0x5B334E0, 0xA9;
+	string64 level_name : 0x5B334E0, 0x142;
+	string64 level_descriptive_name : 0x5B334E0, 0x183;
+	string32 game_version : 0x5B334E0, 0x284;
+	string256 log_message : 0x5B33CF0, 0x0, 0x28;
+	float node_x : 0x5A93A40, 0x260, 0x38, 0x38, 0x10;
+	float node_y : 0x5A93A40, 0x260, 0x38, 0x38, 0x14;
+	float node_z : 0x5A93A40, 0x260, 0x38, 0x38, 0x18;
+}
+
+//	directx 11
+state("bg3_dx11", "steam_hotfix_14")
+{
+	byte is_playable : 0x58A39E0, 0xA9;
+	string64 level_name : 0x58A39E0, 0x142;
+	string64 level_descriptive_name : 0x58A39E0, 0x183;
+	string32 game_version : 0x58A39E0, 0x284;
+	string256 log_message : 0x58A4190, 0x0, 0x28;
+	float node_x : 0x5804780, 0x260, 0x38, 0x38, 0x10;
+	float node_y : 0x5804780, 0x260, 0x38, 0x38, 0x14;
+	float node_z : 0x5804780, 0x260, 0x38, 0x38, 0x18;
+}
+
+
 state("bg3", "unsupported")
 {
 }
@@ -563,6 +620,7 @@ startup
 	
 	settings.Add("debug", false, "Debug");
 	settings.Add("debug_node_fling", false, "Debug - Node Fling");
+	settings.Add("debug_no_cached_addresses", false, "Debug - No Cached Addresses, Always scan (Splitter will slow whenever game starts up. Requires game or livesplit to restart)");
 
 	//	https://github.com/ogam/asl/blob/master/dust%20aet.asl
 	//	debug labels
@@ -762,6 +820,7 @@ init
 		{ "4.1.1.3956130", "gog_hotfix_11" },
 		{ "4.1.1.4079877", "gog_hotfix_12" },
 		{ "4.1.1.4145012", "gog_hotfix_13" },
+		{ "4.1.1.4216792", "gog_hotfix_14" },
 	};
 	Dictionary<string, String> steam_version_map = new Dictionary<string, String>()
 	{
@@ -774,7 +833,9 @@ init
 		{ "4.1.1.3956130", "steam_hotfix_11" },
 		{ "4.1.1.4079877", "steam_hotfix_12" },
 		{ "4.1.1.4145012", "steam_hotfix_13" },
+		{ "4.1.1.4216792", "steam_hotfix_14" },
 	};
+
 	String mapped_version;
 	if (is_gog_version)
 	{
@@ -792,7 +853,7 @@ init
 	}
 	
 	vars.is_version_unsupported = false;
-	if (String.IsNullOrEmpty(mapped_version))
+	if (String.IsNullOrEmpty(mapped_version) || settings["debug_no_cached_addresses"])
 	{
 		version = "unsupported";
 		vars.is_version_unsupported = true;
@@ -859,7 +920,7 @@ init
 		vars.server_state_is_playable = new DeepPointer(vars.server_state_ptr, 0xA9);
 		vars.server_state_level_name = new DeepPointer(vars.server_state_ptr, 0x142);
 		vars.server_state_level_descriptive_name = new DeepPointer(vars.server_state_ptr, 0x183);
-		
+
 		if (settings["debug_node_fling"])
 		{
 
