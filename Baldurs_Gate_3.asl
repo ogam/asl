@@ -10,6 +10,7 @@
 //		hotfix 13
 //		hotfix 14
 //		hotfix 15
+//		hotfix 16
 
 /*
 	@notes:
@@ -589,7 +590,6 @@ state("bg3_dx11", "steam_hotfix_14")
 	float node_z : 0x5804780, 0x260, 0x38, 0x38, 0x18;
 }
 
-
 //	vulkan
 state("bg3", "gog_hotfix_15")
 {
@@ -641,6 +641,58 @@ state("bg3_dx11", "steam_hotfix_15")
 	float node_x : 0x5809780, 0x260, 0x38, 0x38, 0x10;
 	float node_y : 0x5809780, 0x260, 0x38, 0x38, 0x14;
 	float node_z : 0x5809780, 0x260, 0x38, 0x38, 0x18;
+}
+
+//	vulkan
+state("bg3", "gog_hotfix_16")
+{
+	byte is_playable : 0x5B38D08, 0xA9;
+	string64 level_name : 0x5B38D08, 0x142;
+	string64 level_descriptive_name : 0x5B38D08, 0x183;
+	string32 game_version : 0x5B38D08, 0x284;
+	string256 log_message : 0x5B39520, 0x0, 0x28;
+	float node_x : 0x5A99080, 0x260, 0x38, 0x38, 0x10;
+	float node_y : 0x5A99080, 0x260, 0x38, 0x38, 0x14;
+	float node_z : 0x5A99080, 0x260, 0x38, 0x38, 0x18;
+}
+
+//	directx 11
+state("bg3_dx11", "gog_hotfix_16")
+{
+	byte is_playable : 0x58AA268, 0xA9;
+	string64 level_name : 0x58AA268, 0x142;
+	string64 level_descriptive_name : 0x58AA268, 0x183;
+	string32 game_version : 0x58AA268, 0x284;
+	string256 log_message : 0x58AAA10, 0x0, 0x28;
+	float node_x : 0x580ADC0, 0x260, 0x38, 0x38, 0x10;
+	float node_y : 0x580ADC0, 0x260, 0x38, 0x38, 0x14;
+	float node_z : 0x580ADC0, 0x260, 0x38, 0x38, 0x18;
+}
+
+//	vulkan
+state("bg3", "steam_hotfix_16")
+{
+	byte is_playable : 0x5B49F10, 0xA9;
+	string64 level_name : 0x5B49F10, 0x142;
+	string64 level_descriptive_name : 0x5B49F10, 0x183;
+	string32 game_version : 0x5B49F10, 0x284;
+	string256 log_message : 0x5B4A718, 0x0, 0x28;
+	float node_x : 0x5AAA200, 0x260, 0x38, 0x38, 0x10;
+	float node_y : 0x5AAA200, 0x260, 0x38, 0x38, 0x14;
+	float node_z : 0x5AAA200, 0x260, 0x38, 0x38, 0x18;
+}
+
+//	directx 11
+state("bg3_dx11", "steam_hotfix_16")
+{
+	byte is_playable : 0x58BB4B0, 0xA9;
+	string64 level_name : 0x58BB4B0, 0x142;
+	string64 level_descriptive_name : 0x58BB4B0, 0x183;
+	string32 game_version : 0x58BB4B0, 0x284;
+	string256 log_message : 0x58BBC70, 0x0, 0x28;
+	float node_x : 0x581BF20, 0x260, 0x38, 0x38, 0x10;
+	float node_y : 0x581BF20, 0x260, 0x38, 0x38, 0x14;
+	float node_z : 0x581BF20, 0x260, 0x38, 0x38, 0x18;
 }
 
 
@@ -877,6 +929,7 @@ init
 		{ "4.1.1.4145012", "gog_hotfix_13" },
 		{ "4.1.1.4216792", "gog_hotfix_14" },
 		{ "4.1.1.4251417", "gog_hotfix_15" },
+		{ "4.1.1.4425968", "gog_hotfix_16" },
 	};
 	Dictionary<string, String> steam_version_map = new Dictionary<string, String>()
 	{
@@ -891,6 +944,7 @@ init
 		{ "4.1.1.4145012", "steam_hotfix_13" },
 		{ "4.1.1.4216792", "steam_hotfix_14" },
 		{ "4.1.1.4251417", "steam_hotfix_15" },
+		{ "4.1.1.4425968", "steam_hotfix_16" },
 	};
 
 	String mapped_version;
