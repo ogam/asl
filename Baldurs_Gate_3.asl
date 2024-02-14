@@ -1463,7 +1463,7 @@ split
 	}
 	if (vars.is_using_ui_state)
 	{
-		is_credits = vars.current_ui_state.Contains("Credits");
+		is_credits = vars.current_ui_state.Contains("Credits") && vars.current_is_playable != 0;
 	}
 
 	return (has_level_changed && is_level_change_progressive) || is_credits;
