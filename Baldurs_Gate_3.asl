@@ -64,8 +64,9 @@ state("bg3", "gog_patch_3")
 	float node_x : 0;	//	unsupported
 	float node_y : 0;	//	unsupported
 	float node_z : 0;	//	unsupported
-}
 
+	string32 ui_state : 0x0; // unsupported
+}
 
 //	directx 11
 state("bg3_dx11", "gog_patch_3")
@@ -78,6 +79,8 @@ state("bg3_dx11", "gog_patch_3")
 	float node_x : 0;	//	unsupported
 	float node_y : 0;	//	unsupported
 	float node_z : 0;	//	unsupported
+
+	string32 ui_state : 0x0; // unsupported
 }
 
 //	vulkan
@@ -91,8 +94,9 @@ state("bg3", "steam_patch_3")
 	float node_x : 0;	//	unsupported
 	float node_y : 0;	//	unsupported
 	float node_z : 0;	//	unsupported
-}
 
+	string32 ui_state : 0x0; // unsupported
+}
 
 //	directx 11
 state("bg3_dx11", "steam_patch_3")
@@ -105,6 +109,8 @@ state("bg3_dx11", "steam_patch_3")
 	float node_x : 0;	//	unsupported
 	float node_y : 0;	//	unsupported
 	float node_z : 0;	//	unsupported
+
+	string32 ui_state : 0x0; // unsupported
 }
 
 //	vulkan
@@ -118,8 +124,9 @@ state("bg3", "gog_hotfix_7")
 	float node_x : 0;	//	unsupported
 	float node_y : 0;	//	unsupported
 	float node_z : 0;	//	unsupported
-}
 
+	string32 ui_state : 0x0; // unsupported
+}
 
 //	directx 11
 state("bg3_dx11", "gog_hotfix_7")
@@ -132,6 +139,8 @@ state("bg3_dx11", "gog_hotfix_7")
 	float node_x : 0;	//	unsupported
 	float node_y : 0;	//	unsupported
 	float node_z : 0;	//	unsupported
+
+	string32 ui_state : 0x0; // unsupported
 }
 
 //	vulkan
@@ -145,8 +154,9 @@ state("bg3", "steam_hotfix_7")
 	float node_x : 0;	//	unsupported
 	float node_y : 0;	//	unsupported
 	float node_z : 0;	//	unsupported
-}
 
+	string32 ui_state : 0x0; // unsupported
+}
 
 //	directx 11
 state("bg3_dx11", "steam_hotfix_7")
@@ -159,6 +169,8 @@ state("bg3_dx11", "steam_hotfix_7")
 	float node_x : 0;	//	unsupported
 	float node_y : 0;	//	unsupported
 	float node_z : 0;	//	unsupported
+
+	string32 ui_state : 0x0; // unsupported
 }
 
 //	vulkan
@@ -172,8 +184,9 @@ state("bg3", "gog_hotfix_9")
 	float node_x : 0;	//	unsupported
 	float node_y : 0;	//	unsupported
 	float node_z : 0;	//	unsupported
-}
 
+	string32 ui_state : 0x0; // unsupported
+}
 
 //	directx 11
 state("bg3_dx11", "gog_hotfix_9")
@@ -186,6 +199,8 @@ state("bg3_dx11", "gog_hotfix_9")
 	float node_x : 0;	//	unsupported
 	float node_y : 0;	//	unsupported
 	float node_z : 0;	//	unsupported
+
+	string32 ui_state : 0x0; // unsupported
 }
 
 //	vulkan
@@ -199,8 +214,9 @@ state("bg3", "steam_hotfix_9")
 	float node_x : 0;	//	unsupported
 	float node_y : 0;	//	unsupported
 	float node_z : 0;	//	unsupported
-}
 
+	string32 ui_state : 0x0; // unsupported
+}
 
 //	directx 11
 state("bg3_dx11", "steam_hotfix_9")
@@ -213,6 +229,8 @@ state("bg3_dx11", "steam_hotfix_9")
 	float node_x : 0;	//	unsupported
 	float node_y : 0;	//	unsupported
 	float node_z : 0;	//	unsupported
+
+	string32 ui_state : 0x0; // unsupported
 }
 
 //	vulkan
@@ -226,8 +244,9 @@ state("bg3", "gog_patch_4")
 	float node_x : 0;	//	unsupported
 	float node_y : 0;	//	unsupported
 	float node_z : 0;	//	unsupported
-}
 
+	string32 ui_state : 0x0; // unsupported
+}
 
 //	directx 11
 state("bg3_dx11", "gog_patch_4")
@@ -240,6 +259,8 @@ state("bg3_dx11", "gog_patch_4")
 	float node_x : 0;	//	unsupported
 	float node_y : 0;	//	unsupported
 	float node_z : 0;	//	unsupported
+
+	string32 ui_state : 0x0; // unsupported
 }
 
 //	vulkan
@@ -253,8 +274,9 @@ state("bg3", "steam_patch_4")
 	float node_x : 0;	//	unsupported
 	float node_y : 0;	//	unsupported
 	float node_z : 0;	//	unsupported
-}
 
+	string32 ui_state : 0x0; // unsupported
+}
 
 //	directx 11
 state("bg3_dx11", "steam_patch_4")
@@ -267,6 +289,8 @@ state("bg3_dx11", "steam_patch_4")
 	float node_x : 0;	//	unsupported
 	float node_y : 0;	//	unsupported
 	float node_z : 0;	//	unsupported
+
+	string32 ui_state : 0x0; // unsupported
 }
 
 //	vulkan
@@ -280,8 +304,9 @@ state("bg3", "gog_patch_4_1")
 	float node_x : 0x5B01AE0, 0x260, 0x38, 0x38, 0x10;
 	float node_y : 0x5B01AE0, 0x260, 0x38, 0x38, 0x14;
 	float node_z : 0x5B01AE0, 0x260, 0x38, 0x38, 0x18;
-}
 
+	string32 ui_state : 0x0; // unsupported
+}
 
 //	directx 11
 state("bg3_dx11", "gog_patch_4_1")
@@ -294,6 +319,8 @@ state("bg3_dx11", "gog_patch_4_1")
 	float node_x : 0x586DB00, 0x260, 0x38, 0x38, 0x10;
 	float node_y : 0x586DB00, 0x260, 0x38, 0x38, 0x14;
 	float node_z : 0x586DB00, 0x260, 0x38, 0x38, 0x18;
+
+	string32 ui_state : 0x0; // unsupported
 }
 
 //	vulkan
@@ -307,8 +334,9 @@ state("bg3", "steam_patch_4_1")
 	float node_x : 0x5B13BA0, 0x260, 0x38, 0x38, 0x10;
 	float node_y : 0x5B13BA0, 0x260, 0x38, 0x38, 0x14;
 	float node_z : 0x5B13BA0, 0x260, 0x38, 0x38, 0x18;
-}
 
+	string32 ui_state : 0x0; // unsupported
+}
 
 //	directx 11
 state("bg3_dx11", "steam_patch_4_1")
@@ -321,6 +349,8 @@ state("bg3_dx11", "steam_patch_4_1")
 	float node_x : 0x587FC60, 0x260, 0x38, 0x38, 0x10;
 	float node_y : 0x587FC60, 0x260, 0x38, 0x38, 0x14;
 	float node_z : 0x587FC60, 0x260, 0x38, 0x38, 0x18;
+
+	string32 ui_state : 0x0; // unsupported
 }
 
 //	vulkan
@@ -334,8 +364,9 @@ state("bg3", "gog_hotfix_10")
 	float node_x : 0x5B02AC0, 0x260, 0x38, 0x38, 0x10;
 	float node_y : 0x5B02AC0, 0x260, 0x38, 0x38, 0x14;
 	float node_z : 0x5B02AC0, 0x260, 0x38, 0x38, 0x18;
-}
 
+	string32 ui_state : 0x0; // unsupported
+}
 
 //	directx 11
 state("bg3_dx11", "gog_hotfix_10")
@@ -348,6 +379,8 @@ state("bg3_dx11", "gog_hotfix_10")
 	float node_x : 0x586DB20, 0x260, 0x38, 0x38, 0x10;
 	float node_y : 0x586DB20, 0x260, 0x38, 0x38, 0x14;
 	float node_z : 0x586DB20, 0x260, 0x38, 0x38, 0x18;
+
+	string32 ui_state : 0x0; // unsupported
 }
 
 //	vulkan
@@ -361,8 +394,9 @@ state("bg3", "steam_hotfix_10")
 	float node_x : 0x5B13BC0, 0x260, 0x38, 0x38, 0x10;
 	float node_y : 0x5B13BC0, 0x260, 0x38, 0x38, 0x14;
 	float node_z : 0x5B13BC0, 0x260, 0x38, 0x38, 0x18;
-}
 
+	string32 ui_state : 0x0; // unsupported
+}
 
 //	directx 11
 state("bg3_dx11", "steam_hotfix_10")
@@ -375,6 +409,8 @@ state("bg3_dx11", "steam_hotfix_10")
 	float node_x : 0x587FC60, 0x260, 0x38, 0x38, 0x10;
 	float node_y : 0x587FC60, 0x260, 0x38, 0x38, 0x14;
 	float node_z : 0x587FC60, 0x260, 0x38, 0x38, 0x18;
+
+	string32 ui_state : 0x0; // unsupported
 }
 
 //	vulkan
@@ -388,8 +424,9 @@ state("bg3", "gog_hotfix_11")
 	float node_x : 0x5B02AE0, 0x260, 0x38, 0x38, 0x10;
 	float node_y : 0x5B02AE0, 0x260, 0x38, 0x38, 0x14;
 	float node_z : 0x5B02AE0, 0x260, 0x38, 0x38, 0x18;
-}
 
+	string32 ui_state : 0x0; // unsupported
+}
 
 //	directx 11
 state("bg3_dx11", "gog_hotfix_11")
@@ -402,6 +439,8 @@ state("bg3_dx11", "gog_hotfix_11")
 	float node_x : 0x586DB60, 0x260, 0x38, 0x38, 0x10;
 	float node_y : 0x586DB60, 0x260, 0x38, 0x38, 0x14;
 	float node_z : 0x586DB60, 0x260, 0x38, 0x38, 0x18;
+
+	string32 ui_state : 0x0; // unsupported
 }
 
 //	vulkan
@@ -415,8 +454,9 @@ state("bg3", "steam_hotfix_11")
 	float node_x : 0x5B13C20, 0x260, 0x38, 0x38, 0x10;
 	float node_y : 0x5B13C20, 0x260, 0x38, 0x38, 0x14;
 	float node_z : 0x5B13C20, 0x260, 0x38, 0x38, 0x18;
-}
 
+	string32 ui_state : 0x0; // unsupported
+}
 
 //	directx 11
 state("bg3_dx11", "steam_hotfix_11")
@@ -429,6 +469,8 @@ state("bg3_dx11", "steam_hotfix_11")
 	float node_x : 0x587FC60, 0x260, 0x38, 0x38, 0x10;
 	float node_y : 0x587FC60, 0x260, 0x38, 0x38, 0x14;
 	float node_z : 0x587FC60, 0x260, 0x38, 0x38, 0x18;
+
+	string32 ui_state : 0x0; // unsupported
 }
 
 //	vulkan
@@ -442,8 +484,9 @@ state("bg3", "gog_hotfix_12")
 	float node_x : 0x5A7E8C0, 0x260, 0x38, 0x38, 0x10;
 	float node_y : 0x5A7E8C0, 0x260, 0x38, 0x38, 0x14;
 	float node_z : 0x5A7E8C0, 0x260, 0x38, 0x38, 0x18;
-}
 
+	string32 ui_state : 0x0; // unsupported
+}
 
 //	directx 11
 state("bg3_dx11", "gog_hotfix_12")
@@ -456,6 +499,8 @@ state("bg3_dx11", "gog_hotfix_12")
 	float node_x : 0x57EF5E0, 0x260, 0x38, 0x38, 0x10;
 	float node_y : 0x57EF5E0, 0x260, 0x38, 0x38, 0x14;
 	float node_z : 0x57EF5E0, 0x260, 0x38, 0x38, 0x18;
+
+	string32 ui_state : 0x0; // unsupported
 }
 
 //	vulkan
@@ -469,8 +514,9 @@ state("bg3", "steam_hotfix_12")
 	float node_x : 0x5A90A60, 0x260, 0x38, 0x38, 0x10;
 	float node_y : 0x5A90A60, 0x260, 0x38, 0x38, 0x14;
 	float node_z : 0x5A90A60, 0x260, 0x38, 0x38, 0x18;
-}
 
+	string32 ui_state : 0x0; // unsupported
+}
 
 //	directx 11
 state("bg3_dx11", "steam_hotfix_12")
@@ -483,6 +529,8 @@ state("bg3_dx11", "steam_hotfix_12")
 	float node_x : 0x58017C0, 0x260, 0x38, 0x38, 0x10;
 	float node_y : 0x58017C0, 0x260, 0x38, 0x38, 0x14;
 	float node_z : 0x58017C0, 0x260, 0x38, 0x38, 0x18;
+
+	string32 ui_state : 0x0; // unsupported
 }
 
 //	vulkan
@@ -496,8 +544,9 @@ state("bg3", "gog_hotfix_13")
 	float node_x : 0x5A7F8E0, 0x260, 0x38, 0x38, 0x10;
 	float node_y : 0x5A7F8E0, 0x260, 0x38, 0x38, 0x14;
 	float node_z : 0x5A7F8E0, 0x260, 0x38, 0x38, 0x18;
-}
 
+	string32 ui_state : 0x0; // unsupported
+}
 
 //	directx 11
 state("bg3_dx11", "gog_hotfix_13")
@@ -510,6 +559,8 @@ state("bg3_dx11", "gog_hotfix_13")
 	float node_x : 0x57F1640, 0x260, 0x38, 0x38, 0x10;
 	float node_y : 0x57F1640, 0x260, 0x38, 0x38, 0x14;
 	float node_z : 0x57F1640, 0x260, 0x38, 0x38, 0x18;
+
+	string32 ui_state : 0x0; // unsupported
 }
 
 //	vulkan
@@ -523,6 +574,8 @@ state("bg3", "steam_hotfix_13")
 	float node_x : 0x5A91A80, 0x260, 0x38, 0x38, 0x10;
 	float node_y : 0x5A91A80, 0x260, 0x38, 0x38, 0x14;
 	float node_z : 0x5A91A80, 0x260, 0x38, 0x38, 0x18;
+
+	string32 ui_state : 0x0; // unsupported
 }
 
 //	directx 11
@@ -536,6 +589,8 @@ state("bg3_dx11", "steam_hotfix_13")
 	float node_x : 0x58037A0, 0x260, 0x38, 0x38, 0x10;
 	float node_y : 0x58037A0, 0x260, 0x38, 0x38, 0x14;
 	float node_z : 0x58037A0, 0x260, 0x38, 0x38, 0x18;
+
+	string32 ui_state : 0x0; // unsupported
 }
 
 //	vulkan
@@ -549,8 +604,9 @@ state("bg3", "gog_hotfix_14")
 	float node_x : 0x5A828E0, 0x260, 0x38, 0x38, 0x10;
 	float node_y : 0x5A828E0, 0x260, 0x38, 0x38, 0x14;
 	float node_z : 0x5A828E0, 0x260, 0x38, 0x38, 0x18;
-}
 
+	string32 ui_state : 0x0; // unsupported
+}
 
 //	directx 11
 state("bg3_dx11", "gog_hotfix_14")
@@ -563,6 +619,8 @@ state("bg3_dx11", "gog_hotfix_14")
 	float node_x : 0x57F3600, 0x260, 0x38, 0x38, 0x10;
 	float node_y : 0x57F3600, 0x260, 0x38, 0x38, 0x14;
 	float node_z : 0x57F3600, 0x260, 0x38, 0x38, 0x18;
+
+	string32 ui_state : 0x0; // unsupported
 }
 
 //	vulkan
@@ -576,6 +634,8 @@ state("bg3", "steam_hotfix_14")
 	float node_x : 0x5A93A40, 0x260, 0x38, 0x38, 0x10;
 	float node_y : 0x5A93A40, 0x260, 0x38, 0x38, 0x14;
 	float node_z : 0x5A93A40, 0x260, 0x38, 0x38, 0x18;
+
+	string32 ui_state : 0x0; // unsupported
 }
 
 //	directx 11
@@ -589,6 +649,8 @@ state("bg3_dx11", "steam_hotfix_14")
 	float node_x : 0x5804780, 0x260, 0x38, 0x38, 0x10;
 	float node_y : 0x5804780, 0x260, 0x38, 0x38, 0x14;
 	float node_z : 0x5804780, 0x260, 0x38, 0x38, 0x18;
+
+	string32 ui_state : 0x0; // unsupported
 }
 
 //	vulkan
@@ -602,8 +664,9 @@ state("bg3", "gog_hotfix_15")
 	float node_x : 0x5A85900, 0x260, 0x38, 0x38, 0x10;
 	float node_y : 0x5A85900, 0x260, 0x38, 0x38, 0x14;
 	float node_z : 0x5A85900, 0x260, 0x38, 0x38, 0x18;
-}
 
+	string32 ui_state : 0x0; // unsupported
+}
 
 //	directx 11
 state("bg3_dx11", "gog_hotfix_15")
@@ -616,6 +679,8 @@ state("bg3_dx11", "gog_hotfix_15")
 	float node_x : 0x57F7640, 0x260, 0x38, 0x38, 0x10;
 	float node_y : 0x57F7640, 0x260, 0x38, 0x38, 0x14;
 	float node_z : 0x57F7640, 0x260, 0x38, 0x38, 0x18;
+
+	string32 ui_state : 0x0; // unsupported
 }
 
 //	vulkan
@@ -629,6 +694,8 @@ state("bg3", "steam_hotfix_15")
 	float node_x : 0x5A97A80, 0x260, 0x38, 0x38, 0x10;
 	float node_y : 0x5A97A80, 0x260, 0x38, 0x38, 0x14;
 	float node_z : 0x5A97A80, 0x260, 0x38, 0x38, 0x18;
+
+	string32 ui_state : 0x0; // unsupported
 }
 
 //	directx 11
@@ -642,6 +709,8 @@ state("bg3_dx11", "steam_hotfix_15")
 	float node_x : 0x5809780, 0x260, 0x38, 0x38, 0x10;
 	float node_y : 0x5809780, 0x260, 0x38, 0x38, 0x14;
 	float node_z : 0x5809780, 0x260, 0x38, 0x38, 0x18;
+
+	string32 ui_state : 0x0; // unsupported
 }
 
 //	vulkan
@@ -655,6 +724,8 @@ state("bg3", "gog_hotfix_16")
 	float node_x : 0x5A99080, 0x260, 0x38, 0x38, 0x10;
 	float node_y : 0x5A99080, 0x260, 0x38, 0x38, 0x14;
 	float node_z : 0x5A99080, 0x260, 0x38, 0x38, 0x18;
+
+	string32 ui_state : 0x0; // unsupported
 }
 
 //	directx 11
@@ -668,6 +739,8 @@ state("bg3_dx11", "gog_hotfix_16")
 	float node_x : 0x580ADC0, 0x260, 0x38, 0x38, 0x10;
 	float node_y : 0x580ADC0, 0x260, 0x38, 0x38, 0x14;
 	float node_z : 0x580ADC0, 0x260, 0x38, 0x38, 0x18;
+
+	string32 ui_state : 0x0; // unsupported
 }
 
 //	vulkan
@@ -681,6 +754,8 @@ state("bg3", "steam_hotfix_16")
 	float node_x : 0x5AAA200, 0x260, 0x38, 0x38, 0x10;
 	float node_y : 0x5AAA200, 0x260, 0x38, 0x38, 0x14;
 	float node_z : 0x5AAA200, 0x260, 0x38, 0x38, 0x18;
+
+	string32 ui_state : 0x0; // unsupported
 }
 
 //	directx 11
@@ -694,6 +769,8 @@ state("bg3_dx11", "steam_hotfix_16")
 	float node_x : 0x581BF20, 0x260, 0x38, 0x38, 0x10;
 	float node_y : 0x581BF20, 0x260, 0x38, 0x38, 0x14;
 	float node_z : 0x581BF20, 0x260, 0x38, 0x38, 0x18;
+
+	string32 ui_state : 0x0; // unsupported
 }
 
 //	vulkan
@@ -707,6 +784,8 @@ state("bg3", "gog_hotfix_17")
 	float node_x : 0x5B04160, 0x260, 0x38, 0x38, 0x10;
 	float node_y : 0x5B04160, 0x260, 0x38, 0x38, 0x14;
 	float node_z : 0x5B04160, 0x260, 0x38, 0x38, 0x18;
+
+	string32 ui_state : 0x5B19218, 0x8, 0x120, 0x18, 0, 0x1C8, 0x230, 0x580;
 }
 
 //	directx 11
@@ -720,6 +799,8 @@ state("bg3_dx11", "gog_hotfix_17")
 	float node_x : 0x5875E60, 0x260, 0x38, 0x38, 0x10;
 	float node_y : 0x5875E60, 0x260, 0x38, 0x38, 0x14;
 	float node_z : 0x5875E60, 0x260, 0x38, 0x38, 0x18;
+
+	string32 ui_state : 0x588AF00, 0x8, 0x120, 0x18, 0, 0x1C8, 0x230, 0x580;
 }
 
 //	vulkan
@@ -733,6 +814,8 @@ state("bg3", "steam_hotfix_17")
 	float node_x : 0x5B172A0, 0x260, 0x38, 0x38, 0x10;
 	float node_y : 0x5B172A0, 0x260, 0x38, 0x38, 0x14;
 	float node_z : 0x5B172A0, 0x260, 0x38, 0x38, 0x18;
+
+	string32 ui_state : 0x5B2C360, 0x8, 0x120, 0x18, 0, 0x1C8, 0x230, 0x580;
 }
 
 //	directx 11
@@ -746,6 +829,8 @@ state("bg3_dx11", "steam_hotfix_17")
 	float node_x : 0x5887FE0, 0x260, 0x38, 0x38, 0x10;
 	float node_y : 0x5887FE0, 0x260, 0x38, 0x38, 0x14;
 	float node_z : 0x5887FE0, 0x260, 0x38, 0x38, 0x18;
+
+	string32 ui_state : 0x589D088, 0x8, 0x120, 0x18, 0, 0x1C8, 0x230, 0x580;
 }
 
 
@@ -781,6 +866,10 @@ startup
 	settings.Add("debug", false, "Debug");
 	settings.Add("debug_node_fling", false, "Debug - Node Fling");
 	settings.Add("debug_no_cached_addresses", false, "Debug - No Cached Addresses, Always scan (Splitter will slow whenever game starts up. Requires game or livesplit to restart)");
+	settings.Add("load_remove_ui_state", false, "Load Remove use UI State (Not guaranteed to work prior to hotfix 17 4.1.1.4494476)"); 
+	//  @REMOVE: testing phase
+	settings.Add("debug_save_time", false, "Display how much time has been spent in saving state (Not guaranteed to work prior to hotfix 17 4.1.1.4494476)"); 
+
 
 	//	https://github.com/ogam/asl/blob/master/dust%20aet.asl
 	//	debug labels
@@ -958,7 +1047,24 @@ init
 	//	slow path does require livesplit to be running before the game does, otherwise it'll take too long
 	//	trying to comb through memory pages for logging and server pointers
 
+	vars.scan_target_ui_state = new SigScanTarget(7,
+/*
+7FF7F288BB65 - 57 - push rdi
+7FF7F288BB66 - 48 83 EC 20 - sub rsp,20
+7FF7F288BB6A - 48 8B 05 8FF3CC01  - mov rax,[bg3_dx11.exe+588AF00] <<
+7FF7F288BB71 - 48 8B D9  - mov rbx,rcx
+7FF7F288BB74 - 48 8B 78 08  - mov rdi,[rax+08]
+*/
+		"48 83 EC 20",
+		"48 8B 05 ????????",
+		"48 8B D9",
+		"48 8B 78 08"
+	);
+
 	vars.game_version = modules.First().FileVersionInfo.ProductVersion;
+	// getting ProductMajorPart, ProductMinorPart, ProductBuildPart, ProductPrivatePart returns 1,0,0,0 isntead
+	// of the actual product version string we get above.. so splitting it off the string intead
+	var split_version_parts = vars.game_version.Split('.');
 	bool is_gog_version = false;
 	foreach (var module in modules)
 	{
@@ -969,7 +1075,7 @@ init
 		}
 	}
 	
-	Dictionary<string, String> gog_version_map = new Dictionary<string, String>()
+	Dictionary<String, String> gog_version_map = new Dictionary<String, String>()
 	{
 		{ "4.1.1.3732833", "gog_patch_3" },
 		{ "4.1.1.3735951", "gog_hotfix_7" },
@@ -985,7 +1091,7 @@ init
 		{ "4.1.1.4425968", "gog_hotfix_16" },
 		{ "4.1.1.4494476", "gog_hotfix_17" },
 	};
-	Dictionary<string, String> steam_version_map = new Dictionary<string, String>()
+	Dictionary<String, String> steam_version_map = new Dictionary<String, String>()
 	{
 		{ "4.1.1.3732833", "steam_patch_3" },
 		{ "4.1.1.3735951", "steam_hotfix_7" },
@@ -1001,6 +1107,20 @@ init
 		{ "4.1.1.4425968", "steam_hotfix_16" },
 		{ "4.1.1.4494476", "steam_hotfix_17" },
 	};
+	
+	vars.is_using_ui_state = false;
+	if (split_version_parts.Length == 4)
+	{
+		// hotfix 17+
+		if (Convert.ToInt32(split_version_parts[0]) >= 4 && 
+			Convert.ToInt32(split_version_parts[1]) >= 1 &&
+			Convert.ToInt32(split_version_parts[2]) >= 1 &&
+			Convert.ToInt32(split_version_parts[3]) >= 4494476
+		)
+		{
+			vars.is_using_ui_state = true;
+		}
+	}
 
 	String mapped_version;
 	if (is_gog_version)
@@ -1025,7 +1145,6 @@ init
 		vars.is_version_unsupported = true;
 	}
    
-
 	print(String.Format("[BG3_ASL]: {0} - {1}", game.ProcessName, version));
 
 	vars.logging_message_code_ptr = IntPtr.Zero;
@@ -1047,13 +1166,10 @@ init
 	vars.node_fling_y_ptr = null;
 	vars.node_fling_z_ptr = null;
 
-	/*
-	bg3_dx11.CAkRegistryMgr::GetObjAndAddref+1A70 - 40 53                 - push rbx
-    bg3_dx11.CAkRegistryMgr::GetObjAndAddref+1A72 - 48 83 EC 20           - sub rsp,20 { 32 }
-    bg3_dx11.CAkRegistryMgr::GetObjAndAddref+1A76 - 48 8B 1D 4BB9D501     - mov rbx,[bg3_dx11.exe+5070E58] { (23C53651B80) }
-    bg3_dx11.CAkRegistryMgr::GetObjAndAddref+1A7D - 48 85 DB              - test rbx,rbx
-    0x218, 0xD0, 0x30, 0x220, 0x580
-	*/
+	vars.ui_state_code_ptr = IntPtr.Zero;
+	vars.ui_state_code_offset = 0;
+	vars.ui_state_offset = 0;
+	vars.ui_state_ptr = IntPtr.Zero;
 
 	if (vars.is_version_unsupported)
 	{
@@ -1104,6 +1220,27 @@ init
 		}
 	}
 
+	if (!vars.is_using_ui_state || vars.is_version_unsupported)
+	{
+		if (settings["load_remove_ui_state"])
+		{
+			vars.ui_state_code_ptr = vars.Scanner(game, vars.scan_target_ui_state);
+			if (vars.logging_message_code_ptr == IntPtr.Zero)
+			{
+				throw new Exception("Couldn't find ui state pointer");
+			}
+			vars.ui_state_code_offset = game.ReadValue<int>((IntPtr)vars.ui_state_code_ptr);
+			vars.ui_state_offset = vars.ui_state_code_ptr.ToInt64() - modules.First().BaseAddress.ToInt64() + 4;
+			vars.ui_state_offset = vars.ui_state_offset + vars.ui_state_code_offset;
+			vars.ui_state_ptr = new IntPtr(modules.First().BaseAddress.ToInt64() + vars.ui_state_offset);
+			vars.ui_state = new DeepPointer(vars.ui_state_ptr, 0x8, 0x120, 0x18, 0, 0x1C8, 0x230, 0x580);
+		}
+		else
+		{
+			vars.is_using_ui_state = false;
+		}
+	}
+
 	vars.current_is_playable = 0;
 	vars.current_level_name = String.Empty;
 	vars.current_level_descriptive_name = String.Empty;
@@ -1111,6 +1248,7 @@ init
 	vars.current_node_x = 0;
 	vars.current_node_y = 0;
 	vars.current_node_z = 0;
+	vars.current_ui_state = String.Empty;
 	vars.old_is_playable = 0;
 	vars.old_level_name = String.Empty;
 	vars.old_level_descriptive_name = String.Empty;
@@ -1118,6 +1256,14 @@ init
 	vars.old_node_x = 0;
 	vars.old_node_y = 0;
 	vars.old_node_z = 0;
+	vars.old_ui_state = String.Empty;
+	
+	//  @REMOVE
+	vars.saving_timer_begin = DateTime.Now;
+	vars.saving_time = new TimeSpan(0);
+	vars.saving_time_min = new TimeSpan(Int64.MaxValue);
+	vars.saving_time_max = new TimeSpan(Int64.MinValue);
+	vars.saving_time_acc = new TimeSpan(0);
 }
 
 update
@@ -1129,6 +1275,7 @@ update
 	vars.old_node_x = vars.current_node_x;
 	vars.old_node_y = vars.current_node_y;
 	vars.old_node_z = vars.current_node_z;
+	vars.old_ui_state = vars.current_ui_state;
 
 	if (vars.is_version_unsupported)
 	{
@@ -1142,6 +1289,10 @@ update
 			vars.current_node_y = vars.node_fling_y_ptr.Deref<float>(game);
 			vars.current_node_z = vars.node_fling_z_ptr.Deref<float>(game);
 		}
+		if (vars.ui_state_ptr != null)
+		{
+			vars.current_ui_state = vars.ui_state.DerefString(game, 32, String.Empty);
+		}
 	}
 	else
 	{
@@ -1154,6 +1305,11 @@ update
 			vars.current_node_x = current.node_x;
 			vars.current_node_y = current.node_y;
 			vars.current_node_z = current.node_z;
+		}
+
+		if (vars.is_using_ui_state)
+		{
+			vars.current_ui_state = current.ui_state;
 		}
 	}
 
@@ -1171,6 +1327,11 @@ update
 		vars.SetText("Debug_Server_is_playable", String.Format("{0}", vars.current_is_playable));
 		vars.SetText("Debug_Server_level_name", vars.current_level_name);
 		vars.SetText("Debug_Server_level_descriptive_name", vars.current_level_descriptive_name);
+
+		vars.SetText("Debug_UI_Ptr", String.Format("{0}", vars.ui_state_code_ptr.ToString("X")));
+		vars.SetText("Debug_UI_code_offset", vars.ui_state_code_offset.ToString("X"));
+		vars.SetText("*Debug_UI_offset*", vars.ui_state_offset.ToString("X"));
+		vars.SetText("Debug_UI", vars.current_ui_state);
 	}
 
 	if (settings["debug_node_fling"])
@@ -1184,24 +1345,111 @@ update
 			vars.SetText("*Debug_Node_offset*", vars.node_fling_offset.ToString("X"));
 		}
 	}
+
+	//  @REMOVE once decision is made if save time should be kept
+	if (settings["debug_save_time"] && vars.is_using_ui_state)
+	{
+		bool saving_begin = vars.current_ui_state.Contains("Saving") && !vars.old_ui_state.Contains("Saving");
+		bool saving_end = !vars.current_ui_state.Contains("Saving") && vars.old_ui_state.Contains("Saving");
+		if (saving_begin)
+		{
+			vars.saving_timer_begin = DateTime.Now;
+		}
+		if (saving_end)
+		{
+			var dt = DateTime.Now - vars.saving_timer_begin;
+			if (vars.saving_time_min.Ticks > dt.Ticks)
+			{
+				vars.saving_time_min = dt;
+			}
+			if (vars.saving_time_max.Ticks < dt.Ticks)
+			{
+				vars.saving_time_max = dt;
+			}
+			vars.saving_time = dt;
+			vars.saving_time_acc = vars.saving_time_acc.Add(dt);
+		}
+
+		double min = vars.saving_time_min.TotalMilliseconds;
+		double max = vars.saving_time_max.TotalMilliseconds;
+		double cur = vars.saving_time.TotalMilliseconds;
+		double acc = vars.saving_time_acc.TotalMilliseconds;
+
+		String min_time_space = "ms";
+		String max_time_space = "ms";
+		String cur_time_space = "ms";
+		String acc_time_space = "ms";
+		if (vars.saving_time_min.Ticks == Int64.MaxValue)
+		{
+			min = 0.0;
+		}
+		else if (min > 2000)
+		{
+			min = vars.saving_time_min.TotalSeconds;
+			min_time_space = "s";
+		}
+		if (vars.saving_time_max.Ticks == Int64.MinValue)
+		{
+			max = 0.0;
+		}
+		else if (max > 2000)
+		{
+			max = vars.saving_time_max.TotalSeconds;
+			max_time_space = "s";
+		}
+		if (cur > 2000)
+		{
+			cur = vars.saving_time.TotalSeconds;
+			cur_time_space = "s";
+		}
+		if (acc > 2000)
+		{
+			acc = vars.saving_time_acc.TotalSeconds;
+			acc_time_space = "s";
+		}
+		
+		vars.SetText("Saving Time", String.Format("{0} {1}", cur, cur_time_space));
+		vars.SetText("Saving Time Min", String.Format("{0} {1}", min, min_time_space));
+		vars.SetText("Saving Time Max", String.Format("{0} {1}", max, max_time_space));
+		vars.SetText("Saving Time Total", String.Format("{0} {1}", acc, acc_time_space));
+	}
 }
 
 start
 {
 	bool is_tutorial = vars.current_level_name.Contains("TUT_Avernus_C");
-	bool is_running = vars.current_log_message.Contains("to: Running") && !vars.old_log_message.Contains("to: Running");
+	bool is_running = false;
+	if (vars.is_using_ui_state)
+	{
+		is_running = vars.current_ui_state.Contains("None") && vars.old_ui_state.Contains("Loading");
+	}
+	else
+	{
+		is_running = vars.current_log_message.Contains("to: Running") && !vars.old_log_message.Contains("to: Running");
+	}
 	return is_tutorial && vars.current_is_playable != 0 && is_running;
 }
 
 isLoading
 {
-	return !(vars.current_is_playable != 0 && vars.current_log_message.Contains("to: Running")) && !vars.current_log_message.Contains("to: Save");
+	bool is_playing = vars.current_is_playable != 0;
+	bool is_loading = false;
+	if (vars.is_using_ui_state)
+	{
+		is_loading = vars.current_ui_state.Contains("Loading");
+	}
+	else
+	{
+		is_loading = !vars.current_log_message.Contains("to: Running") && !vars.current_log_message.Contains("to: Save");
+	}
+	return !is_playing || (is_playing && is_loading);
 }
 
 split
 {
 	bool has_level_changed = vars.current_level_name != vars.old_level_name;
 	bool is_level_change_progressive = false;
+	bool is_credits = false;
 	foreach (KeyValuePair<string, Tuple<string, string, string>> split_pair in vars.splits)
 	{
 		if (settings[split_pair.Key])
@@ -1213,8 +1461,12 @@ split
 			}
 		}
 	}
+	if (vars.is_using_ui_state)
+	{
+		is_credits = vars.current_ui_state.Contains("Credits");
+	}
 
-	return has_level_changed && is_level_change_progressive;
+	return (has_level_changed && is_level_change_progressive) || is_credits;
 }
 
 exit
