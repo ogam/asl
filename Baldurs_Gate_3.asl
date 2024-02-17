@@ -6,12 +6,14 @@
 //		patch 4_1
 //		hotfix 10
 //		hotfix 11
+//		patch 5 *missing gog vulkan, gog dx11, steam vulkan
 //		hotfix 12
 //		hotfix 13
 //		hotfix 14
 //		hotfix 15
 //		hotfix 16
 //		hotfix 17
+//		patch 6
 
 /*
 	@notes:
@@ -473,6 +475,23 @@ state("bg3_dx11", "steam_hotfix_11")
 	string32 ui_state : 0x0; // unsupported
 }
 
+//  @todo: patch 5 - gog vulkan, gog dx11, steam vulkan
+
+//	directx 11
+state("bg3_dx11", "steam_patch_5")
+{
+	byte is_playable : 0x58A0BC0, 0xA9;
+	string64 level_name : 0x58A0BC0, 0x142;
+	string64 level_descriptive_name : 0x58A0BC0, 0x183;
+	string32 game_version : 0x58A0BC0, 0x284;
+	string256 log_message : 0x58A1368, 0x0, 0x28;
+	float node_x : 0x58017C0, 0x260, 0x38, 0x38, 0x10;
+	float node_y : 0x58017C0, 0x260, 0x38, 0x38, 0x14;
+	float node_z : 0x58017C0, 0x260, 0x38, 0x38, 0x18;
+
+	string32 ui_state : 0x0; // unsupported
+}
+
 //	vulkan
 state("bg3", "gog_hotfix_12")
 {
@@ -833,6 +852,65 @@ state("bg3_dx11", "steam_hotfix_17")
 	string32 ui_state : 0x589D088, 0x8, 0x120, 0x18, 0, 0x1C8, 0x230, 0x580;
 }
 
+//	vulkan
+state("bg3", "gog_patch_6")
+{
+	byte is_playable : 0x5BDC398, 0xA9;
+	string64 level_name : 0x5BDC398, 0x183;
+	string64 level_descriptive_name : 0x5BDC398, 0x1C4;
+	string32 game_version : 0x5BDC398, 0x284;
+	string256 log_message : 0x5BDCBA8, 0x0, 0x28;
+	float node_x : 0x5B3C070, 0x260, 0x38, 0x38, 0x10;
+	float node_y : 0x5B3C070, 0x260, 0x38, 0x38, 0x14;
+	float node_z : 0x5B3C070, 0x260, 0x38, 0x38, 0x18;
+
+	string32 ui_state : 0x5B510F8, 0x8, 0x108, 0x18, 0x10, 0x208, 0x3F0, 0x598;
+}
+
+//	directx 11
+state("bg3_dx11", "gog_patch_6")
+{
+	byte is_playable : 0x594E988, 0xA9;
+	string64 level_name : 0x594E988, 0x183;
+	string64 level_descriptive_name : 0x594E988, 0x1C4;
+	string32 game_version : 0x594E988, 0x284;
+	string256 log_message : 0x594F148, 0x0, 0x28;
+	float node_x : 0x58AED90, 0x260, 0x38, 0x38, 0x10;
+	float node_y : 0x58AED90, 0x260, 0x38, 0x38, 0x14;
+	float node_z : 0x58AED90, 0x260, 0x38, 0x38, 0x18;
+
+	string32 ui_state : 0x58C3E00, 0x8, 0x108, 0x18, 0x10, 0x208, 0x3F0, 0x598;
+}
+
+//	vulkan
+state("bg3", "steam_patch_6")
+{
+	byte is_playable : 0x5BEE6A0, 0xA9;
+	string64 level_name : 0x5BEE6A0, 0x183;
+	string64 level_descriptive_name : 0x5BEE6A0, 0x1C4;
+	string32 game_version : 0x5BEE6A0, 0x284;
+	string256 log_message : 0x5BEEEB8, 0x0, 0x28;
+	float node_x : 0x5B4E230, 0x260, 0x38, 0x38, 0x10;
+	float node_y : 0x5B4E230, 0x260, 0x38, 0x38, 0x14;
+	float node_z : 0x5B4E230, 0x260, 0x38, 0x38, 0x18;
+
+	string32 ui_state : 0x5B632C0, 0x8, 0x108, 0x18, 0x10, 0x208, 0x3F0, 0x598;
+}
+
+//	directx 11
+state("bg3_dx11", "steam_patch_6")
+{
+	byte is_playable : 0x5960D20, 0xA9;
+	string64 level_name : 0x5960D20, 0x183;
+	string64 level_descriptive_name : 0x5960D20, 0x1C4;
+	string32 game_version : 0x5960D20, 0x284;
+	string256 log_message : 0x59614D8, 0x0, 0x28;
+	float node_x : 0x58C0F30, 0x260, 0x38, 0x38, 0x10;
+	float node_y : 0x58C0F30, 0x260, 0x38, 0x38, 0x14;
+	float node_z : 0x58C0F30, 0x260, 0x38, 0x38, 0x18;
+
+	string32 ui_state : 0x58D5FA8, 0x8, 0x108, 0x18, 0x10, 0x208, 0x3F0, 0x598;
+}
 
 state("bg3", "unsupported")
 {
@@ -1016,15 +1094,13 @@ init
 */
 	);
 
-	vars.scan_target_server_state = new SigScanTarget(7,
+	vars.scan_target_server_state = new SigScanTarget(3,
 /*
-		bg3.exe+379F652 - 48 83 EC 40           - sub rsp,40 { 64 }
-		bg3.exe+379F656 - 48 8B 2D 4B154002     - mov rbp,[bg3.exe+5BA0BA8] { (1FBDDBF4000) }
-		bg3.exe+379F65D - 83 BD C4020000 FF     - cmp dword ptr [rbp+000002C4],-01 { 255 }
+7FF7BEF5EC5B - 48 8B 35 3EFA5302  - mov rsi,[bg3.exe+5BEE6A0] <<
+7FF7BEF5EC62 - 44 0FB6 71 08  - movzx r14d,byte ptr [rcx+08]
 */
-		"48 83 EC 40",
-		"48 8B 2D ????????",
-		"83 BD C4020000 FF"
+		"48 8B 35 ????????",
+		"44 0FB6 71 08"
 	);
 
 	//	world object position x, y = x + 4, z = x + 8
@@ -1084,12 +1160,14 @@ init
 		{ "4.1.1.3905231", "gog_patch_4_1" },
 		{ "4.1.1.3911062", "gog_hotfix_10" },
 		{ "4.1.1.3956130", "gog_hotfix_11" },
+//		{ "4.1.1.4061076", "gog_patch_5" },
 		{ "4.1.1.4079877", "gog_hotfix_12" },
 		{ "4.1.1.4145012", "gog_hotfix_13" },
 		{ "4.1.1.4216792", "gog_hotfix_14" },
 		{ "4.1.1.4251417", "gog_hotfix_15" },
 		{ "4.1.1.4425968", "gog_hotfix_16" },
 		{ "4.1.1.4494476", "gog_hotfix_17" },
+		{ "4.1.1.4763283", "gog_patch_6" },
 	};
 	Dictionary<String, String> steam_version_map = new Dictionary<String, String>()
 	{
@@ -1100,12 +1178,14 @@ init
 		{ "4.1.1.3905231", "steam_patch_4_1" },
 		{ "4.1.1.3911062", "steam_hotfix_10" },
 		{ "4.1.1.3956130", "steam_hotfix_11" },
+		{ "4.1.1.4061076", "steam_patch_5" },
 		{ "4.1.1.4079877", "steam_hotfix_12" },
 		{ "4.1.1.4145012", "steam_hotfix_13" },
 		{ "4.1.1.4216792", "steam_hotfix_14" },
 		{ "4.1.1.4251417", "steam_hotfix_15" },
 		{ "4.1.1.4425968", "steam_hotfix_16" },
 		{ "4.1.1.4494476", "steam_hotfix_17" },
+		{ "4.1.1.4763283", "steam_patch_6" },
 	};
 	
 	vars.is_using_ui_state = false;
@@ -1170,6 +1250,7 @@ init
 	vars.ui_state_code_offset = 0;
 	vars.ui_state_offset = 0;
 	vars.ui_state_ptr = IntPtr.Zero;
+	vars.ui_state = null;
 
 	if (vars.is_version_unsupported)
 	{
@@ -1200,12 +1281,11 @@ init
 		vars.server_state_offset = vars.server_state_offset + vars.server_state_code_offset;
 		vars.server_state_ptr = new IntPtr(modules.First().BaseAddress.ToInt64() + vars.server_state_offset);
 		vars.server_state_is_playable = new DeepPointer(vars.server_state_ptr, 0xA9);
-		vars.server_state_level_name = new DeepPointer(vars.server_state_ptr, 0x142);
-		vars.server_state_level_descriptive_name = new DeepPointer(vars.server_state_ptr, 0x183);
+		vars.server_state_level_name = new DeepPointer(vars.server_state_ptr, 0x183);
+		vars.server_state_level_descriptive_name = new DeepPointer(vars.server_state_ptr, 0x1C4);
 
 		if (settings["debug_node_fling"])
 		{
-
 			vars.node_fling_code_ptr = vars.Scanner(game, vars.scan_target_node_fling);
 			if (vars.server_state_code_ptr != IntPtr.Zero)
 			{
@@ -1225,7 +1305,7 @@ init
 		if (settings["load_remove_ui_state"])
 		{
 			vars.ui_state_code_ptr = vars.Scanner(game, vars.scan_target_ui_state);
-			if (vars.logging_message_code_ptr == IntPtr.Zero)
+			if (vars.ui_state_code_ptr == IntPtr.Zero)
 			{
 				throw new Exception("Couldn't find ui state pointer");
 			}
@@ -1233,7 +1313,7 @@ init
 			vars.ui_state_offset = vars.ui_state_code_ptr.ToInt64() - modules.First().BaseAddress.ToInt64() + 4;
 			vars.ui_state_offset = vars.ui_state_offset + vars.ui_state_code_offset;
 			vars.ui_state_ptr = new IntPtr(modules.First().BaseAddress.ToInt64() + vars.ui_state_offset);
-			vars.ui_state = new DeepPointer(vars.ui_state_ptr, 0x8, 0x120, 0x18, 0, 0x1C8, 0x230, 0x580);
+			vars.ui_state = new DeepPointer(vars.ui_state_ptr, 0x8, 0x108, 0x18, 0x10, 0x208, 0x3F0, 0x598);
 		}
 		else
 		{
