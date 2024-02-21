@@ -912,6 +912,66 @@ state("bg3_dx11", "steam_patch_6")
 	string32 ui_state : 0x58D5FA8, 0x8, 0x108, 0x18, 0x10, 0x208, 0x3F0, 0x598;
 }
 
+//	vulkan
+state("bg3", "gog_hotfix_18")
+{
+	byte is_playable : 0x530DEE0, 0xA9;
+	string64 level_name : 0x530DEE0, 0x183;
+	string64 level_descriptive_name : 0x530DEE0, 0x1C4;
+	string32 game_version : 0x530DEE0, 0x284;
+	string256 log_message : 0x5311C08, 0x0, 0x28;
+	float node_x : 0x514D2E0, 0x260, 0x38, 0x38, 0x10;
+	float node_y : 0x514D2E0, 0x260, 0x38, 0x38, 0x14;
+	float node_z : 0x514D2E0, 0x260, 0x38, 0x38, 0x18;
+
+	string32 ui_state : 0x5389800, 0x8, 0x120, 0x18, 0x0, 0x208, 0x598; 
+}
+
+//	directx 11
+state("bg3_dx11", "gog_hotfix_18")
+{
+	byte is_playable : 0x5081630, 0xA9;
+	string64 level_name : 0x5081630, 0x183;
+	string64 level_descriptive_name : 0x5081630, 0x1C4;
+	string32 game_version : 0x5081630, 0x284;
+	string256 log_message : 0x5085008, 0x0, 0x28;
+	float node_x : 0x4EC0AE0, 0x260, 0x38, 0x38, 0x10;
+	float node_y : 0x4EC0AE0, 0x260, 0x38, 0x38, 0x14;
+	float node_z : 0x4EC0AE0, 0x260, 0x38, 0x38, 0x18;
+
+	string32 ui_state : 0x50FCC10, 0x8, 0x120, 0x18, 0x0, 0x208, 0x598; 
+}
+
+//	vulkan
+state("bg3", "steam_hotfix_18")
+{
+	byte is_playable : 0x5318110, 0xA9;
+	string64 level_name : 0x5318110, 0x183;
+	string64 level_descriptive_name : 0x5318110, 0x1C4;
+	string32 game_version : 0x5318110, 0x284;
+	string256 log_message : 0x531BE38, 0x0, 0x28;
+	float node_x : 0x51573C0, 0x260, 0x38, 0x38, 0x10;
+	float node_y : 0x51573C0, 0x260, 0x38, 0x38, 0x14;
+	float node_z : 0x51573C0, 0x260, 0x38, 0x38, 0x18;
+
+	string32 ui_state : 0x5393910, 0x8, 0x120, 0x18, 0x0, 0x208, 0x598; 
+}
+
+//	directx 11
+state("bg3_dx11", "steam_hotfix_18")
+{
+	byte is_playable : 0x508A880, 0xA9;
+	string64 level_name : 0x508A880, 0x183;
+	string64 level_descriptive_name : 0x508A880, 0x1C4;
+	string32 game_version : 0x508A880, 0x284;
+	string256 log_message : 0x508E258, 0x0, 0x28;
+	float node_x : 0x4EC9BE0, 0x260, 0x38, 0x38, 0x10;
+	float node_y : 0x4EC9BE0, 0x260, 0x38, 0x38, 0x14;
+	float node_z : 0x4EC9BE0, 0x260, 0x38, 0x38, 0x18;
+
+	string32 ui_state : 0x5105D40, 0x8, 0x120, 0x18, 0x0, 0x208, 0x598; 
+}
+
 state("bg3", "unsupported")
 {
 }
@@ -1094,13 +1154,14 @@ init
 */
 	);
 
-	vars.scan_target_server_state = new SigScanTarget(3,
+	vars.scan_target_server_state = new SigScanTarget(7,
 /*
-7FF7BEF5EC5B - 48 8B 35 3EFA5302  - mov rsi,[bg3.exe+5BEE6A0] <<
-7FF7BEF5EC62 - 44 0FB6 71 08  - movzx r14d,byte ptr [rcx+08]
+bg3_dx11.exe+2F7A9C0 - 0FB6 51 08            - movzx edx,byte ptr [rcx+08]
+bg3_dx11.exe+2F7A9C4 - 48 8B 0D B5FE1002     - mov rcx,[bg3_dx11.exe+508A880] { (245C87C1F00) }
+
 */
-		"48 8B 35 ????????",
-		"44 0FB6 71 08"
+		"0F B6 51 08",
+		"48 8B 0D ????????"
 	);
 
 	//	world object position x, y = x + 4, z = x + 8
@@ -1109,13 +1170,13 @@ init
 	//	0x260, 38, 38, 10
 	vars.scan_target_node_fling = new SigScanTarget(3,
 /*
-	bg3_dx11.exe+28E9692 - 48 8B 0D 6744F802     - mov rcx,[bg3_dx11.exe+586DB00] { (1E8C2860600) }
-	bg3_dx11.exe+28E9699 - 4C 8D 44 24 40        - lea r8,[rsp+40]
-	bg3_dx11.exe+28E969E - 48 8D 54 24 20        - lea rdx,[rsp+20]
+bg3_dx11.exe+235FFD6 - 48 8B 0D 039CB602     - mov rcx,[bg3_dx11.exe+4EC9BE0] { (192805A0400) }
+bg3_dx11.exe+235FFDD - 48 8D 54 24 30        - lea rdx,[rsp+30]
+bg3_dx11.exe+235FFE2 - 44 0FB6 C0            - movzx r8d,al
 */
 	"48 8B 0D ????????",
-	"4C 8D 44 24 40",
-	"48 8D 54 24 20"
+	"48 8D 54 24 30",
+	"44 0F B6 C0"
 	);
 
 	//	try to use hardcoded pointers so it's a bit faster
@@ -1123,18 +1184,22 @@ init
 	//	slow path does require livesplit to be running before the game does, otherwise it'll take too long
 	//	trying to comb through memory pages for logging and server pointers
 
-	vars.scan_target_ui_state = new SigScanTarget(7,
+	//	main menu -> go to options -> hit escape to return to main menu
+	//	it'll be a lookup for some sounds, there are other ones that will do lookup from Wwise but those 
+	//	signatures are all varied by images of the same game versions..
+	vars.scan_target_ui_state = new SigScanTarget(10,
 /*
-7FF7F288BB65 - 57 - push rdi
-7FF7F288BB66 - 48 83 EC 20 - sub rsp,20
-7FF7F288BB6A - 48 8B 05 8FF3CC01  - mov rax,[bg3_dx11.exe+588AF00] <<
-7FF7F288BB71 - 48 8B D9  - mov rbx,rcx
-7FF7F288BB74 - 48 8B 78 08  - mov rdi,[rax+08]
+7FF629B3F806 - 48 83 EC 20 - sub rsp,20
+7FF629B3F80A - 48 8B D9  - mov rbx,rcx
+7FF629B3F80D - 48 8B 0D 2C656D01  - mov rcx,[bg3_dx11.exe+5105D40] <<
+7FF629B3F814 - E8 E774F2FF - call bg3_dx11.exe+3956D00
+7FF629B3F819 - 48 8B F8  - mov rdi,rax
 */
 		"48 83 EC 20",
-		"48 8B 05 ????????",
 		"48 8B D9",
-		"48 8B 78 08"
+		"48 8B 0D ????????",
+		"E8 ????????",
+		"48 8B F8"
 	);
 
 	vars.game_version = modules.First().FileVersionInfo.ProductVersion;
@@ -1168,6 +1233,7 @@ init
 		{ "4.1.1.4425968", "gog_hotfix_16" },
 		{ "4.1.1.4494476", "gog_hotfix_17" },
 		{ "4.1.1.4763283", "gog_patch_6" },
+		{ "4.1.1.4788723", "gog_hotfix_18" },
 	};
 	Dictionary<String, String> steam_version_map = new Dictionary<String, String>()
 	{
@@ -1186,6 +1252,7 @@ init
 		{ "4.1.1.4425968", "steam_hotfix_16" },
 		{ "4.1.1.4494476", "steam_hotfix_17" },
 		{ "4.1.1.4763283", "steam_patch_6" },
+		{ "4.1.1.4788723", "steam_hotfix_18" },
 	};
 	
 	vars.is_using_ui_state = false;
@@ -1313,7 +1380,7 @@ init
 			vars.ui_state_offset = vars.ui_state_code_ptr.ToInt64() - modules.First().BaseAddress.ToInt64() + 4;
 			vars.ui_state_offset = vars.ui_state_offset + vars.ui_state_code_offset;
 			vars.ui_state_ptr = new IntPtr(modules.First().BaseAddress.ToInt64() + vars.ui_state_offset);
-			vars.ui_state = new DeepPointer(vars.ui_state_ptr, 0x8, 0x108, 0x18, 0x10, 0x208, 0x3F0, 0x598);
+			vars.ui_state = new DeepPointer(vars.ui_state_ptr, 0x8, 0x120, 0x18, 0x0, 0x208, 0x598);
 		}
 		else
 		{
@@ -1369,7 +1436,7 @@ update
 			vars.current_node_y = vars.node_fling_y_ptr.Deref<float>(game);
 			vars.current_node_z = vars.node_fling_z_ptr.Deref<float>(game);
 		}
-		if (vars.ui_state_ptr != null)
+		if (vars.ui_state_ptr != null && vars.ui_state != null)
 		{
 			vars.current_ui_state = vars.ui_state.DerefString(game, 32, String.Empty);
 		}
