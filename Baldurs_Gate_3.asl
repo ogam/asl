@@ -14,6 +14,8 @@
 //		hotfix 16
 //		hotfix 17
 //		patch 6
+//		hotfix 18
+//		hotfix 19
 
 /*
 	@notes:
@@ -972,6 +974,66 @@ state("bg3_dx11", "steam_hotfix_18")
 	string32 ui_state : 0x5105D40, 0x8, 0x120, 0x18, 0x0, 0x208, 0x598; 
 }
 
+//	vulkan
+state("bg3", "gog_hotfix_19")
+{
+	byte is_playable : 0x5BF93B8, 0xA9;
+	string64 level_name : 0x5BF93B8, 0x183;
+	string64 level_descriptive_name : 0x5BF93B8, 0x1C4;
+	string32 game_version : 0x5BF93B8, 0x284;
+	string256 log_message : 0x5BF9BB8, 0x0, 0x28;
+	float node_x : 0x5B590D0, 0x260, 0x38, 0x38, 0x10;
+	float node_y : 0x5B590D0, 0x260, 0x38, 0x38, 0x14;
+	float node_z : 0x5B590D0, 0x260, 0x38, 0x38, 0x18;
+
+	string32 ui_state : 0x5B6E158, 0x8, 0x120, 0x18, 0x0, 0x208, 0x88, 0x598;
+}
+
+//	directx 11
+state("bg3_dx11", "gog_hotfix_19")
+{
+	byte is_playable : 0x596B968, 0xA9;
+	string64 level_name : 0x596B968, 0x183;
+	string64 level_descriptive_name : 0x596B968, 0x1C4;
+	string32 game_version : 0x596B968, 0x284;
+	string256 log_message : 0x596C118, 0x0, 0x28;
+	float node_x : 0x58CBD90, 0x260, 0x38, 0x38, 0x10;
+	float node_y : 0x58CBD90, 0x260, 0x38, 0x38, 0x14;
+	float node_z : 0x58CBD90, 0x260, 0x38, 0x38, 0x18;
+
+	string32 ui_state : 0x58E0E00, 0x8, 0x120, 0x18, 0x0, 0x208, 0x88, 0x598;
+}
+
+//	vulkan
+state("bg3", "steam_hotfix_19")
+{
+	byte is_playable : 0x5C0B570, 0xA9;
+	string64 level_name : 0x5C0B570, 0x183;
+	string64 level_descriptive_name : 0x5C0B570, 0x1C4;
+	string32 game_version : 0x5C0B570, 0x284;
+	string256 log_message : 0x5C0BD78, 0x0, 0x28;
+	float node_x : 0x5B6B1F0, 0x260, 0x38, 0x38, 0x10;
+	float node_y : 0x5B6B1F0, 0x260, 0x38, 0x38, 0x14;
+	float node_z : 0x5B6B1F0, 0x260, 0x38, 0x38, 0x18;
+
+	string32 ui_state : 0x5B80280, 0x8, 0x120, 0x18, 0x0, 0x208, 0x88, 0x598;
+}
+
+//	directx 11
+state("bg3_dx11", "steam_hotfix_19")
+{
+	byte is_playable : 0x597DA00, 0xA9;
+	string64 level_name : 0x597DA00, 0x183;
+	string64 level_descriptive_name : 0x597DA00, 0x1C4;
+	string32 game_version : 0x597DA00, 0x284;
+	string256 log_message : 0x597E1B0, 0x0, 0x28;
+	float node_x : 0x58DDF30, 0x260, 0x38, 0x38, 0x10;
+	float node_y : 0x58DDF30, 0x260, 0x38, 0x38, 0x14;
+	float node_z : 0x58DDF30, 0x260, 0x38, 0x38, 0x18;
+
+	string32 ui_state : 0x58F2FA8, 0x8, 0x120, 0x18, 0x0, 0x208, 0x88, 0x598;
+}
+
 state("bg3", "unsupported")
 {
 }
@@ -1154,14 +1216,13 @@ init
 */
 	);
 
-	vars.scan_target_server_state = new SigScanTarget(7,
+	vars.scan_target_server_state = new SigScanTarget(3,
 /*
-bg3_dx11.exe+2F7A9C0 - 0FB6 51 08            - movzx edx,byte ptr [rcx+08]
-bg3_dx11.exe+2F7A9C4 - 48 8B 0D B5FE1002     - mov rcx,[bg3_dx11.exe+508A880] { (245C87C1F00) }
-
+7FF74701B1FB - 48 8B 35 66072B02  - mov rsi,[bg3_dx11.exe+596B968] <<
+7FF74701B202 - 44 0F B6 71 08  - movzx r14d,byte ptr [rcx+08]
 */
-		"0F B6 51 08",
-		"48 8B 0D ????????"
+		"48 8B 35 ????????",
+		"44 0F B6 71 08"
 	);
 
 	//	world object position x, y = x + 4, z = x + 8
@@ -1170,13 +1231,13 @@ bg3_dx11.exe+2F7A9C4 - 48 8B 0D B5FE1002     - mov rcx,[bg3_dx11.exe+508A880] { 
 	//	0x260, 38, 38, 10
 	vars.scan_target_node_fling = new SigScanTarget(3,
 /*
-bg3_dx11.exe+235FFD6 - 48 8B 0D 039CB602     - mov rcx,[bg3_dx11.exe+4EC9BE0] { (192805A0400) }
-bg3_dx11.exe+235FFDD - 48 8D 54 24 30        - lea rdx,[rsp+30]
-bg3_dx11.exe+235FFE2 - 44 0FB6 C0            - movzx r8d,al
+bg3_dx11.exe+27D2692 - 48 8B 0D F7960F03     - mov rcx,[bg3_dx11.exe+58CBD90] { (28BE4D60400) }
+bg3_dx11.exe+27D2699 - 4C 8D 44 24 40        - lea r8,[rsp+40]
+bg3_dx11.exe+27D269E - 48 8D 54 24 20        - lea rdx,[rsp+20]
 */
 	"48 8B 0D ????????",
-	"48 8D 54 24 30",
-	"44 0F B6 C0"
+	"4C 8D 44 24 40",
+	"48 8D 54 24 20"
 	);
 
 	//	try to use hardcoded pointers so it's a bit faster
@@ -1187,19 +1248,17 @@ bg3_dx11.exe+235FFE2 - 44 0FB6 C0            - movzx r8d,al
 	//	main menu -> go to options -> hit escape to return to main menu
 	//	it'll be a lookup for some sounds, there are other ones that will do lookup from Wwise but those 
 	//	signatures are all varied by images of the same game versions..
-	vars.scan_target_ui_state = new SigScanTarget(10,
+	vars.scan_target_ui_state = new SigScanTarget(7,
 /*
-7FF629B3F806 - 48 83 EC 20 - sub rsp,20
-7FF629B3F80A - 48 8B D9  - mov rbx,rcx
-7FF629B3F80D - 48 8B 0D 2C656D01  - mov rcx,[bg3_dx11.exe+5105D40] <<
-7FF629B3F814 - E8 E774F2FF - call bg3_dx11.exe+3956D00
-7FF629B3F819 - 48 8B F8  - mov rdi,rax
+bg3_dx11.exe+3B97AC6 - 48 83 EC 20           - sub rsp,20 { 32 }
+bg3_dx11.exe+3B97ACA - 48 8B 05 2F93D401     - mov rax,[bg3_dx11.exe+58E0E00] { (28D119EC458) }
+bg3_dx11.exe+3B97AD1 - 48 8B D9              - mov rbx,rcx
+bg3_dx11.exe+3B97AD4 - 48 8B 78 08           - mov rdi,[rax+08]
 */
 		"48 83 EC 20",
+		"48 8B 05 ????????",
 		"48 8B D9",
-		"48 8B 0D ????????",
-		"E8 ????????",
-		"48 8B F8"
+		"48 8B 78 08"
 	);
 
 	vars.game_version = modules.First().FileVersionInfo.ProductVersion;
@@ -1234,6 +1293,7 @@ bg3_dx11.exe+235FFE2 - 44 0FB6 C0            - movzx r8d,al
 		{ "4.1.1.4494476", "gog_hotfix_17" },
 		{ "4.1.1.4763283", "gog_patch_6" },
 		{ "4.1.1.4788723", "gog_hotfix_18" },
+		{ "4.1.1.4811634", "gog_hotfix_19" },
 	};
 	Dictionary<String, String> steam_version_map = new Dictionary<String, String>()
 	{
@@ -1253,6 +1313,7 @@ bg3_dx11.exe+235FFE2 - 44 0FB6 C0            - movzx r8d,al
 		{ "4.1.1.4494476", "steam_hotfix_17" },
 		{ "4.1.1.4763283", "steam_patch_6" },
 		{ "4.1.1.4788723", "steam_hotfix_18" },
+		{ "4.1.1.4811634", "steam_hotfix_19" },
 	};
 	
 	vars.is_using_ui_state = false;
@@ -1380,7 +1441,7 @@ bg3_dx11.exe+235FFE2 - 44 0FB6 C0            - movzx r8d,al
 			vars.ui_state_offset = vars.ui_state_code_ptr.ToInt64() - modules.First().BaseAddress.ToInt64() + 4;
 			vars.ui_state_offset = vars.ui_state_offset + vars.ui_state_code_offset;
 			vars.ui_state_ptr = new IntPtr(modules.First().BaseAddress.ToInt64() + vars.ui_state_offset);
-			vars.ui_state = new DeepPointer(vars.ui_state_ptr, 0x8, 0x120, 0x18, 0x0, 0x208, 0x598);
+			vars.ui_state = new DeepPointer(vars.ui_state_ptr, 0x8, 0x120, 0x18, 0x0, 0x208, 0x88, 0x598);
 		}
 		else
 		{
