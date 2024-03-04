@@ -16,6 +16,7 @@
 //		patch 6
 //		hotfix 18
 //		hotfix 19
+//		hotfix 20
 
 /*
 	@notes:
@@ -1034,6 +1035,66 @@ state("bg3_dx11", "steam_hotfix_19")
 	string32 ui_state : 0x58F2FA8, 0x8, 0x120, 0x18, 0x0, 0x208, 0x88, 0x598;
 }
 
+//	vulkan
+state("bg3", "gog_hotfix_20")
+{
+	byte is_playable : 0x5BF5328, 0xA9;
+	string64 level_name : 0x5BF5328, 0x183;
+	string64 level_descriptive_name : 0x5BF5328, 0x1C4;
+	string32 game_version : 0x5BF5328, 0x284;
+	string256 log_message : 0x5BF5B38, 0x0, 0x28;
+	float node_x : 0x5B55050, 0x260, 0x38, 0x38, 0x10;
+	float node_y : 0x5B55050, 0x260, 0x38, 0x38, 0x14;
+	float node_z : 0x5B55050, 0x260, 0x38, 0x38, 0x18;
+
+	string32 ui_state : 0x5B6A0D8, 0x8, 0x120, 0x18, 0x0, 0x208, 0x578;
+}
+
+//	directx 11
+state("bg3_dx11", "gog_hotfix_20")
+{
+	byte is_playable : 0x59679F8, 0xA9;
+	string64 level_name : 0x59679F8, 0x183;
+	string64 level_descriptive_name : 0x59679F8, 0x1C4;
+	string32 game_version : 0x59679F8, 0x284;
+	string256 log_message : 0x59681B0, 0x0, 0x28;
+	float node_x : 0x58C7DD0, 0x260, 0x38, 0x38, 0x10;
+	float node_y : 0x58C7DD0, 0x260, 0x38, 0x38, 0x14;
+	float node_z : 0x58C7DD0, 0x260, 0x38, 0x38, 0x18;
+
+	string32 ui_state : 0x58DCE40, 0x8, 0x120, 0x18, 0x0, 0x208, 0x578;
+}
+
+//	vulkan
+state("bg3", "steam_hotfix_20")
+{
+	byte is_playable : 0x5C06480, 0xA9;
+	string64 level_name : 0x5C06480, 0x183;
+	string64 level_descriptive_name : 0x5C06480, 0x1C4;
+	string32 game_version : 0x5C06480, 0x284;
+	string256 log_message : 0x5C06C98, 0x0, 0x28;
+	float node_x : 0x5B661B0, 0x260, 0x38, 0x38, 0x10;
+	float node_y : 0x5B661B0, 0x260, 0x38, 0x38, 0x14;
+	float node_z : 0x5B661B0, 0x260, 0x38, 0x38, 0x18;
+
+	string32 ui_state : 0x5B7B240, 0x8, 0x120, 0x18, 0x0, 0x208, 0x578;
+}
+
+//	directx 11
+state("bg3_dx11", "steam_hotfix_20")
+{
+	byte is_playable : 0x5978A20, 0xA9;
+	string64 level_name : 0x5978A20, 0x183;
+	string64 level_descriptive_name : 0x5978A20, 0x1C4;
+	string32 game_version : 0x5978A20, 0x284;
+	string256 log_message : 0x59791E8, 0x0, 0x28;
+	float node_x : 0x58D8ED0, 0x260, 0x38, 0x38, 0x10;
+	float node_y : 0x58D8ED0, 0x260, 0x38, 0x38, 0x14;
+	float node_z : 0x58D8ED0, 0x260, 0x38, 0x38, 0x18;
+
+	string32 ui_state : 0x058EDF48, 0x8, 0x120, 0x18, 0x0, 0x208, 0x578;
+}
+
 state("bg3", "unsupported")
 {
 }
@@ -1250,10 +1311,10 @@ bg3_dx11.exe+27D269E - 48 8D 54 24 20        - lea rdx,[rsp+20]
 	//	signatures are all varied by images of the same game versions..
 	vars.scan_target_ui_state = new SigScanTarget(7,
 /*
-bg3_dx11.exe+3B97AC6 - 48 83 EC 20           - sub rsp,20 { 32 }
-bg3_dx11.exe+3B97ACA - 48 8B 05 2F93D401     - mov rax,[bg3_dx11.exe+58E0E00] { (28D119EC458) }
-bg3_dx11.exe+3B97AD1 - 48 8B D9              - mov rbx,rcx
-bg3_dx11.exe+3B97AD4 - 48 8B 78 08           - mov rdi,[rax+08]
+bg3_dx11.exe+3BA3856 - 48 83 EC 20           - sub rsp,20 { 32 }
+bg3_dx11.exe+3BA385A - 48 8B 05 E7A6D401     - mov rax,[bg3_dx11.exe+58EDF48] { (1CEAF5086A8) }
+bg3_dx11.exe+3BA3861 - 48 8B D9              - mov rbx,rcx
+bg3_dx11.exe+3BA3864 - 48 8B 78 08           - mov rdi,[rax+08]
 */
 		"48 83 EC 20",
 		"48 8B 05 ????????",
@@ -1294,6 +1355,7 @@ bg3_dx11.exe+3B97AD4 - 48 8B 78 08           - mov rdi,[rax+08]
 		{ "4.1.1.4763283", "gog_patch_6" },
 		{ "4.1.1.4788723", "gog_hotfix_18" },
 		{ "4.1.1.4811634", "gog_hotfix_19" },
+		{ "4.1.1.4854838", "gog_hotfix_20" },
 	};
 	Dictionary<String, String> steam_version_map = new Dictionary<String, String>()
 	{
@@ -1314,6 +1376,7 @@ bg3_dx11.exe+3B97AD4 - 48 8B 78 08           - mov rdi,[rax+08]
 		{ "4.1.1.4763283", "steam_patch_6" },
 		{ "4.1.1.4788723", "steam_hotfix_18" },
 		{ "4.1.1.4811634", "steam_hotfix_19" },
+		{ "4.1.1.4854838", "steam_hotfix_20" },
 	};
 	
 	vars.is_using_ui_state = false;
@@ -1441,7 +1504,7 @@ bg3_dx11.exe+3B97AD4 - 48 8B 78 08           - mov rdi,[rax+08]
 			vars.ui_state_offset = vars.ui_state_code_ptr.ToInt64() - modules.First().BaseAddress.ToInt64() + 4;
 			vars.ui_state_offset = vars.ui_state_offset + vars.ui_state_code_offset;
 			vars.ui_state_ptr = new IntPtr(modules.First().BaseAddress.ToInt64() + vars.ui_state_offset);
-			vars.ui_state = new DeepPointer(vars.ui_state_ptr, 0x8, 0x120, 0x18, 0x0, 0x208, 0x88, 0x598);
+			vars.ui_state = new DeepPointer(vars.ui_state_ptr, 0x8, 0x120, 0x18, 0x0, 0x208, 0x578);
 		}
 		else
 		{
