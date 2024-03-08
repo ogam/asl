@@ -17,6 +17,7 @@
 //		hotfix 18
 //		hotfix 19
 //		hotfix 20
+//		hotfix 21
 
 /*
 	@notes:
@@ -1095,6 +1096,66 @@ state("bg3_dx11", "steam_hotfix_20")
 	string32 ui_state : 0x058EDF48, 0x8, 0x120, 0x18, 0x0, 0x208, 0x578;
 }
 
+//	vulkan
+state("bg3", "gog_hotfix_21")
+{
+	byte is_playable : 0x5C034C8, 0xA9;
+	string64 level_name : 0x5C034C8, 0x183;
+	string64 level_descriptive_name : 0x5C034C8, 0x1C4;
+	string32 game_version : 0x5C034C8, 0x284;
+	string256 log_message : 0x5C03CC8, 0x0, 0x28;
+	float node_x : 0x5B63070, 0x260, 0x38, 0x38, 0x10;
+	float node_y : 0x5B63070, 0x260, 0x38, 0x38, 0x14;
+	float node_z : 0x5B63070, 0x260, 0x38, 0x38, 0x18;
+
+	string32 ui_state : 0x5B780F8, 0x8, 0x120, 0x18, 0x0, 0x208, 0x588;
+}
+
+//	directx 11
+state("bg3_dx11", "gog_hotfix_21")
+{
+	byte is_playable : 0x5975BA8, 0xA9;
+	string64 level_name : 0x5975BA8, 0x183;
+	string64 level_descriptive_name : 0x5975BA8, 0x1C4;
+	string32 game_version : 0x5975BA8, 0x284;
+	string256 log_message : 0x5976358, 0x0, 0x28;
+	float node_x : 0x58D5DF0, 0x260, 0x38, 0x38, 0x10;
+	float node_y : 0x58D5DF0, 0x260, 0x38, 0x38, 0x14;
+	float node_z : 0x58D5DF0, 0x260, 0x38, 0x38, 0x18;
+
+	string32 ui_state : 0x58EAE50, 0x8, 0x120, 0x18, 0x0, 0x208, 0x588;
+}
+
+//	vulkan
+state("bg3", "steam_hotfix_21")
+{
+	byte is_playable : 0x5C14840, 0xA9;
+	string64 level_name : 0x5C14840, 0x183;
+	string64 level_descriptive_name : 0x5C14840, 0x1C4;
+	string32 game_version : 0x5C14840, 0x284;
+	string256 log_message : 0x5C15040, 0x0, 0x28;
+	float node_x : 0x5B741F0, 0x260, 0x38, 0x38, 0x10;
+	float node_y : 0x5B741F0, 0x260, 0x38, 0x38, 0x14;
+	float node_z : 0x5B741F0, 0x260, 0x38, 0x38, 0x18;
+
+	string32 ui_state : 0x5B89280, 0x8, 0x120, 0x18, 0x0, 0x208, 0x588;
+}
+
+//	directx 11
+state("bg3_dx11", "steam_hotfix_21")
+{
+	byte is_playable : 0x5986E10, 0xA9;
+	string64 level_name : 0x5986E10, 0x183;
+	string64 level_descriptive_name : 0x5986E10, 0x1C4;
+	string32 game_version : 0x5986E10, 0x284;
+	string256 log_message : 0x59875D0, 0x0, 0x28;
+	float node_x : 0x58E6F50, 0x260, 0x38, 0x38, 0x10;
+	float node_y : 0x58E6F50, 0x260, 0x38, 0x38, 0x14;
+	float node_z : 0x58E6F50, 0x260, 0x38, 0x38, 0x18;
+
+	string32 ui_state : 0x58FBFB8, 0x8, 0x120, 0x18, 0x0, 0x208, 0x588;
+}
+
 state("bg3", "unsupported")
 {
 }
@@ -1128,9 +1189,6 @@ startup
 	settings.Add("debug_node_fling", false, "Debug - Node Fling");
 	settings.Add("debug_no_cached_addresses", false, "Debug - No Cached Addresses, Always scan (Splitter will slow whenever game starts up. Requires game or livesplit to restart)");
 	settings.Add("load_remove_ui_state", false, "Load Remove use UI State (Not guaranteed to work prior to hotfix 17 4.1.1.4494476)"); 
-	//  @REMOVE: testing phase
-	settings.Add("debug_save_time", false, "Display how much time has been spent in saving state (Not guaranteed to work prior to hotfix 17 4.1.1.4494476)"); 
-
 
 	//	https://github.com/ogam/asl/blob/master/dust%20aet.asl
 	//	debug labels
@@ -1356,6 +1414,7 @@ bg3_dx11.exe+3BA3864 - 48 8B 78 08           - mov rdi,[rax+08]
 		{ "4.1.1.4788723", "gog_hotfix_18" },
 		{ "4.1.1.4811634", "gog_hotfix_19" },
 		{ "4.1.1.4854838", "gog_hotfix_20" },
+		{ "4.1.1.4890942", "gog_hotfix_21" },
 	};
 	Dictionary<String, String> steam_version_map = new Dictionary<String, String>()
 	{
@@ -1377,6 +1436,7 @@ bg3_dx11.exe+3BA3864 - 48 8B 78 08           - mov rdi,[rax+08]
 		{ "4.1.1.4788723", "steam_hotfix_18" },
 		{ "4.1.1.4811634", "steam_hotfix_19" },
 		{ "4.1.1.4854838", "steam_hotfix_20" },
+		{ "4.1.1.4890942", "steam_hotfix_21" },
 	};
 	
 	vars.is_using_ui_state = false;
@@ -1504,7 +1564,7 @@ bg3_dx11.exe+3BA3864 - 48 8B 78 08           - mov rdi,[rax+08]
 			vars.ui_state_offset = vars.ui_state_code_ptr.ToInt64() - modules.First().BaseAddress.ToInt64() + 4;
 			vars.ui_state_offset = vars.ui_state_offset + vars.ui_state_code_offset;
 			vars.ui_state_ptr = new IntPtr(modules.First().BaseAddress.ToInt64() + vars.ui_state_offset);
-			vars.ui_state = new DeepPointer(vars.ui_state_ptr, 0x8, 0x120, 0x18, 0x0, 0x208, 0x578);
+			vars.ui_state = new DeepPointer(vars.ui_state_ptr, 0x8, 0x120, 0x18, 0x0, 0x208, 0x588);
 		}
 		else
 		{
@@ -1528,13 +1588,6 @@ bg3_dx11.exe+3BA3864 - 48 8B 78 08           - mov rdi,[rax+08]
 	vars.old_node_y = 0;
 	vars.old_node_z = 0;
 	vars.old_ui_state = String.Empty;
-	
-	//  @REMOVE
-	vars.saving_timer_begin = DateTime.Now;
-	vars.saving_time = new TimeSpan(0);
-	vars.saving_time_min = new TimeSpan(Int64.MaxValue);
-	vars.saving_time_max = new TimeSpan(Int64.MinValue);
-	vars.saving_time_acc = new TimeSpan(0);
 }
 
 update
@@ -1615,74 +1668,6 @@ update
 			vars.SetText("Debug_Node_code_offset", vars.node_fling_code_offset.ToString("X"));
 			vars.SetText("*Debug_Node_offset*", vars.node_fling_offset.ToString("X"));
 		}
-	}
-
-	//  @REMOVE once decision is made if save time should be kept
-	if (settings["debug_save_time"] && vars.is_using_ui_state)
-	{
-		bool saving_begin = vars.current_ui_state.Contains("Saving") && !vars.old_ui_state.Contains("Saving");
-		bool saving_end = !vars.current_ui_state.Contains("Saving") && vars.old_ui_state.Contains("Saving");
-		if (saving_begin)
-		{
-			vars.saving_timer_begin = DateTime.Now;
-		}
-		if (saving_end)
-		{
-			var dt = DateTime.Now - vars.saving_timer_begin;
-			if (vars.saving_time_min.Ticks > dt.Ticks)
-			{
-				vars.saving_time_min = dt;
-			}
-			if (vars.saving_time_max.Ticks < dt.Ticks)
-			{
-				vars.saving_time_max = dt;
-			}
-			vars.saving_time = dt;
-			vars.saving_time_acc = vars.saving_time_acc.Add(dt);
-		}
-
-		double min = vars.saving_time_min.TotalMilliseconds;
-		double max = vars.saving_time_max.TotalMilliseconds;
-		double cur = vars.saving_time.TotalMilliseconds;
-		double acc = vars.saving_time_acc.TotalMilliseconds;
-
-		String min_time_space = "ms";
-		String max_time_space = "ms";
-		String cur_time_space = "ms";
-		String acc_time_space = "ms";
-		if (vars.saving_time_min.Ticks == Int64.MaxValue)
-		{
-			min = 0.0;
-		}
-		else if (min > 2000)
-		{
-			min = vars.saving_time_min.TotalSeconds;
-			min_time_space = "s";
-		}
-		if (vars.saving_time_max.Ticks == Int64.MinValue)
-		{
-			max = 0.0;
-		}
-		else if (max > 2000)
-		{
-			max = vars.saving_time_max.TotalSeconds;
-			max_time_space = "s";
-		}
-		if (cur > 2000)
-		{
-			cur = vars.saving_time.TotalSeconds;
-			cur_time_space = "s";
-		}
-		if (acc > 2000)
-		{
-			acc = vars.saving_time_acc.TotalSeconds;
-			acc_time_space = "s";
-		}
-		
-		vars.SetText("Saving Time", String.Format("{0} {1}", cur, cur_time_space));
-		vars.SetText("Saving Time Min", String.Format("{0} {1}", min, min_time_space));
-		vars.SetText("Saving Time Max", String.Format("{0} {1}", max, max_time_space));
-		vars.SetText("Saving Time Total", String.Format("{0} {1}", acc, acc_time_space));
 	}
 }
 
