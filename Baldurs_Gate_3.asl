@@ -1,4 +1,5 @@
 //	currently supported versions
+//		hotfix 6 *steam only, unable to get gog hotfix 6 version
 //		Patch 3
 //		hotfix 7
 //		hotfix 9
@@ -59,6 +60,36 @@ CTY_Main_A		-	Baldur's Gate
 END_Main		-	High Hall
 EPI_MAIN_A		-	Reunion Camp
 */
+
+//	vulkan
+state("bg3", "steam_hotfix_6")
+{
+	byte is_playable : 0x0574E9F0, 0xA9;
+	string64 level_name : 0x0574E9F0, 0x142;
+	string64 level_descriptive_name : 0x0574E9F0, 0x183;
+	string32 game_version : 0x0574E9F0, 0x284;
+	string256 log_message : 0x05752CF0, 0x0, 0x44;
+	float node_x : 0x055CE928, 0x260, 0x38, 0x38, 0x10;
+	float node_y : 0x055CE928, 0x260, 0x38, 0x38, 0x14;
+	float node_z : 0x055CE928, 0x260, 0x38, 0x38, 0x18;
+
+	string32 ui_state : 0x056B34E0, 0x8, 0xF0, 0x18, 0x0, 0x220, 0x580;
+}
+
+//	directx 11
+state("bg3_dx11", "steam_hotfix_6")
+{
+	byte is_playable : 0x054D0580, 0xA9;
+	string64 level_name : 0x054D0580, 0x142;
+	string64 level_descriptive_name : 0x054D0580, 0x183;
+	string32 game_version : 0x054D0580, 0x284;
+	string256 log_message : 0x054D37C0, 0x0, 0x44;
+	float node_x : 0x05350488, 0x260, 0x38, 0x38, 0x10;
+	float node_y : 0x05350488, 0x260, 0x38, 0x38, 0x14;
+	float node_z : 0x05350488, 0x260, 0x38, 0x38, 0x18;
+
+	string32 ui_state : 0x05435100, 0x8, 0xF0, 0x18, 0x0, 0x220, 0x580;
+}
 
 //	vulkan
 state("bg3", "gog_patch_3")
@@ -1454,9 +1485,10 @@ bg3_dx11.exe+3BA3864 - 48 8B 78 08           - mov rdi,[rax+08]
 			break;
 		}
 	}
-	
+
 	Dictionary<String, String> gog_version_map = new Dictionary<String, String>()
 	{
+//		{ "4.1.1.370362", "gog_hotfix_6" },
 		{ "4.1.1.3732833", "gog_patch_3" },
 		{ "4.1.1.3735951", "gog_hotfix_7" },
 		{ "4.1.1.3767641", "gog_hotfix_9" },
@@ -1478,8 +1510,10 @@ bg3_dx11.exe+3BA3864 - 48 8B 78 08           - mov rdi,[rax+08]
 		{ "4.1.1.4890942", "gog_hotfix_21" },
 		{ "4.1.1.4900808", "gog_hotfix_21_1" },
 	};
+
 	Dictionary<String, String> steam_version_map = new Dictionary<String, String>()
 	{
+		{ "4.1.1.3700362", "steam_hotfix_6" },
 		{ "4.1.1.3732833", "steam_patch_3" },
 		{ "4.1.1.3735951", "steam_hotfix_7" },
 		{ "4.1.1.3767641", "steam_hotfix_9" },
@@ -1505,12 +1539,14 @@ bg3_dx11.exe+3BA3864 - 48 8B 78 08           - mov rdi,[rax+08]
 	vars.is_using_ui_state = false;
 	if (split_version_parts.Length == 4)
 	{
-		// hotfix 17+
-		if (Convert.ToInt32(split_version_parts[0]) >= 4 && 
-			Convert.ToInt32(split_version_parts[1]) >= 1 &&
-			Convert.ToInt32(split_version_parts[2]) >= 1 &&
-			Convert.ToInt32(split_version_parts[3]) >= 4494476
-		)
+		int product_major = Convert.ToInt32(split_version_parts[0]);
+		int product_minor = Convert.ToInt32(split_version_parts[1]);
+		int product_build = Convert.ToInt32(split_version_parts[2]);
+		int product_private = Convert.ToInt32(split_version_parts[3]);
+		bool is_hotfix_6 = product_major == 4 && product_minor == 1 && product_build == 1 && product_private == 3700362;
+		bool is_hotfix_17_to_latest = product_major >= 4 && product_minor >= 1 && product_build >= 1 && product_private >= 4494476;
+
+		if (is_hotfix_6 || is_hotfix_17_to_latest)
 		{
 			vars.is_using_ui_state = true;
 		}
