@@ -1539,7 +1539,6 @@ bg3_dx11.exe+3BA3864 - 48 8B 78 08           - mov rdi,[rax+08]
 	vars.is_using_ui_state = false;
 	if (split_version_parts.Length == 4)
 	{
-		print(string.Format("Product version - {0}", vars.game_version));
 		int product_major = Convert.ToInt32(split_version_parts[0]);
 		int product_minor = Convert.ToInt32(split_version_parts[1]);
 		int product_build = Convert.ToInt32(split_version_parts[2]);
