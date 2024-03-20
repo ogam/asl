@@ -20,6 +20,7 @@
 //		hotfix 20
 //		hotfix 21
 //		hotfix 21_1 *minor crash fix patch
+//		hotfix 22
 
 /*
 	@notes:
@@ -1248,6 +1249,66 @@ state("bg3_dx11", "steam_hotfix_21_1")
 	string32 ui_state : 0x58FCFB8, 0x8, 0x120, 0x18, 0x0, 0x208, 0x588;
 }
 
+//	vulkan
+state("bg3", "gog_hotfix_22")
+{
+	byte is_playable : 0x5C054C8, 0xA9;
+	string64 level_name : 0x5C054C8, 0x183;
+	string64 level_descriptive_name : 0x5C054C8, 0x1C4;
+	string32 game_version : 0x5C054C8, 0x284;
+	string256 log_message : 0x5C05CD0, 0x0, 0x28;
+	float node_x : 0x5B65050, 0x260, 0x38, 0x38, 0x10;
+	float node_y : 0x5B65050, 0x260, 0x38, 0x38, 0x14;
+	float node_z : 0x5B65050, 0x260, 0x38, 0x38, 0x18;
+
+	string32 ui_state : 0x5B7A0D8, 0x8, 0x120, 0x18, 0x0, 0x208, 0x598;
+}
+
+//	directx 11
+state("bg3_dx11", "gog_hotfix_22")
+{
+	byte is_playable : 0x5978978, 0xA9;
+	string64 level_name : 0x5978978, 0x183;
+	string64 level_descriptive_name : 0x5978978, 0x1C4;
+	string32 game_version : 0x5978978, 0x284;
+	string256 log_message : 0x5979138, 0x0, 0x28;
+	float node_x : 0x58D8DB0, 0x260, 0x38, 0x38, 0x10;
+	float node_y : 0x58D8DB0, 0x260, 0x38, 0x38, 0x14;
+	float node_z : 0x58D8DB0, 0x260, 0x38, 0x38, 0x18;
+
+	string32 ui_state : 0x58EDE10, 0x8, 0x120, 0x18, 0x0, 0x208, 0x598;
+}
+
+//	vulkan
+state("bg3", "steam_hotfix_22")
+{
+	byte is_playable : 0x5C16680, 0xA9;
+	string64 level_name : 0x5C16680, 0x183;
+	string64 level_descriptive_name : 0x5C16680, 0x1C4;
+	string32 game_version : 0x5C16680, 0x284;
+	string256 log_message : 0x5C16E98, 0x0, 0x28;
+	float node_x : 0x5B761F0, 0x260, 0x38, 0x38, 0x10;
+	float node_y : 0x5B761F0, 0x260, 0x38, 0x38, 0x14;
+	float node_z : 0x5B761F0, 0x260, 0x38, 0x38, 0x18;
+
+	string32 ui_state : 0x5B8B280, 0x8, 0x120, 0x18, 0x0, 0x208, 0x598;
+}
+
+//	directx 11
+state("bg3_dx11", "steam_hotfix_22")
+{
+	byte is_playable : 0x5988B70, 0xA9;
+	string64 level_name : 0x5988B70, 0x183;
+	string64 level_descriptive_name : 0x5988B70, 0x1C4;
+	string32 game_version : 0x5988B70, 0x284;
+	string256 log_message : 0x5989338, 0x0, 0x28;
+	float node_x : 0x58E8F10, 0x260, 0x38, 0x38, 0x10;
+	float node_y : 0x58E8F10, 0x260, 0x38, 0x38, 0x14;
+	float node_z : 0x58E8F10, 0x260, 0x38, 0x38, 0x18;
+
+	string32 ui_state : 0x58FDF78, 0x8, 0x120, 0x18, 0x0, 0x208, 0x598;
+}
+
 state("bg3", "unsupported")
 {
 }
@@ -1509,6 +1570,7 @@ bg3_dx11.exe+3BA3864 - 48 8B 78 08           - mov rdi,[rax+08]
 		{ "4.1.1.4854838", "gog_hotfix_20" },
 		{ "4.1.1.4890942", "gog_hotfix_21" },
 		{ "4.1.1.4900808", "gog_hotfix_21_1" },
+		{ "4.1.1.4905117", "gog_hotfix_22" },
 	};
 
 	Dictionary<String, String> steam_version_map = new Dictionary<String, String>()
@@ -1534,6 +1596,7 @@ bg3_dx11.exe+3BA3864 - 48 8B 78 08           - mov rdi,[rax+08]
 		{ "4.1.1.4854838", "steam_hotfix_20" },
 		{ "4.1.1.4890942", "steam_hotfix_21" },
 		{ "4.1.1.4900808", "steam_hotfix_21_1" },
+		{ "4.1.1.4905117", "steam_hotfix_22" },
 	};
 	
 	vars.is_using_ui_state = false;
@@ -1663,7 +1726,7 @@ bg3_dx11.exe+3BA3864 - 48 8B 78 08           - mov rdi,[rax+08]
 			vars.ui_state_offset = vars.ui_state_code_ptr.ToInt64() - modules.First().BaseAddress.ToInt64() + 4;
 			vars.ui_state_offset = vars.ui_state_offset + vars.ui_state_code_offset;
 			vars.ui_state_ptr = new IntPtr(modules.First().BaseAddress.ToInt64() + vars.ui_state_offset);
-			vars.ui_state = new DeepPointer(vars.ui_state_ptr, 0x8, 0x120, 0x18, 0x0, 0x208, 0x588);
+			vars.ui_state = new DeepPointer(vars.ui_state_ptr, 0x8, 0x120, 0x18, 0x0, 0x208, 0x598);
 		}
 		else
 		{
