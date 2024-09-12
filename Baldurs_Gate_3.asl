@@ -22,6 +22,7 @@
 //		hotfix 21_1 *minor crash fix patch
 //		hotfix 22
 //		hotfix 25
+//		patch 7
 
 /*
 	@notes:
@@ -1370,6 +1371,67 @@ state("bg3_dx11", "steam_hotfix_25")
 	string32 ui_state : 0x5901F58, 0x8, 0x120, 0x18, 0x0, 0x1F0, 0x208, 0x598;
 }
 
+//	vulkan
+state("bg3", "gog_patch_7")
+{
+	byte is_playable : 0x5F93C98, 0xA9;
+	string64 level_name : 0x5F93C98, 0x183;
+	string64 level_descriptive_name : 0x5F93C98, 0x1C4;
+	string32 game_version : 0x5F93C98, 0x284;
+	string256 log_message : 0x5F944D8, 0x0, 0x28;
+	float node_x : 0x5F94490, 0x260, 0x38, 0x38, 0x10;
+	float node_y : 0x5F94490, 0x260, 0x38, 0x38, 0x14;
+	float node_z : 0x5F94490, 0x260, 0x38, 0x38, 0x18;
+// patch 7 has a large amount of changes to UI, gog vulkan version seems to have a different pointer path compared to other binaries
+// signature scanner will fail to give you the correct pointer but the code offset seems correct
+	string32 ui_state : 0x5F13918, 0x8, 0x770, 0xE8, 0x4C0;
+}
+
+//	directx 11
+state("bg3_dx11", "gog_patch_7")
+{
+	byte is_playable : 0x5D040F8, 0xA9;
+	string64 level_name : 0x5D040F8, 0x183;
+	string64 level_descriptive_name : 0x5D040F8, 0x1C4;
+	string32 game_version : 0x5D040F8, 0x284;
+	string256 log_message : 0x5D048E0, 0x0, 0x28;
+	float node_x : 0x5D048A0, 0x260, 0x38, 0x38, 0x10;
+	float node_y : 0x5D048A0, 0x260, 0x38, 0x38, 0x14;
+	float node_z : 0x5D048A0, 0x260, 0x38, 0x38, 0x18;
+
+	string32 ui_state : 0x5C845F8, 0x8, 0xE40, 0x58, 0x4C0;
+}
+
+//	vulkan
+state("bg3", "steam_patch_7")
+{
+	byte is_playable : 0x5F9DE28, 0xA9;
+	string64 level_name : 0x5F9DE28, 0x183;
+	string64 level_descriptive_name : 0x5F9DE28, 0x1C4;
+	string32 game_version : 0x5F9DE28, 0x284;
+	string256 log_message : 0x5F9E668, 0x0, 0x28;
+	float node_x : 0x5F9E620, 0x260, 0x38, 0x38, 0x10;
+	float node_y : 0x5F9E620, 0x260, 0x38, 0x38, 0x14;
+	float node_z : 0x5F9E620, 0x260, 0x38, 0x38, 0x18;
+
+	string32 ui_state : 0x5F1D9D8, 0x8, 0xE40, 0x58, 0x4C0;
+}
+
+//	directx 11
+state("bg3_dx11", "steam_patch_7")
+{
+	byte is_playable : 0x5D0F238, 0xA9;
+	string64 level_name : 0x5D0F238, 0x183;
+	string64 level_descriptive_name : 0x5D0F238, 0x1C4;
+	string32 game_version : 0x5D0F238, 0x284;
+	string256 log_message : 0x5D0FA20, 0x0, 0x28;
+	float node_x : 0x5D0F9E0, 0x260, 0x38, 0x38, 0x10;
+	float node_y : 0x5D0F9E0, 0x260, 0x38, 0x38, 0x14;
+	float node_z : 0x5D0F9E0, 0x260, 0x38, 0x38, 0x18;
+
+	string32 ui_state : 0x5C8F718, 0x8, 0xE40, 0x58, 0x4C0;
+}
+
 state("bg3", "unsupported")
 {
 }
@@ -1633,6 +1695,7 @@ bg3_dx11.exe+3BAF734 - 48 8B 78 08           - mov rdi,[rax+08]
 		{ "4.1.1.4900808", "gog_hotfix_21_1" },
 		{ "4.1.1.4905117", "gog_hotfix_22" },
 		{ "4.1.1.5022896", "gog_hotfix_25" },
+		{ "4.1.1.5849914", "gog_patch_7" },
 	};
 
 	Dictionary<String, String> steam_version_map = new Dictionary<String, String>()
@@ -1660,6 +1723,7 @@ bg3_dx11.exe+3BAF734 - 48 8B 78 08           - mov rdi,[rax+08]
 		{ "4.1.1.4900808", "steam_hotfix_21_1" },
 		{ "4.1.1.4905117", "steam_hotfix_22" },
 		{ "4.1.1.5022896", "steam_hotfix_25" },
+		{ "4.1.1.5849914", "steam_patch_7" },
 	};
 	
 	vars.is_using_ui_state = false;
@@ -1789,7 +1853,7 @@ bg3_dx11.exe+3BAF734 - 48 8B 78 08           - mov rdi,[rax+08]
 			vars.ui_state_offset = vars.ui_state_code_ptr.ToInt64() - modules.First().BaseAddress.ToInt64() + 4;
 			vars.ui_state_offset = vars.ui_state_offset + vars.ui_state_code_offset;
 			vars.ui_state_ptr = new IntPtr(modules.First().BaseAddress.ToInt64() + vars.ui_state_offset);
-			vars.ui_state = new DeepPointer(vars.ui_state_ptr, 0x8, 0x120, 0x18, 0x0, 0x1F0, 0x208, 0x598);
+			vars.ui_state = new DeepPointer(vars.ui_state_ptr, 0x8, 0xE40, 0x58, 0x4C0);
 		}
 		else
 		{
