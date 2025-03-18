@@ -1510,11 +1510,11 @@ startup
 	vars.splits = new Dictionary<string, Tuple<string, string, string>>();
 	vars.splits.Add("split_on_nautiloid_to_wilderness", new Tuple<string, string, string>("Split on Nautiloid to Wilderness", "TUT_Avernus_C", "WLD_Main_A"));
 	vars.splits.Add("split_on_wilderness_to_mountain_pass", new Tuple<string, string, string>("Split on Wilderness to Mountain Pass", "WLD_Main_A", "CRE_Main_A"));
-	vars.splits.Add("split_on_mountain_pass_to_shadow_cursed_lands", new Tuple<string, string, string>("Split on Mountain_Pass to Shadow Cursed Lands", "CRE_Main_A", "SCL_Main_A"));
+	vars.splits.Add("split_on_mountain_pass_to_shadow_cursed_lands", new Tuple<string, string, string>("Split on Mountain Pass to Shadow Cursed Lands", "CRE_Main_A", "SCL_Main_A"));
 	vars.splits.Add("split_on_shadow_cursed_lands_to_intermission_gith", new Tuple<string, string, string>("Split on Shadow Cursed Lands to Intermission Gith", "SCL_Main_A", "INT_Main_A"));
-	vars.splits.Add("split_on_intermission_gith_to_wyrms_crossing", new Tuple<string, string, string>("Split on Intermission Gith to Wyrms Crossing", "INT_Main_A", "BGO_Main_A"));
-	vars.splits.Add("split_on_wyrms_crossing_to_baldurs_gate", new Tuple<string, string, string>("Split on Wyrms Crossing to Baldurs Gate", "BGO_Main_A", "CTY_Main_A"));
-	vars.splits.Add("split_on_baldurs_gate_to_high_hall", new Tuple<string, string, string>("Split on Baldurs Gate to High Hall", "CTY_Main_A", "END_Main"));
+	vars.splits.Add("split_on_intermission_gith_to_wyrms_crossing", new Tuple<string, string, string>("Split on Intermission Gith to Wyrm's Crossing", "INT_Main_A", "BGO_Main_A"));
+	vars.splits.Add("split_on_wyrms_crossing_to_baldurs_gate", new Tuple<string, string, string>("Split on Wyrm's Crossing to Baldur's Gate", "BGO_Main_A", "CTY_Main_A"));
+	vars.splits.Add("split_on_baldurs_gate_to_high_hall", new Tuple<string, string, string>("Split on Baldur's Gate to High Hall", "CTY_Main_A", "END_Main"));
 
 	vars.split_mapping = new Dictionary<string, Tuple<string, string, string>>();
 
