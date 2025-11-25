@@ -30,6 +30,7 @@
 //		hotfix 32
 //		hotfix 33
 //		hotfix 34
+//		hotfix 35
 
 /*
 	@notes:
@@ -60,7 +61,7 @@
 level_name		-	Descriptive Level Name
 
 SYS_CC_I		-	Character Creation
-TUT_Avernus_C	-	A Nautiloid in Hell
+TUT_Avernus_C		-	A Nautiloid in Hell
 WLD_Main_A		-	Wilderness
 CRE_Main_A		-	Githyanki Creche
 SCL_Main_A		-	Shadow-Cursed-Lands
@@ -1859,6 +1860,38 @@ state("bg3_dx11", "steam_hotfix_34")
 	string32 ui_state : 0x6016378, 0x10, 0x20, 0x2D8, 0x688;
 }
 
+// @todo: gog version of hotfix_35
+
+//	vulkan
+state("bg3", "steam_hotfix_35")
+{
+	byte is_playable : 0x62A3DE8, 0xA9;
+	string64 level_name : 0x62A3DE8, 0x183;
+	string64 level_descriptive_name : 0x62A3DE8, 0x1C4;
+	string32 game_version : 0x62A3DE8, 0x284;
+	string256 log_message : 0x62A4630, 0x0, 0x28;
+	float node_x : 0x62A45E8, 0x2F0, 0x38, 0x38, 0x10;
+	float node_y : 0x62A45E8, 0x2F0, 0x38, 0x38, 0x14;
+	float node_z : 0x62A45E8, 0x2F0, 0x38, 0x38, 0x18;
+
+	string32 ui_state : 0x62A1030, 0x10, 0x20, 0x2D8, 0x688;
+}
+
+//	directx 11
+state("bg3_dx11", "steam_hotfix_35")
+{
+	byte is_playable : 0x601A3B8, 0xA9;
+	string64 level_name : 0x601A3B8, 0x183;
+	string64 level_descriptive_name : 0x601A3B8, 0x1C4;
+	string32 game_version : 0x601A3B8, 0x284;
+	string256 log_message : 0x601ABA8, 0x0, 0x28;
+	float node_x : 0x601AB68, 0x2F0, 0x38, 0x38, 0x10;
+	float node_y : 0x601AB68, 0x2F0, 0x38, 0x38, 0x14;
+	float node_z : 0x601AB68, 0x2F0, 0x38, 0x38, 0x18;
+
+	string32 ui_state : 0x6017618, 0x10, 0x20, 0x2D8, 0x688;
+}
+
 state("bg3", "unsupported")
 {
 }
@@ -2163,6 +2196,7 @@ bg3_dx11.exe+3BEA4CB - 0F11 85 B0050000      - movups [rbp+000005B0],xmm0
 		{ "4.1.1.6848561", "steam_hotfix_32" },
 		{ "4.1.1.6897358", "steam_hotfix_33" },
 		{ "4.1.1.6946847", "steam_hotfix_34" },
+		{ "4.1.1.6995620", "steam_hotfix_35" },
 	};
 	
 	vars.is_using_ui_state = false;
