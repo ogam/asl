@@ -1860,7 +1860,35 @@ state("bg3_dx11", "steam_hotfix_34")
 	string32 ui_state : 0x6016378, 0x10, 0x20, 0x2D8, 0x688;
 }
 
-// @todo: gog version of hotfix_35
+//	vulkan
+state("bg3", "gog_hotfix_35")
+{
+	byte is_playable : 0x6297D18, 0xA9;
+	string64 level_name : 0x6297D18, 0x183;
+	string64 level_descriptive_name : 0x6297D18, 0x1C4;
+	string32 game_version : 0x6297D18, 0x284;
+	string256 log_message : 0x6298560, 0x0, 0x28;
+	float node_x : 0x6298518, 0x2F0, 0x38, 0x38, 0x10;
+	float node_y : 0x6298518, 0x2F0, 0x38, 0x38, 0x14;
+	float node_z : 0x6298518, 0x2F0, 0x38, 0x38, 0x18;
+
+	string32 ui_state : 0x6294F30, 0x10, 0x20, 0x2D8, 0x688;
+}
+
+//	directx 11
+state("bg3_dx11", "gog_hotfix_35")
+{
+	byte is_playable : 0x600E368, 0xA9;
+	string64 level_name : 0x600E368, 0x183;
+	string64 level_descriptive_name : 0x600E368, 0x1C4;
+	string32 game_version : 0x600E368, 0x284;
+	string256 log_message : 0x600EB38, 0x0, 0x28;
+	float node_x : 0x600EAF8, 0x2F0, 0x38, 0x38, 0x10;
+	float node_y : 0x600EAF8, 0x2F0, 0x38, 0x38, 0x14;
+	float node_z : 0x600EAF8, 0x2F0, 0x38, 0x38, 0x18;
+
+	string32 ui_state : 0x600B5C8, 0x10, 0x20, 0x2D8, 0x688;
+}
 
 //	vulkan
 state("bg3", "steam_hotfix_35")
@@ -2161,6 +2189,7 @@ bg3_dx11.exe+3BEA4CB - 0F11 85 B0050000      - movups [rbp+000005B0],xmm0
 		{ "4.1.1.6848561", "gog_hotfix_32" },
 		{ "4.1.1.6897358", "gog_hotfix_33" },
 		{ "4.1.1.6946847", "gog_hotfix_34" },
+		{ "4.1.1.6995620", "gog_hotfix_35" },
 	};
 
 	Dictionary<String, String> steam_version_map = new Dictionary<String, String>()
