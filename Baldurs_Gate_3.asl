@@ -2074,7 +2074,7 @@ startup
 	settings.Add("debug", false, "Debug");
 	settings.Add("debug_node_fling", false, "Debug - Node Fling");
 	settings.Add("debug_no_cached_addresses", false, "Debug - No Cached Addresses, Always scan (Splitter will slow whenever game starts up. Requires game or livesplit to restart)");
-	settings.Add("load_remove_ui_state", false, "Load Remove use UI State (Not guaranteed to work prior to hotfix 17 4.1.1.4494476)"); 
+	settings.Add("load_remove_ui_state", true, "Load Remove use UI State (Not guaranteed to work prior to hotfix 17 4.1.1.4494476)"); 
 
 	//	https://github.com/ogam/asl/blob/master/dust%20aet.asl
 	//	debug labels
